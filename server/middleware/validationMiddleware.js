@@ -33,8 +33,8 @@ export const validateRecipeInput = withValidationErrors([
   body("instructions").notEmpty().withMessage("instructions is required"),
   body("prep_time").notEmpty().withMessage("prep_time is required"),
   body("image_url").notEmpty().withMessage("image_url is required"),
-  // body("user_id").notEmpty().withMessage("user id is required"),
 ]);
+
 export const validateRegisterInput = withValidationErrors([
   body("firstName").notEmpty().withMessage("first name is required"),
   body("lastName").notEmpty().withMessage("last name is required"),
@@ -58,6 +58,7 @@ export const validateRegisterInput = withValidationErrors([
     .isLength({ min: 6 })
     .withMessage("password must be at least 6 characters long"),
 ]);
+
 export const validateLoginInput = withValidationErrors([
   body("email")
     .notEmpty()

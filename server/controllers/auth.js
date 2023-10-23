@@ -35,17 +35,22 @@ export const register = async (req, res) => {
     msg: "user registered in...logging in",
   });
 };
+
 export const login = async (req, res) => {
   const { email, password } = req.body;
+
   const { rows: users } = await db.query(
     `SELECT * FROM users WHERE email =$1`,
     [email]
   );
+
   if (users.length === 0) throw new UnauthenticatedError("invalid credentials");
+
   const passwordSuccess = await bcrypt.compare(
     password,
     users[0].hashed_password
   );
+
   console.log(users);
   if (!passwordSuccess) {
     throw new UnauthenticatedError("invalid credentials");
@@ -57,6 +62,7 @@ export const login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRATION }
     );
+
     // convert 1 day into milliseconds for res.cookie
     const oneDay = 1000 * 60 * 60 * 24;
     // send cookie to client more secure than local storage
