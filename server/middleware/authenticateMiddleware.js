@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { UnauthenticatedError } from "../errors/customErrors.js";
 
-const authenticateUser = async (req, res, next) => {
+const authenticateUser = (req, res, next) => {
   const { token } = req.cookies;
   if (!token) throw new UnauthenticatedError("authentication invalid");
   try {

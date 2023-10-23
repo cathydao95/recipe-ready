@@ -19,7 +19,7 @@ const withValidationErrors = (validateValues) => {
           throw new NotFoundError(errorMessages);
         }
         if (errorMessages[0].startsWith("not authorized")) {
-          throw new UnauthorizedError("not authorized to perform this action");
+          throw new UnauthorizedError(errorMessages);
         }
         throw new BadRequestError(errorMessages);
       }
@@ -36,12 +36,22 @@ export const validateRecipeInput = withValidationErrors([
   // body("user_id").notEmpty().withMessage("user id is required"),
 ]);
 export const validateRegisterInput = withValidationErrors([
-  body("name").notEmpty().withMessage("name is required"),
+  body("firstName").notEmpty().withMessage("first name is required"),
+  body("lastName").notEmpty().withMessage("last name is required"),
   body("email")
     .notEmpty()
     .withMessage("email is required")
     .isEmail()
-    .withMessage("invalid email format"),
+    .withMessage("invalid email format")
+    .custom(async (email) => {
+      const { rows: user } = await db.query(
+        "SELECT * FROM users WHERE email = $1",
+        [email]
+      );
+      if (user.length !== 0) {
+        throw new BadRequestError("email is already registered");
+      }
+    }),
   body("password")
     .notEmpty()
     .withMessage("password is required")
@@ -57,14 +67,35 @@ export const validateLoginInput = withValidationErrors([
   body("password").notEmpty().withMessage("password is required"),
 ]);
 
+export const validateUpdateUserInput = withValidationErrors([
+  body("firstName").notEmpty().withMessage("first name is required"),
+  body("lastName").notEmpty().withMessage("last name is required"),
+  body("email")
+    .notEmpty()
+    .withMessage("email is required")
+    .isEmail()
+    .withMessage("invalid email format")
+    .custom(async (email, { req }) => {
+      const { rows: user } = await db.query(
+        "SELECT * FROM users WHERE email = $1",
+        [email]
+      );
+      // make sure email is not already registered for another user
+      if (user.length !== 0 && user[0].id !== req.user.userId) {
+        throw new BadRequestError("email already registered");
+      }
+    }),
+]);
+
 export const validateOwner = withValidationErrors([
+  // req provides info about current user and param('id'), provides access to the param in the route that we will be using
   param("id").custom(async (id, { req }) => {
     const { rows: recipe } = await db.query(
       "SELECT * FROM recipes WHERE id = $1",
       [id]
     );
-    if (recipe.length === 0)
-      throw new NotFoundError(`no recipe with id ${value}`);
+
+    if (recipe.length === 0) throw new NotFoundError(`no recipe with id ${id}`);
     const ownerId = recipe[0].user_id;
     const currentUserId = req.user.userId;
     if (ownerId !== currentUserId) {
