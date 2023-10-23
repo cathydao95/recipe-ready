@@ -3,13 +3,57 @@ import "dotenv/config";
 import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "../errors/customErrors.js";
 
+// export const getRecipes = async (req, res) => {
+//   const { ingredients } = req.query;
+//   console.log("INGREDIENTS", ingredients);
+
+//   if (ingredients) {
+//     const ingredientsArray = ingredients.split(",");
+
+//     const query = `
+//       SELECT * FROM recipes
+//         WHERE
+//           $1::text[] @> ingredients
+//       `;
+
+//     const { rows: recipes } = await db.query(query, [ingredientsArray]);
+
+//     res.status(StatusCodes.OK).json({
+//       status: "success",
+//       results: recipes.length,
+//       data: { recipes },
+//     });
+//   } else {
+//     const { rows: recipes } = await db.query("SELECT * FROM recipes");
+//     res.status(StatusCodes.OK).json({
+//       status: "success",
+//       results: recipes.length,
+//       data: { recipes },
+//     });
+//   }
+// };
+
 export const getRecipes = async (req, res) => {
-  const { rows: recipes } = await db.query("SELECT * FROM recipes");
-  res.status(StatusCodes.OK).json({
+  const { ingredients } = req.query;
+
+  let queryText = "SELECT * FROM recipes";
+  let queryParams = [];
+
+  if (ingredients) {
+    const ingredientsArray = ingredients.split(",");
+    queryText += " WHERE $1::text[] @> ingredients";
+    queryParams = [ingredientsArray];
+  }
+
+  const { rows: recipes } = await db.query(queryText, queryParams);
+
+  const response = {
     status: "success",
     results: recipes.length,
     data: { recipes },
-  });
+  };
+
+  res.status(StatusCodes.OK).json(response);
 };
 
 export const getRecipe = async (req, res) => {
@@ -23,7 +67,6 @@ export const getRecipe = async (req, res) => {
     data: { recipe },
   });
 };
-
 export const getUsersRecipes = async (req, res) => {
   const { userId } = req.user;
   const { rows: recipes } = await db.query(
@@ -36,7 +79,6 @@ export const getUsersRecipes = async (req, res) => {
     data: { recipes },
   });
 };
-
 export const createRecipe = async (req, res) => {
   const { userId } = req.user;
   console.log(userId);
@@ -61,11 +103,9 @@ export const createRecipe = async (req, res) => {
     data: { newRecipe },
   });
 };
-
 export const editRecipe = async (req, res) => {
   const { id } = req.params;
   const { title, ingredients, instructions, prep_time, image_url } = req.body;
-
   const { rows: updatedRecipe } = await db.query(
     "UPDATE recipes SET (title, ingredients, instructions, prep_time, image_url) = ($1, $2, $3, $4, $5) WHERE id = $6 RETURNING *",
     [title, ingredients, instructions, prep_time, image_url, id]
@@ -75,7 +115,6 @@ export const editRecipe = async (req, res) => {
     data: { updatedRecipe },
   });
 };
-
 export const deleteRecipe = async (req, res) => {
   const { id } = req.params;
   const { rows: deletedRecipe } = await db.query(
@@ -86,7 +125,6 @@ export const deleteRecipe = async (req, res) => {
     status: "success",
   });
 };
-
 export const getRecipeNutrition = async (req, res) => {
   // LOOK INTO URL ENCODED
   // const { id } = req.params;
