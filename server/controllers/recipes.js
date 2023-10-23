@@ -91,3 +91,23 @@ export const deleteRecipe = async (req, res) => {
     status: "success",
   });
 };
+
+export const getRecipeNutrition = async (req, res) => {
+  // send back ID and use ID to find recipe and grab title
+  // LOOK INTO URL ENCODED
+  // const { title } = req.query;
+  // let queryTitle = title.replace(/ /g, "+");
+  // try {
+  //   const response = await fetch(
+  //     `https://api.spoonacular.com/recipes/guessNutrition?apiKey=${process.env.SPOONACULAR_API_KEY}&title=${queryTitle}`
+  //   );
+  //   const recipeNutrition = await response.json();
+  //   res.status(StatusCodes.OK).json({
+  //     status: "success",
+  //     data: { recipeNutrition },
+  //   });
+  // } catch (error) {
+  //   console.error;
+  //   return res.status(400).json({ error });
+  // }
+};
