@@ -3,11 +3,10 @@ import express, { urlencoded } from "express";
 import cors from "cors";
 import "dotenv/config";
 import morgan from "morgan";
-import { body, validationResult } from "express-validator";
-
 // custom imports
 // routers
 import recipeRouter from "./routers/recipes.js";
+import authRouter from "./routers/auth.js";
 
 // middleware
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
@@ -22,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/api/v1/recipes", recipeRouter);
+app.use("/api/v1/auth", authRouter);
 
 // not found middleware (404 - triggered when request is made to a nonexistant route)
 app.use("*", (req, res) => {
