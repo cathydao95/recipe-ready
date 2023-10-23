@@ -10,22 +10,19 @@ import {
 } from "../controllers/recipes.js";
 import {
   validateRecipeInput,
-  // validateId,
+  validateOwner,
 } from "../middleware/validationMiddleware.js";
 
 const router = Router();
-
 router.route("/").get(getRecipes).post(validateRecipeInput, createRecipe);
 
 router.route("/userRecipes").get(getUsersRecipes);
 
-// router.route("/userRecipes").get(validateId, getUsersRecipes);
-
 router
   .route("/:id")
   .get(getRecipe)
-  .put(validateRecipeInput, editRecipe)
-  .delete(deleteRecipe);
+  .put(validateRecipeInput, validateOwner, editRecipe)
+  .delete(validateOwner, deleteRecipe);
 
 router.route("/:id/nutrition").get(getRecipeNutrition);
 

@@ -2,6 +2,7 @@ import db from "../db/db-connection.js";
 import "dotenv/config";
 import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "../errors/customErrors.js";
+
 export const getRecipes = async (req, res) => {
   const { rows: recipes } = await db.query("SELECT * FROM recipes");
   res.status(StatusCodes.OK).json({
@@ -10,6 +11,7 @@ export const getRecipes = async (req, res) => {
     data: { recipes },
   });
 };
+
 export const getRecipe = async (req, res) => {
   const { id } = req.params;
   const { rows: recipe } = await db.query("SELECT * FROM recipes WHERE id=$1", [
@@ -34,6 +36,7 @@ export const getUsersRecipes = async (req, res) => {
     data: { recipes },
   });
 };
+
 export const createRecipe = async (req, res) => {
   const { userId } = req.user;
   console.log(userId);
@@ -58,56 +61,23 @@ export const createRecipe = async (req, res) => {
     data: { newRecipe },
   });
 };
+
 export const editRecipe = async (req, res) => {
   const { id } = req.params;
-  const { userId } = req.user;
   const { title, ingredients, instructions, prep_time, image_url } = req.body;
-
-  const { rows: existingRecipe } = await db.query(
-    "SELECT * FROM recipes WHERE id = $1",
-    [id]
-  );
-  if (existingRecipe.length === 0)
-    throw new NotFoundError(`no recipe with id ${id}`);
-  const ownerId = existingRecipe[0].user_id;
-  const currentUserId = userId;
-  if (ownerId !== currentUserId) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({
-      status: "error",
-      message: "You are not authorized to edit this recipe.",
-    });
-  }
 
   const { rows: updatedRecipe } = await db.query(
     "UPDATE recipes SET (title, ingredients, instructions, prep_time, image_url) = ($1, $2, $3, $4, $5) WHERE id = $6 RETURNING *",
     [title, ingredients, instructions, prep_time, image_url, id]
   );
-
-  if (updatedRecipe.length === 0) {
-    throw new NotFoundError(`No recipe with id ${id}`);
-  }
   res.status(StatusCodes.OK).json({
     status: "success",
     data: { updatedRecipe },
   });
 };
+
 export const deleteRecipe = async (req, res) => {
   const { id } = req.params;
-  const { userId } = req.user;
-  const { rows: existingRecipe } = await db.query(
-    "SELECT * FROM recipes WHERE id = $1",
-    [id]
-  );
-  if (existingRecipe.length === 0)
-    throw new NotFoundError(`no recipe with id ${id}`);
-  const ownerId = existingRecipe[0].user_id;
-  const currentUserId = userId;
-  if (ownerId !== currentUserId) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({
-      status: "error",
-      message: "You are not authorized to delete this recipe.",
-    });
-  }
   const { rows: deletedRecipe } = await db.query(
     "DELETE FROM recipes WHERE id = $1",
     [id]
