@@ -1,25 +1,9 @@
 import { useEffect, useState } from "react";
 import { Loading, ResultsLayout } from "../../components";
+import { useAppContext } from "../../context/appContext";
 
 const Results = () => {
-  const [recipes, setRecipes] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const getRecipes = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/api/v1/recipes", {
-        credentials: "include",
-      });
-      if (response.ok) {
-        const {
-          data: { recipes },
-        } = await response.json();
-        setRecipes(recipes);
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { getRecipes, recipeResults, isLoading } = useAppContext();
 
   // const getCurrentUser = async () => {
   //   try {
@@ -36,15 +20,14 @@ const Results = () => {
   //     console.error(error);
   //   }
   // };
-
-  // useEffect(() => {
-  //   getRecipes();
-  //   // getCurrentUser();
-  // }, []);
+  useEffect(() => {
+    getRecipes();
+    // getCurrentUser();
+  }, []);
   return isLoading ? (
     <Loading />
   ) : (
-    <ResultsLayout recipes={recipes} title="Recipe Results" />
+    <ResultsLayout recipes={recipeResults} title="Recipe Results" />
   );
 };
 
