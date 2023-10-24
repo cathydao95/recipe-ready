@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FormRow } from "../../components";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -30,7 +32,14 @@ const Login = () => {
 
       if (response.ok) {
         let { msg } = await response.json();
+        console.log(msg);
+        toast.success(msg);
         navigate("/recipes");
+      } else {
+        let { msg } = await response.json();
+        if (msg) {
+          toast.error(msg);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -51,6 +60,7 @@ const Login = () => {
         <button className="formBtn" type="submit" onClick={loginUser}>
           Submit
         </button>
+        <p className="formAlert">Error Message</p>
       </form>
     </div>
   );
