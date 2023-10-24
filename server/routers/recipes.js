@@ -14,6 +14,7 @@ import {
 } from "../middleware/validationMiddleware.js";
 
 const router = Router();
+
 router.route("/").get(getRecipes).post(validateRecipeInput, createRecipe);
 
 router.route("/userRecipes").get(getUsersRecipes);

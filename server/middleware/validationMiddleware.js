@@ -28,54 +28,54 @@ const withValidationErrors = (validateValues) => {
   ];
 };
 export const validateRecipeInput = withValidationErrors([
-  body("title").notEmpty().withMessage("title is required"),
-  body("ingredients").notEmpty().withMessage("ingredients is required"),
-  body("instructions").notEmpty().withMessage("instructions is required"),
-  body("prep_time").notEmpty().withMessage("prep_time is required"),
-  body("image_url").notEmpty().withMessage("image_url is required"),
+  body("title").notEmpty().withMessage("Title is required"),
+  body("ingredients").notEmpty().withMessage("Ingredients is required"),
+  body("instructions").notEmpty().withMessage("Instructions is required"),
+  body("prep_time").notEmpty().withMessage("Prep time is required"),
+  body("image_url").notEmpty().withMessage("Image Url is required"),
 ]);
 
 export const validateRegisterInput = withValidationErrors([
-  body("firstName").notEmpty().withMessage("first name is required"),
-  body("lastName").notEmpty().withMessage("last name is required"),
+  body("firstName").notEmpty().withMessage("First name is required"),
+  body("lastName").notEmpty().withMessage("Last name is required"),
   body("email")
     .notEmpty()
-    .withMessage("email is required")
+    .withMessage("Email is required")
     .isEmail()
-    .withMessage("invalid email format")
+    .withMessage("Invalid email format")
     .custom(async (email) => {
       const { rows: user } = await db.query(
         "SELECT * FROM users WHERE email = $1",
         [email]
       );
       if (user.length !== 0) {
-        throw new BadRequestError("email is already registered");
+        throw new BadRequestError("Email is already registered");
       }
     }),
-  body("password")
+  body("Password")
     .notEmpty()
-    .withMessage("password is required")
+    .withMessage("Password is required")
     .isLength({ min: 6 })
-    .withMessage("password must be at least 6 characters long"),
+    .withMessage("Password must be at least 6 characters long"),
 ]);
 
 export const validateLoginInput = withValidationErrors([
   body("email")
     .notEmpty()
-    .withMessage("email is required")
+    .withMessage("Email is required")
     .isEmail()
-    .withMessage("invalid email format"),
-  body("password").notEmpty().withMessage("password is required"),
+    .withMessage("Invalid email format"),
+  body("password").notEmpty().withMessage("Password is required"),
 ]);
 
 export const validateUpdateUserInput = withValidationErrors([
-  body("firstName").notEmpty().withMessage("first name is required"),
-  body("lastName").notEmpty().withMessage("last name is required"),
+  body("firstName").notEmpty().withMessage("First name is required"),
+  body("lastName").notEmpty().withMessage("Last name is required"),
   body("email")
     .notEmpty()
-    .withMessage("email is required")
+    .withMessage("Email is required")
     .isEmail()
-    .withMessage("invalid email format")
+    .withMessage("Invalid email format")
     .custom(async (email, { req }) => {
       const { rows: user } = await db.query(
         "SELECT * FROM users WHERE email = $1",
@@ -83,9 +83,14 @@ export const validateUpdateUserInput = withValidationErrors([
       );
       // make sure email is not already registered for another user
       if (user.length !== 0 && user[0].id !== req.user.userId) {
-        throw new BadRequestError("email already registered");
+        throw new BadRequestError("Email already registered");
       }
     }),
+  body("password")
+    .notEmpty()
+    .withMessage("Password is required")
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters long"),
 ]);
 
 export const validateOwner = withValidationErrors([
@@ -96,11 +101,13 @@ export const validateOwner = withValidationErrors([
       [id]
     );
 
-    if (recipe.length === 0) throw new NotFoundError(`no recipe with id ${id}`);
+    if (recipe.length === 0) throw new NotFoundError(`No recipe with id ${id}`);
+
     const ownerId = recipe[0].user_id;
     const currentUserId = req.user.userId;
+
     if (ownerId !== currentUserId) {
-      throw new UnauthorizedError("not authorized to perform this action");
+      throw new UnauthorizedError("Not authorized to perform this action");
     }
   }),
 ]);
