@@ -35,7 +35,7 @@ const Register = () => {
         let { msg } = await response.json();
         // console.log(msg);
         toast.success(msg);
-        navigate("/recipes");
+        navigate("/dashboard");
       } else {
         let { msg } = await response.json();
         if (msg) {
