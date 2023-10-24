@@ -40,7 +40,7 @@ export const login = async (req, res) => {
   if (!passwordMatch) {
     throw new UnauthenticatedError("invalid credentials");
   }
-  const token = generateToken(users[0].rows[0]);
+  const token = generateToken(users[0]);
 
   setTokenCookie(res, token);
 

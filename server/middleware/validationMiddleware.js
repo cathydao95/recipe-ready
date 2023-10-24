@@ -52,7 +52,7 @@ export const validateRegisterInput = withValidationErrors([
         throw new BadRequestError("Email is already registered");
       }
     }),
-  body("Password")
+  body("password")
     .notEmpty()
     .withMessage("Password is required")
     .isLength({ min: 6 })
