@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.loading {
+  width: 10rem;
+  height: 10rem;
+  border: 5px solid var(--clr-primary-red);
+  border-radius: 50%;
+  border-top-color: var(--clr-primary-10);
+  animation: spinner 2s linear infinite;
+  margin: 25px auto;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
