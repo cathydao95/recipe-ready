@@ -14,6 +14,7 @@ import {
   UserSettings,
 } from "./pages";
 import SearchByName from "./pages/Search/SearchByName";
+import UserRecipes from "./pages/UserRecipes/UserRecipes";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
           { path: ":id", element: <Recipe /> },
           { path: "bookmarked", element: <Bookmarked /> },
           { path: "create", element: <Create /> },
+          { path: "my-recipes", element: <UserRecipes /> },
           { path: "settings", element: <UserSettings /> },
         ],
       },
