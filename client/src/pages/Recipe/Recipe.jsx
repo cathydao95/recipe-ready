@@ -4,13 +4,16 @@ import { useParams } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import { FaRegClock, FaRegBookmark } from "react-icons/fa";
+import { useAppContext } from "../../context/appContext";
 
 const Recipe = () => {
+  const { setIsLoading, isLoading } = useAppContext();
   const { id } = useParams();
-  const [recipeInfo, setRecipeInfo] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+
   const [recipeNutrition, setRecipeNutrition] = useState();
+  const [recipeInfo, setRecipeInfo] = useState([]);
   const [showNutrition, setShowNutrition] = useState(false);
+
   const getRecipe = async () => {
     try {
       const response = await fetch(
@@ -49,9 +52,9 @@ const Recipe = () => {
     }
   };
 
-  // useEffect(() => {
-  //   getRecipe();
-  // }, []);
+  useEffect(() => {
+    getRecipe();
+  }, []);
 
   return isLoading ? (
     <Loading />
