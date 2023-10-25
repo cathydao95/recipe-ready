@@ -10,3 +10,4 @@ export { default as Recipe } from "./Recipe/Recipe";
 export { default as Create } from "./Create/Create";
 export { default as Bookmarked } from "./Bookmarked/Bookmarked";
 export { default as UserSettings } from "./UserSettings/UserSettings";
+export { default as Dashboard } from "./Dashboard/Dashboard";
