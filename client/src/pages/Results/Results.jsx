@@ -1,29 +1,26 @@
 import { useEffect, useState } from "react";
 import { Loading, ResultsLayout } from "../../components";
 import { useAppContext } from "../../context/appContext";
+import { useLocation } from "react-router-dom";
 
 const Results = () => {
-  const { getRecipes, recipeResults, isLoading } = useAppContext();
+  const { getRecipes, recipeResults, isLoading, setIsLoading } =
+    useAppContext();
+  const location = useLocation();
 
-  // const getCurrentUser = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       "http://localhost:8080/api/v1/users/current"
-  //     );
-  //     if (response.ok) {
-  //       const {
-  //         data: { user },
-  //       } = await response.json();
-  //       console.log(data);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
   useEffect(() => {
-    getRecipes();
-    // getCurrentUser();
+    const { state } = location;
+    const selectedIngredients =
+      state && state.ingredients ? state.ingredients : [];
+
+    const keyword = state && state.keyword ? state.keyword : "";
+
+    // Use selectedIngredients to call getRecipes
+    getRecipes(selectedIngredients, keyword);
   }, []);
+
+  console.log(recipeResults);
+
   return isLoading ? (
     <Loading />
   ) : (

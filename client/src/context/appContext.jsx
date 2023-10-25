@@ -7,11 +7,27 @@ const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [recipeInfo, setRecipeInfo] = useState([]);
 
-  const getRecipes = async () => {
+  const getRecipes = async (ingredients, keyword) => {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/recipes", {
-        credentials: "include",
-      });
+      let queryParam = "";
+
+      if (ingredients && ingredients.length > 0) {
+        queryParam += `?ingredients=${ingredients.join(",")}`;
+      }
+
+      if (keyword && keyword !== "") {
+        queryParam += `?keyword=${keyword}`;
+      }
+
+      console.log(queryParam);
+
+      const response = await fetch(
+        `http://localhost:8080/api/v1/recipes${queryParam}`,
+        {
+          credentials: "include",
+        }
+      );
+
       if (response.ok) {
         const {
           data: { recipes },

@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "../errors/customErrors.js";
 
 export const getRecipes = async (req, res) => {
-  const { ingredients } = req.query;
+  const { ingredients, keyword } = req.query;
 
   let queryText = "SELECT * FROM recipes";
   let queryParams = [];
@@ -13,6 +13,11 @@ export const getRecipes = async (req, res) => {
     const ingredientsArray = ingredients.split(",");
     queryText += " WHERE $1::text[] @> ingredients";
     queryParams = [ingredientsArray];
+  }
+
+  if (keyword) {
+    queryText += " WHERE title ILIKE $1";
+    queryParams = [`%${keyword}%`];
   }
 
   const { rows: recipes } = await db.query(queryText, queryParams);
