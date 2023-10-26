@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FormRow } from "../../components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import styles from "./styles.module.scss";
+import uploadImg from "../../assets/upload-img.svg";
 
 const Create = () => {
   const navigate = useNavigate();
@@ -89,14 +91,13 @@ const Create = () => {
       <h1 className="title">Create New Recipe</h1>
       <form className="form">
         <FormRow type="text" name="title" handleInput={handleInput} />
-        <FormRow type="text" name="ingredients" handleInput={handleInput} />
-        <FormRow type="text" name="instructions" handleInput={handleInput} />
-        <FormRow
-          type="number"
-          name="prep_time"
-          labelText="prep time (in minutes)"
-          handleInput={handleInput}
-        />
+
+        <div className={styles.imgInputContainer}>
+          <img
+            className={styles.uploadImg}
+            src={recipeInfo.image_url !== "" ? recipeInfo.image_url : uploadImg}
+          />
+        </div>
 
         <div className="formRow">
           <input
@@ -107,13 +108,22 @@ const Create = () => {
             onChange={handleInput}
           />
         </div>
-        {recipeInfo.image_url && recipeInfo.image_url !== "" && (
-          <div>
-            <img src={recipeInfo.image_url} />
-          </div>
-        )}
 
-        <button className="formBtn" type="submit" onClick={createRecipe}>
+        <FormRow type="text" name="ingredients" handleInput={handleInput} />
+        <FormRow type="text" name="instructions" handleInput={handleInput} />
+        <FormRow
+          type="number"
+          name="prep_time"
+          labelText="prep time (in minutes)"
+          handleInput={handleInput}
+        />
+
+        <button
+          className="formBtn"
+          type="submit"
+          onClick={createRecipe}
+          disabled={recipeInfo.image_url === ""}
+        >
           Submit
         </button>
       </form>
