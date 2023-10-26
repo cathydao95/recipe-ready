@@ -4,8 +4,8 @@ import { useAppContext } from "../../context/appContext";
 import { useLocation } from "react-router-dom";
 
 const UserRecipes = () => {
-  const { isLoading, setIsLoading } = useAppContext();
-  const [usersRecipes, setUsersRecipes] = useState([]);
+  const { isLoading, setIsLoading, usersRecipes, setUsersRecipes } =
+    useAppContext();
 
   const getPersonalRecipes = async () => {
     try {
@@ -37,7 +37,7 @@ const UserRecipes = () => {
   return isLoading ? (
     <Loading />
   ) : (
-    <ResultsLayout recipes={usersRecipes} title="My Recipes" />
+    <ResultsLayout recipes={usersRecipes} title="My Recipes" page="personal" />
   );
 };
 

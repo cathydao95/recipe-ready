@@ -1,11 +1,13 @@
 import { useState, createContext, useEffect, useContext } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [recipeResults, setRecipeResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [recipeInfo, setRecipeInfo] = useState([]);
+  const [usersRecipes, setUsersRecipes] = useState([]);
 
   const getRecipes = async (ingredients, keyword) => {
     try {
@@ -40,9 +42,47 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const deleteRecipe = async (id) => {
+    try {
+      let response = await fetch(`http://localhost:8080/api/v1/recipes/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/JSON",
+        },
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        setUsersRecipes((prevRecipes) =>
+          prevRecipes.filter((recipe) => recipe.id !== id)
+        );
+        let { msg } = await response.json();
+        toast.success(msg);
+        return { success: true, message: msg };
+      } else {
+        let { msg } = await response.json();
+        if (msg) {
+          toast.error(msg);
+          return { success: false, message: msg };
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      return { success: false, message: "An error occurred" };
+    }
+  };
+
   return (
     <AppContext.Provider
-      value={{ getRecipes, recipeInfo, recipeResults, isLoading, setIsLoading }}
+      value={{
+        getRecipes,
+        deleteRecipe,
+        recipeResults,
+        isLoading,
+        setIsLoading,
+        usersRecipes,
+        setUsersRecipes,
+      }}
     >
       {children}
     </AppContext.Provider>
