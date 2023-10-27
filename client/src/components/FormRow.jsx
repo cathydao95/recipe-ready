@@ -1,4 +1,4 @@
-const FormRow = ({ type, name, labelText, handleInput }) => {
+const FormRow = ({ type, name, labelText, handleInput, value }) => {
   return (
     <div className="formRow">
       <input
@@ -10,6 +10,7 @@ const FormRow = ({ type, name, labelText, handleInput }) => {
         placeholder={labelText || name}
         required
         onChange={handleInput}
+        value={value}
       />
     </div>
   );

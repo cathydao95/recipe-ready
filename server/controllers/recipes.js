@@ -100,9 +100,18 @@ export const editRecipe = async (req, res) => {
   const { id } = req.params;
   const { title, ingredients, instructions, prep_time, image_url } = req.body;
 
+  console.log(req.body);
+  let ingredientsArray = ingredients;
+  if (!Array.isArray(ingredients)) {
+    ingredientsArray = ingredients
+      .split(",")
+      .map((ingredient) => ingredient.trim());
+  }
+  const ingredientsString = `{${ingredientsArray.join(",")}}`;
+
   const { rows: updatedRecipe } = await db.query(
     "UPDATE recipes SET (title, ingredients, instructions, prep_time, image_url) = ($1, $2, $3, $4, $5) WHERE id = $6 RETURNING *",
-    [title, ingredients, instructions, prep_time, image_url, id]
+    [title, ingredientsString, instructions, prep_time, image_url, id]
   );
 
   res.status(StatusCodes.OK).json({

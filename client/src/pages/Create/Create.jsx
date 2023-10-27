@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FormRow } from "../../components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,13 +8,19 @@ import uploadImg from "../../assets/upload-img.svg";
 
 const Create = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
+  const { isEditing, currentRecipeInfo } = state || {};
+
   const [recipeInfo, setRecipeInfo] = useState({
-    title: "",
-    ingredients: "",
-    instructions: "",
-    prep_time: "",
-    image_url: "",
+    title: currentRecipeInfo?.title || "",
+    ingredients: currentRecipeInfo?.ingredients || "",
+    instructions: currentRecipeInfo?.instructions || "",
+    prep_time: currentRecipeInfo?.prep_time || "",
+    image_url: currentRecipeInfo?.image_url || "",
   });
+
+  console.log(isEditing, currentRecipeInfo);
 
   const uploadRecipeImage = async (file) => {
     try {
@@ -38,7 +44,6 @@ const Create = () => {
           image_url: data.secure_url,
         }));
       }
-      console.log(data);
     } catch (error) {
       console.error("Image upload failed:", error);
       toast.error("Failed to upload image");
@@ -56,12 +61,20 @@ const Create = () => {
   };
 
   console.log(recipeInfo);
-
   const createRecipe = async (e) => {
     e.preventDefault();
+    let url;
+    let method;
+    if (isEditing) {
+      url = `http://localhost:8080/api/v1/recipes/${currentRecipeInfo.id}`;
+      method = "PUT";
+    } else {
+      url = "http://localhost:8080/api/v1/recipes";
+      method = "POST";
+    }
     try {
-      let response = await fetch("http://localhost:8080/api/v1/recipes", {
-        method: "POST",
+      let response = await fetch(url, {
+        method,
         headers: {
           "Content-type": "application/JSON",
         },
@@ -69,7 +82,7 @@ const Create = () => {
         body: JSON.stringify(recipeInfo),
       });
 
-      console.log(recipeInfo, "for body");
+      console.log(response);
       if (response.ok) {
         let { msg } = await response.json();
         toast.success(msg);
@@ -85,12 +98,18 @@ const Create = () => {
     }
   };
 
-  // console.log(recipeInfo);
   return (
     <div className="pageWrapper">
-      <h1 className="title">Create New Recipe</h1>
+      <h1 className="title">
+        {isEditing && currentRecipeInfo ? "Edit Recipe" : "Create New Recipe"}
+      </h1>
       <form className="form">
-        <FormRow type="text" name="title" handleInput={handleInput} />
+        <FormRow
+          type="text"
+          name="title"
+          value={recipeInfo.title}
+          handleInput={handleInput}
+        />
 
         <div className={styles.imgInputContainer}>
           <img
@@ -109,12 +128,23 @@ const Create = () => {
           />
         </div>
 
-        <FormRow type="text" name="ingredients" handleInput={handleInput} />
-        <FormRow type="text" name="instructions" handleInput={handleInput} />
+        <FormRow
+          type="text"
+          name="ingredients"
+          value={recipeInfo.ingredients}
+          handleInput={handleInput}
+        />
+        <FormRow
+          type="text"
+          name="instructions"
+          value={recipeInfo.instructions}
+          handleInput={handleInput}
+        />
         <FormRow
           type="number"
           name="prep_time"
           labelText="prep time (in minutes)"
+          value={recipeInfo.prep_time}
           handleInput={handleInput}
         />
 
