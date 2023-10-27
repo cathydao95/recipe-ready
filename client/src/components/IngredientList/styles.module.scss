@@ -1,0 +1,16 @@
+.listContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  text-align: left;
+}
+
+.category {
+  text-align: center;
+}
+
+.ingItem {
+  text-transform: capitalize;
+  padding: 0 0.5rem;
+  text-align: left;
+}
