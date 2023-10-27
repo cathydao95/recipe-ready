@@ -1,6 +1,8 @@
 import "express-async-errors";
 import express, { urlencoded } from "express";
 import cors from "cors";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 import "dotenv/config";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
@@ -29,6 +31,8 @@ cloudinary.config({
 });
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "build");
+app.use(express.static(REACT_BUILD_DIR));
 
 // Middleware
 app.use(

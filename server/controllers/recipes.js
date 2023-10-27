@@ -1,7 +1,7 @@
 import db from "../db/db-connection.js";
 import "dotenv/config";
 import { StatusCodes } from "http-status-codes";
-import { NotFoundError } from "../errors/customErrors.js";
+import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
 import fs from "fs/promises";
 import cloudinary from "cloudinary";
 
@@ -35,6 +35,8 @@ export const getRecipes = async (req, res) => {
 
 export const getRecipe = async (req, res) => {
   const { id } = req.params;
+  if (!id || isNaN(id))
+    throw new BadRequestError('Invalid or missing "id" parameter');
 
   const { rows: recipe } = await db.query("SELECT * FROM recipes WHERE id=$1", [
     id,
@@ -138,7 +140,7 @@ export const getRecipeNutrition = async (req, res) => {
 
     if (!response.ok) {
       return res
-        .status(StatusCodes.BAD_REQUEST)
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ error: "Failed to fetch nutrition data" });
     }
 
