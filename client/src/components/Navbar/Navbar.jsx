@@ -33,13 +33,15 @@ const Navbar = () => {
         >
           <FaAlignLeft />
         </button>
-        <NavLink to="/recipes">
+        <NavLink to="/dashboard">
           <h4 className={styles.logo}>Recipe Ready</h4>
         </NavLink>
         <div className={styles.btnContainer}>Logout</div>
       </div>
       <div className={styles.bigNavItems}>
-        <h4 className={styles.logo}>Recipe Ready</h4>
+        <NavLink to="/dashboard">
+          <h4 className={styles.logo}>Recipe Ready</h4>
+        </NavLink>
         <div className={styles.linksContainer}>
           <div className={styles.link}>
             <button className={styles.dropBtn}>Explore</button>

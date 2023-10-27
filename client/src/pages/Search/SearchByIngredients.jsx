@@ -1,31 +1,24 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { IngredientList } from "../../components";
 import clsx from "clsx";
+import { useAppContext } from "../../context/appContext";
 
 const SearchByIngredients = () => {
+  const navigate = useNavigate();
+  const { getRecipes, recipeResults, setIsLoading } = useAppContext();
   const [selectedIngredients, setSelectedIngredients] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
 
-  const searchRecipesByIng = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/v1/recipes?ingredients=${selectedIngredients.join(
-          ","
-        )}`,
-        { credentials: "include" }
-      );
-      if (response.ok) {
-        const {
-          data: { recipes },
-        } = await response.json();
-        console.log(recipes);
-        setSearchResults(recipes);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    navigate("/dashboard/results", {
+      state: { ingredients: selectedIngredients },
+    });
+    setIsLoading(true);
   };
+
+  console.log(recipeResults);
+
   return (
     <div className={clsx("wrapper")}>
       <h2>What Ingredients Do You Have?</h2>
@@ -37,7 +30,7 @@ const SearchByIngredients = () => {
             selectedIngredients={selectedIngredients}
             setSelectedIngredients={setSelectedIngredients}
           />
-          <button onClick={searchRecipesByIng}>Search For Recipes</button>
+          <button onClick={(e) => handleSubmit(e)}>Search For Recipes</button>
         </form>
       </div>
     </div>
