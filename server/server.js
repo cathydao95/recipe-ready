@@ -28,8 +28,7 @@ cloudinary.config({
 });
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "build");
-console.log("React build directory:", REACT_BUILD_DIR);
+const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "dist");
 app.use(express.static(REACT_BUILD_DIR));
 
 // Middleware
@@ -39,7 +38,7 @@ app.use(
     credentials: true, // To allow cookies and credentials
   })
 );
-// app.use(express.static(path.resolve(__dirname, "index.html")));
+
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -50,12 +49,6 @@ app.use("/api/v1/recipes", authenticateUser, recipeRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", usersRouter);
 
-// creates an endpoint for the route /api
-app.get("/", (req, res) => {
-  //res.json({ message: 'Hello from My template ExpressJS' });
-  res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
-});
-
 // Not found middleware (404 - triggered when request is made to a nonexistant route)
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "not found" });
@@ -63,6 +56,12 @@ app.use("*", (req, res) => {
 
 // Error handling middleware
 app.use(errorHandlerMiddleware);
+
+// creates an endpoint for the route /api
+app.get("*", (req, res) => {
+  // res.json({ message: "Hola, from My template ExpressJS with React-Vite" });
+  res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
+});
 
 app.listen(PORT, () =>
   console.log(`Server running on Port http://localhost:${PORT}`)
