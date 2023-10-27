@@ -15,7 +15,7 @@ import usersRouter from "./routers/users.js";
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 import authenticateUser from "./middleware/authenticateMiddleware.js";
 
-// Constantss
+// Constants
 const PORT = process.env.PORT || 8080;
 const ORIGIN = "http://localhost:5173";
 
@@ -38,7 +38,7 @@ app.use(
     credentials: true, // To allow cookies and credentials
   })
 );
-app.use(express.static(path.resolve(__dirname, "./public")));
+// app.use(express.static(path.resolve(__dirname, "index.html")));
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -48,6 +48,12 @@ app.use(express.json());
 app.use("/api/v1/recipes", authenticateUser, recipeRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", usersRouter);
+
+// creates an endpoint for the route /api
+app.get("/", (req, res) => {
+  //res.json({ message: 'Hello from My template ExpressJS' });
+  res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
+});
 
 // Not found middleware (404 - triggered when request is made to a nonexistant route)
 app.use("*", (req, res) => {
