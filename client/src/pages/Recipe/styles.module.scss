@@ -1,0 +1,44 @@
+.recipeWrapper {
+  background-color: var(--clr-primary-8);
+}
+
+.imgContainer {
+  width: 100%;
+}
+
+.img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.recipeInfoContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.recipeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ingContainer {
+  text-align: left;
+}
+
+.ing {
+  margin-bottom: 0.5rem;
+}
+
+.instructionsContainer {
+  text-align: left;
+}
+
+.instructionsList {
+  margin: 0 1rem;
+}
+
+.instruction {
+  padding: 0 0.5rem 0.5rem;
+}
