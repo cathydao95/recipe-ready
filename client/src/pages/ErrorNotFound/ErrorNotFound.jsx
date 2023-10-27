@@ -3,7 +3,7 @@ import img from "../../assets/not-found.svg";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 
-const Error = () => {
+const ErrorNotFound = () => {
   const error = useRouteError();
 
   if (error.status === 404) {
@@ -32,4 +32,4 @@ const Error = () => {
   }
 };
 
-export default Error;
+export default ErrorNotFound;
