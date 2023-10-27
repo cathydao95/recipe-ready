@@ -50,9 +50,9 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", usersRouter);
 
 // Not found middleware (404 - triggered when request is made to a nonexistant route)
-app.use("*", (req, res) => {
-  res.status(404).json({ msg: "not found" });
-});
+// app.use("*", (req, res) => {
+//   res.status(404).json({ msg: "not found" });
+// });
 
 // Error handling middleware
 app.use(errorHandlerMiddleware);
