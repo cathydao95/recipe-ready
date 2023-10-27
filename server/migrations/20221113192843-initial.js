@@ -1,10 +1,11 @@
 "use strict";
 
+import fs from "fs";
+import path from "path";
+
 var dbm;
 var type;
 var seed;
-var fs = require("fs");
-var path = require("path");
 var Promise;
 
 /**
