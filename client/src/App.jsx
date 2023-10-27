@@ -5,7 +5,7 @@ import {
   Landing,
   Register,
   Login,
-  Error,
+  ErrorNotFound,
   Results,
   SearchByIngredients,
   Recipe,
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout />,
-    errorElement: <Error />,
+    errorElement: <ErrorNotFound />,
     children: [
       { index: true, element: <Landing /> },
       { path: "register", element: <Register /> },
