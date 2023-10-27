@@ -20,41 +20,6 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
-
---
--- Name: migrations; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.migrations (
-    id integer NOT NULL,
-    name character varying(255) NOT NULL,
-    run_on timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.migrations OWNER TO postgres;
-
---
--- Name: migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.migrations_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.migrations_id_seq OWNER TO postgres;
-
---
--- Name: migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.migrations_id_seq OWNED BY public.migrations.id;
-
 --
 -- Name: recipes; Type: TABLE; Schema: public; Owner: tpl1122_1
 --
@@ -162,8 +127,8 @@ COPY public.recipes (id, title, ingredients, instructions, prep_time, image_url,
 9	Mock Recipe 9	{chicken,rice,"soy sauce",broccoli}	1. Cook chicken. 2. Cook rice. 3. Add soy sauce and broccoli. 4. Combine all ingredients.	20	https://res.cloudinary.com/dnu4wptmg/image/upload/v1675149363/recipe-image/tmp-1-1675149361908_imoboq.jpg	\N	t
 10	Mock Recipe 10	{salmon,dill,lemon,couscous}	1. Grill salmon with dill and lemon. 2. Serve with couscous.	40	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150168/recipe-image/tmp-3-1675150167278_rtbur4.jpg	\N	t
 11	TEST FOR CATHY	{"Chicken Breast","Mixed Greens",Tomatoes,Cucumbers,"Balsamic Vinaigrette"}	1. Grill chicken until fully cooked. 2. Slice chicken into strips. 3. Toss mixed greens, tomatoes, and cucumbers. 4. Top with grilled chicken. 5. Drizzle with balsamic vinaigrette.	25	https://res.cloudinary.com/dnu4wptmg/image/upload/v1675149363/recipe-image/tmp-1-1675149361908_imoboq.jpg	6	f
-25	test2	{xc}	xc	4	https://res.cloudinary.com/dnu4wptmg/image/upload/v1698385398/recipe-image/hand-drawn-healthy-food-landing-page_23-2149080874_xlebmb.jpg	1	f
 24	beef burger	{asdasd,asd}	1. Grill chicken until fully cooked. 2. Slice chicken into strips. 3. Toss mixed greens, tomatoes, and cucumbers. 4. Top with grilled chicken. 5. Drizzle with balsamic vinaigrette.	25	https://res.cloudinary.com/dnu4wptmg/image/upload/v1675149363/recipe-image/tmp-1-1675149361908_imoboq.jpg	1	f
+25	This works!	{YAY}	YAY	24	https://res.cloudinary.com/dnu4wptmg/image/upload/v1698385398/recipe-image/hand-drawn-healthy-food-landing-page_23-2149080874_xlebmb.jpg	1	f
 \.
 
 
@@ -195,13 +160,6 @@ SELECT pg_catalog.setval('public.recipes_id_seq', 28, true);
 SELECT pg_catalog.setval('public.users_id_seq', 6, true);
 
 
-
---
--- Name: migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.migrations_id_seq', 1, true);
-
 --
 -- Name: recipes recipes_pkey; Type: CONSTRAINT; Schema: public; Owner: tpl1122_1
 --
@@ -224,14 +182,6 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.recipes
     ADD CONSTRAINT recipes_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: migrations migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.migrations
-    ADD CONSTRAINT migrations_pkey PRIMARY KEY (id);
 
 
 --
