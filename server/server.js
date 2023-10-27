@@ -6,6 +6,10 @@ import { fileURLToPath } from "url";
 import "dotenv/config";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import cloudinary from "cloudinary";
+
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 
 //CUSTOM IMPORTS
 import recipeRouter from "./routers/recipes.js";
@@ -14,11 +18,19 @@ import usersRouter from "./routers/users.js";
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 import authenticateUser from "./middleware/authenticateMiddleware.js";
 
-// Constants
+// Constantss
 const PORT = process.env.PORT || 8080;
 const ORIGIN = "http://localhost:5173";
 
 const app = express();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -32,6 +44,7 @@ app.use(
     credentials: true, // To allow cookies and credentials
   })
 );
+app.use(express.static(path.resolve(__dirname, "./public")));
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

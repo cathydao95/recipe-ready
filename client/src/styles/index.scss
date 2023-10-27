@@ -24,6 +24,8 @@ Variables
   --clr-primary-gold: #ffbd5a;
 }
 
+// font-family: 'Inter', sans-serif;
+// font-family: 'Poppins', sans-serif;
 *,
 ::after,
 ::before {
@@ -174,6 +176,32 @@ button {
 
 .formAlert {
   color: var(--clr-dark-red);
+}
+
+// RECIPE
+
+.imgContainer {
+  position: relative;
+}
+
+.bookmarkIcon {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  background-color: var(--clr-primary-10);
+  color: var(--clr-primary-4);
+  padding: 0.5rem;
+  z-index: 1;
+  border-radius: 10px;
+}
+
+.prepTime {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 @media (min-width: 481px) {
