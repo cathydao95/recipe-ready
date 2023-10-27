@@ -8,9 +8,6 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cloudinary from "cloudinary";
 
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
-
 //CUSTOM IMPORTS
 import recipeRouter from "./routers/recipes.js";
 import authRouter from "./routers/auth.js";
