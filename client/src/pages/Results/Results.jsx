@@ -37,10 +37,10 @@ const Results = () => {
   //   }
   // };
 
-  useEffect(() => {
-    getRecipes();
-    // getCurrentUser();
-  }, []);
+  // useEffect(() => {
+  //   getRecipes();
+  //   // getCurrentUser();
+  // }, []);
   return isLoading ? (
     <Loading />
   ) : (
