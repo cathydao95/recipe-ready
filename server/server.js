@@ -5,6 +5,10 @@ import "dotenv/config";
 import morgan from "morgan";
 
 const app = express();
+
+const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "build");
+app.use(express.static(REACT_BUILD_DIR));
+
 const PORT = process.env.PORT || 8080;
 
 app.use(cors());
