@@ -5,6 +5,7 @@ import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
 import fs from "fs/promises";
 import cloudinary from "cloudinary";
 
+// GET RECIPES BASED ON INGREDIENTS OR KEYWORD
 export const getRecipes = async (req, res) => {
   const { ingredients, keyword } = req.query;
 
@@ -13,6 +14,7 @@ export const getRecipes = async (req, res) => {
 
   if (ingredients) {
     const ingredientsArray = ingredients.split(",");
+    // @> compares the arrays and ensures that all ingredients in the DB are contained in the ingredientsArray
     queryText += " WHERE $1::text[] @> ingredients";
     queryParams = [ingredientsArray];
   }
@@ -33,6 +35,7 @@ export const getRecipes = async (req, res) => {
   res.status(StatusCodes.OK).json(response);
 };
 
+// GET SINGLE RECIPE
 export const getRecipe = async (req, res) => {
   const { id } = req.params;
   if (!id || isNaN(id))
@@ -50,6 +53,7 @@ export const getRecipe = async (req, res) => {
   });
 };
 
+// GET ALL OF THE LOGGED IN USER'S RECIPES
 export const getUsersRecipes = async (req, res) => {
   const { userId } = req.user;
   const { rows: recipes } = await db.query(
@@ -63,6 +67,7 @@ export const getUsersRecipes = async (req, res) => {
   });
 };
 
+// CREATE A NEW RECIPE
 export const createRecipe = async (req, res) => {
   const { userId } = req.user;
   const { title, ingredients, instructions, prep_time, image_url } = req.body;
@@ -96,6 +101,7 @@ export const createRecipe = async (req, res) => {
   });
 };
 
+// EDIT A RECIPE
 export const editRecipe = async (req, res) => {
   const { id } = req.params;
   const { title, ingredients, instructions, prep_time, image_url } = req.body;
@@ -120,6 +126,7 @@ export const editRecipe = async (req, res) => {
   });
 };
 
+// DELETE A RECIPE
 export const deleteRecipe = async (req, res) => {
   const { id } = req.params;
 
