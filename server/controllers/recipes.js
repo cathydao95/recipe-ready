@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
 import fs from "fs/promises";
 import cloudinary from "cloudinary";
+import { prepareIngredients } from "../utils/recipeUtils.js";
 
 // GET RECIPES BASED ON INGREDIENTS OR KEYWORD
 export const getRecipes = async (req, res) => {
@@ -75,13 +76,7 @@ export const createRecipe = async (req, res) => {
   const user_id = userId ? userId : null;
   const public_recipe = user_id !== null && false;
 
-  let ingredientsArray = ingredients;
-  if (!Array.isArray(ingredients)) {
-    ingredientsArray = ingredients
-      .split(",")
-      .map((ingredient) => ingredient.trim());
-  }
-  const ingredientsString = `{${ingredientsArray.join(",")}}`;
+  const ingredientsString = prepareIngredients(ingredients);
 
   const { rows: newRecipe } = await db.query(
     "INSERT INTO recipes (title, ingredients, instructions, prep_time, image_url, user_id, public_recipe) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
@@ -107,13 +102,7 @@ export const editRecipe = async (req, res) => {
   const { title, ingredients, instructions, prep_time, image_url } = req.body;
 
   console.log(req.body);
-  let ingredientsArray = ingredients;
-  if (!Array.isArray(ingredients)) {
-    ingredientsArray = ingredients
-      .split(",")
-      .map((ingredient) => ingredient.trim());
-  }
-  const ingredientsString = `{${ingredientsArray.join(",")}}`;
+  const ingredientsString = prepareIngredients(ingredients);
 
   const { rows: updatedRecipe } = await db.query(
     "UPDATE recipes SET (title, ingredients, instructions, prep_time, image_url) = ($1, $2, $3, $4, $5) WHERE id = $6 RETURNING *",
@@ -137,6 +126,57 @@ export const deleteRecipe = async (req, res) => {
   });
 };
 
+// BOOKMARK RECIPE
+export const bookmarkRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.user;
+
+  try {
+    const { rows: existingBookmark } = await db.query(
+      "SELECT * FROM bookmarked WHERE user_id = $1 AND recipe_id = $2",
+      [userId, id]
+    );
+    if (existingBookmark.length > 0) {
+      await db.query(
+        "DELETE FROM bookmarked WHERE user_id = $1 AND recipe_id = $2",
+        [userId, id]
+      );
+      const { rows: updatedBookmarks } = await db.query(
+        "SELECT * FROM bookmarked WHERE user_id = $1",
+        [userId]
+      );
+
+      res.status(StatusCodes.OK).json({
+        status: "success",
+        message: "Recipe removed from bookmarks",
+        data: { bookmarks: updatedBookmarks },
+      });
+    } else {
+      await db.query(
+        "INSERT INTO bookmarked (user_id, recipe_id) VALUES ($1, $2)",
+        [userId, id]
+      );
+
+      const { rows: updatedBookmarks } = await db.query(
+        "SELECT * FROM bookmarked WHERE user_id = $1",
+        [userId]
+      );
+
+      res.status(StatusCodes.CREATED).json({
+        status: "success",
+        message: "Recipe added to bookmarks",
+        data: { bookmarks: updatedBookmarks },
+      });
+    }
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      status: "error",
+      message: "Something went wrong",
+    });
+  }
+};
+
+// GET RECIPE NUTRITION
 export const getRecipeNutrition = async (req, res) => {
   try {
     const { id } = req.params;
