@@ -8,7 +8,7 @@ const AppProvider = ({ children }) => {
   const [recipeResults, setRecipeResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [usersRecipes, setUsersRecipes] = useState([]);
-
+  const [usersBookmarked, setUsersBookmarked] = useState([]);
   const getRecipes = async (ingredients, keyword) => {
     try {
       let queryParam = "";
@@ -20,8 +20,6 @@ const AppProvider = ({ children }) => {
       if (keyword && keyword !== "") {
         queryParam += `?keyword=${keyword}`;
       }
-
-      console.log(queryParam);
 
       const response = await fetch(
         `http://localhost:8080/api/v1/recipes${queryParam}`,
@@ -36,6 +34,49 @@ const AppProvider = ({ children }) => {
         } = await response.json();
         setRecipeResults(recipes);
         setIsLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getBookmarkedRecipes = async () => {
+    try {
+      let response = await fetch(
+        "http://localhost:8080/api/v1/recipes/bookmark",
+        {
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const {
+          data: { bookmarks },
+        } = await response.json();
+        setUsersBookmarked(bookmarks);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const bookmarkRecipe = async (id) => {
+    try {
+      let response = await fetch(
+        `http://localhost:8080/api/v1/recipes/bookmark/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/JSON",
+          },
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        const {
+          data: { bookmarks },
+        } = await response.json();
+        setUsersBookmarked(bookmarks);
       }
     } catch (error) {
       console.error(error);
@@ -72,6 +113,9 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    getBookmarkedRecipes();
+  }, []);
   return (
     <AppContext.Provider
       value={{
@@ -82,6 +126,9 @@ const AppProvider = ({ children }) => {
         setIsLoading,
         usersRecipes,
         setUsersRecipes,
+        bookmarkRecipe,
+        usersBookmarked,
+        setUsersBookmarked,
       }}
     >
       {children}

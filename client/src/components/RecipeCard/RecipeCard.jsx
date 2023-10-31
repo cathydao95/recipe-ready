@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import { useState } from "react";
-import { FaRegClock, FaRegBookmark, FaRegTrashAlt } from "react-icons/fa";
+import { FaRegClock, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { NavLink, useNavigate } from "react-router-dom";
 import clsx from "clsx";
@@ -10,21 +10,27 @@ import Modal from "react-bootstrap/Modal";
 const RecipeCard = ({ recipe }) => {
   const { id, title, prep_time, user_id, image_url } = recipe;
   const navigate = useNavigate();
-  const { deleteRecipe } = useAppContext();
+  const { deleteRecipe, bookmarkRecipe, usersBookmarked } = useAppContext();
+  console.log("users bk", usersBookmarked);
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // When delete button clicked, call deleteRecipe functio and navigate to new screen
   const handleDelete = async (e, id) => {
-    e.preventDefault();
     const { success } = await deleteRecipe(id);
     if (success) {
       navigate("/dashboard/my-recipes");
     }
   };
 
+  const isBookmarked = usersBookmarked.some(
+    (bookmarkedRecipe) => bookmarkedRecipe.recipe_id === id
+  );
+
+  console.log(isBookmarked);
   return (
     <>
       <NavLink to={`/dashboard/${id}`}>
@@ -62,9 +68,14 @@ const RecipeCard = ({ recipe }) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
+                  bookmarkRecipe(id);
                 }}
               >
-                <FaRegBookmark />
+                {isBookmarked ? (
+                  <FaBookmark className={styles.bookmarkedIcon} />
+                ) : (
+                  <FaRegBookmark />
+                )}
               </button>
             </div>
           </div>
