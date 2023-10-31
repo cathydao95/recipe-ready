@@ -130,7 +130,9 @@ export const deleteRecipe = async (req, res) => {
 export const getUsersBookmarked = async (req, res) => {
   const { userId } = req.user;
   const { rows: bookmarks } = await db.query(
-    "SELECT * FROM bookmarked WHERE user_id = $1",
+    `SELECT recipes.* FROM bookmarked
+       JOIN recipes ON bookmarked.recipe_id = recipes.id
+       WHERE bookmarked.user_id = $1`,
     [userId]
   );
   res.status(StatusCodes.OK).json({
@@ -155,7 +157,9 @@ export const bookmarkRecipe = async (req, res) => {
         [userId, id]
       );
       const { rows: updatedBookmarks } = await db.query(
-        "SELECT * FROM bookmarked WHERE user_id = $1",
+        `SELECT recipes.* FROM bookmarked
+       JOIN recipes ON bookmarked.recipe_id = recipes.id
+       WHERE bookmarked.user_id = $1`,
         [userId]
       );
 
@@ -171,7 +175,9 @@ export const bookmarkRecipe = async (req, res) => {
       );
 
       const { rows: updatedBookmarks } = await db.query(
-        "SELECT * FROM bookmarked WHERE user_id = $1",
+        `SELECT recipes.* FROM bookmarked
+       JOIN recipes ON bookmarked.recipe_id = recipes.id
+       WHERE bookmarked.user_id = $1`,
         [userId]
       );
 
