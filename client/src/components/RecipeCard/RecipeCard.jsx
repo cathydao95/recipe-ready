@@ -27,7 +27,7 @@ const RecipeCard = ({ recipe }) => {
   };
 
   const isBookmarked = usersBookmarked.some(
-    (bookmarkedRecipe) => bookmarkedRecipe.recipe_id === id
+    (bookmarkedRecipe) => bookmarkedRecipe.id === id
   );
 
   console.log(isBookmarked);

@@ -6,10 +6,6 @@ import { useLocation } from "react-router-dom";
 const Bookmarked = () => {
   const { isLoading, setIsLoading, usersBookmarked } = useAppContext();
 
-  useEffect(() => {
-    setIsLoading(true);
-  }, []);
-
   return isLoading ? (
     <Loading />
   ) : (

@@ -1,3 +1,18 @@
+.noRecipesContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.imgContainer {
+  height: 400px;
+}
+
+.img {
+  object-fit: contain;
+  height: 100%;
+}
+
 .recipesContainer {
   display: grid;
   grid-template-columns: repeat(250px, 1fr);
@@ -5,6 +20,10 @@
 }
 
 @media (min-width: 600px) {
+  .imgContainer {
+    height: 550px;
+  }
+
   .recipesContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

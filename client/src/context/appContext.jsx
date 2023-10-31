@@ -53,6 +53,7 @@ const AppProvider = ({ children }) => {
           data: { bookmarks },
         } = await response.json();
         setUsersBookmarked(bookmarks);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);

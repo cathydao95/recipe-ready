@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import { Loading } from "../../components";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
-import { FaRegClock, FaRegBookmark } from "react-icons/fa";
+import { FaRegClock, FaRegBookmark, FaRegTrashAlt } from "react-icons/fa";
 import { useAppContext } from "../../context/appContext";
 
 const Recipe = () => {
-  const { setIsLoading, isLoading } = useAppContext();
+  const { setIsLoading, isLoading, deleteRecipe } = useAppContext();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [recipeNutrition, setRecipeNutrition] = useState();
   const [recipeInfo, setRecipeInfo] = useState([]);
   const [showNutrition, setShowNutrition] = useState(false);
+  const [recipeNotFound, setRecipeNotFound] = useState(false);
 
+  // Get information for recipe using id
   const getRecipe = async () => {
     try {
       const response = await fetch(
@@ -22,6 +25,10 @@ const Recipe = () => {
           credentials: "include",
         }
       );
+      if (response.status === 404) {
+        setRecipeNotFound(true);
+        setIsLoading(false);
+      }
 
       if (response.ok) {
         const {
@@ -37,31 +44,46 @@ const Recipe = () => {
     }
   };
 
-  console.log(recipeInfo, "recipeinfooo");
-  // const getRecipeNutrition = async (recipeId) => {
-  //   let url = `http://localhost:8080/api/v1/recipes/${id}/nutrition`;
-  //   console.log(url);
-  //   try {
-  //     const response = await fetch(url);
+  // When delete button is clicked, call deleteRecipe function and navigate to new screen
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    const { success } = await deleteRecipe(id);
+    if (success) {
+      navigate("/dashboard/my-recipes");
+    }
+  };
 
-  //     if (response.ok) {
-  //       const {
-  //         data: { recipeNutrition },
-  //       } = await response.json();
-  //       setRecipeNutrition(recipeNutrition);
-  //       setShowNutrition(true);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  // Get the nutrition for the recipe
+  const getRecipeNutrition = async (recipeId) => {
+    let url = `http://localhost:8080/api/v1/recipes/${id}/nutrition`;
+    console.log(url);
+    try {
+      const response = await fetch(url, {
+        credentials: "include",
+      });
 
+      if (response.ok) {
+        const {
+          data: { recipeNutrition },
+        } = await response.json();
+        setRecipeNutrition(recipeNutrition);
+        setShowNutrition(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Run get recipe function when page renders
   useEffect(() => {
     getRecipe();
   }, []);
 
+  console.log(recipeInfo);
   return isLoading ? (
     <Loading />
+  ) : recipeNotFound ? (
+    <h1>Recipe Not Found</h1>
   ) : (
     recipeInfo.id && (
       <div className={clsx(styles.recipeWrapper, "wrapper")}>
@@ -71,7 +93,15 @@ const Recipe = () => {
             src={recipeInfo.image_url}
             alt={recipeInfo.title}
           />
-          <div className="bookmarkIcon">
+          {recipeInfo.user_id && recipeInfo.user_id !== null && (
+            <div
+              className="icon trashIcon"
+              onClick={(e) => handleDelete(e, id)}
+            >
+              <FaRegTrashAlt />
+            </div>
+          )}
+          <div className="icon bookmarkIcon">
             <FaRegBookmark />
           </div>
         </div>
