@@ -8,6 +8,7 @@ import {
   getRecipeNutrition,
   getUsersRecipes,
   uploadRecipeImage,
+  bookmarkRecipe,
 } from "../controllers/recipes.js";
 import {
   validateRecipeInput,
@@ -26,6 +27,7 @@ router.route("/upload").post(upload.single("file"), uploadRecipeImage);
 router
   .route("/:id")
   .get(getRecipe)
+  .post(bookmarkRecipe)
   .put(validateRecipeInput, validateOwner, editRecipe)
   .delete(validateOwner, deleteRecipe);
 
