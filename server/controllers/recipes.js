@@ -126,6 +126,19 @@ export const deleteRecipe = async (req, res) => {
   });
 };
 
+// GET USERS BOOKMARKS
+export const getUsersBookmarked = async (req, res) => {
+  const { userId } = req.user;
+  const { rows: bookmarks } = await db.query(
+    "SELECT * FROM bookmarked WHERE user_id = $1",
+    [userId]
+  );
+  res.status(StatusCodes.OK).json({
+    status: "success",
+    results: bookmarks.length,
+    data: { bookmarks },
+  });
+};
 // BOOKMARK RECIPE
 export const bookmarkRecipe = async (req, res) => {
   const { id } = req.params;

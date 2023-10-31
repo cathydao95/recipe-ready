@@ -8,6 +8,7 @@ import {
   getRecipeNutrition,
   getUsersRecipes,
   uploadRecipeImage,
+  getUsersBookmarked,
   bookmarkRecipe,
 } from "../controllers/recipes.js";
 import {
@@ -20,6 +21,10 @@ const router = Router();
 
 router.route("/").get(getRecipes).post(validateRecipeInput, createRecipe);
 
+router.route("/bookmark").get(getUsersBookmarked);
+
+router.route("/bookmark/:id").post(bookmarkRecipe);
+
 router.route("/userRecipes").get(getUsersRecipes);
 
 router.route("/upload").post(upload.single("file"), uploadRecipeImage);
@@ -27,7 +32,6 @@ router.route("/upload").post(upload.single("file"), uploadRecipeImage);
 router
   .route("/:id")
   .get(getRecipe)
-  .post(bookmarkRecipe)
   .put(validateRecipeInput, validateOwner, editRecipe)
   .delete(validateOwner, deleteRecipe);
 
