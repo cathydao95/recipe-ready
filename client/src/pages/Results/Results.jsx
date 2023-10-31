@@ -19,12 +19,14 @@ const Results = () => {
     getRecipes(selectedIngredients, keyword);
   }, []);
 
-  console.log(recipeResults);
-
   return isLoading ? (
     <Loading />
   ) : (
-    <ResultsLayout recipes={recipeResults} title="Recipe Results" />
+    <ResultsLayout
+      recipes={recipeResults}
+      title="Recipe Results"
+      name="searchResults"
+    />
   );
 };
 

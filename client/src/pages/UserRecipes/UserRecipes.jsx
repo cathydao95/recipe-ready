@@ -27,7 +27,6 @@ const UserRecipes = () => {
       console.error(error);
     }
   };
-  console.log(isLoading);
 
   useEffect(() => {
     setIsLoading(true);
