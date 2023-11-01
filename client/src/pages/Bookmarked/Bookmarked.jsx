@@ -4,15 +4,14 @@ import { useAppContext } from "../../context/appContext";
 import { useLocation } from "react-router-dom";
 
 const Bookmarked = () => {
-  const { isLoading, setIsLoading, usersBookmarked } = useAppContext();
+  const { isLoading, usersBookmarked } = useAppContext();
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     <ResultsLayout
       recipes={usersBookmarked}
       title="Bookmarked Recipes"
       page="bookmarked"
+      isLoading={isLoading}
     />
   );
 };

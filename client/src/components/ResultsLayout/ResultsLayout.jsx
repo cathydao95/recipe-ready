@@ -1,26 +1,20 @@
+import { useEffect } from "react";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import { BsBookmarkPlus } from "react-icons/bs";
 import cooking from "../../assets/cooking.svg";
+import Loading from "../Loading/Loading";
 
-const ResultsLayout = ({ recipes, title, page }) => {
-  console.log("testest", recipes);
-
-  const displayRecipes = () => {
-    return recipes.map((recipe, index) => (
-      <RecipeCard key={recipe.id} recipe={recipe} />
-    ));
-  };
-
-  const displayEmptyPage = () => {
+const ResultsLayout = ({ recipes, title, page, isLoading }) => {
+  const EmptyPageContent = () => {
     switch (page) {
       case "personal":
         return (
           <div className={styles.noRecipesContainer}>
             <p>You Have Not Created Any Recipes</p>
             <div className={styles.imgContainer}>
-              <img className={styles.img} src={cooking} />
+              <img className={styles.img} src={cooking} alt="Cooking" />
             </div>
           </div>
         );
@@ -39,10 +33,21 @@ const ResultsLayout = ({ recipes, title, page }) => {
         return null;
     }
   };
+
   return (
     <div className={clsx("wrapper")}>
       <h1>{title}</h1>
-      {recipes.length === 0 ? displayEmptyPage() : displayRecipes()}
+      {isLoading ? (
+        <Loading />
+      ) : recipes.length === 0 ? (
+        <EmptyPageContent />
+      ) : (
+        <div className={styles.recipesContainer}>
+          {recipes.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

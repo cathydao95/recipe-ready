@@ -4,8 +4,7 @@ import { useAppContext } from "../../context/appContext";
 import { useLocation } from "react-router-dom";
 
 const Results = () => {
-  const { getRecipes, recipeResults, isLoading, setIsLoading } =
-    useAppContext();
+  const { getRecipes, recipeResults, isLoading } = useAppContext();
   const location = useLocation();
 
   useEffect(() => {
@@ -19,13 +18,12 @@ const Results = () => {
     getRecipes(selectedIngredients, keyword);
   }, []);
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     <ResultsLayout
       recipes={recipeResults}
       title="Recipe Results"
       name="searchResults"
+      isLoading={isLoading}
     />
   );
 };

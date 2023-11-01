@@ -54,7 +54,15 @@ const Navbar = () => {
           <div className={styles.link}>
             <button className={styles.dropBtn}>Collection</button>
             <div className={styles.dropdownContent}>
-              <NavLink to="create">Create New Recipe</NavLink>
+              <NavLink
+                to={{
+                  pathname: "/create",
+                  state: { isEditing: false, currentRecipeInfo: [] },
+                }}
+              >
+                Create New Recipe
+              </NavLink>
+              {/* <NavLink to="create">Create New Recipe</NavLink> */}
               <NavLink to="my-recipes">Personal Recipes</NavLink>
               <NavLink to="bookmarked">Bookmarked Recipes</NavLink>
             </div>

@@ -71,11 +71,19 @@ const RecipeCard = ({ recipe }) => {
                   bookmarkRecipe(id);
                 }}
               >
-                {isBookmarked ? (
+                <FaBookmark
+                  className={clsx(
+                    isBookmarked
+                      ? styles.bookmarkedIcon
+                      : styles.notBookmarkedIcon
+                  )}
+                />
+
+                {/* {isBookmarked ? (
                   <FaBookmark className={styles.bookmarkedIcon} />
                 ) : (
                   <FaRegBookmark />
-                )}
+                )} */}
               </button>
             </div>
           </div>
@@ -112,49 +120,7 @@ const RecipeCard = ({ recipe }) => {
           </button>
         </Modal.Body>
       </Modal>
-      {/* <Modal
-        show={show}
-        onHide={handleClose}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">{title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Delete</Modal.Body>
-        <Modal.Body>Edit</Modal.Body>
-        <Modal.Footer>
-          <button onClick={handleClose}>Close</button>
-        </Modal.Footer>
-      </Modal> */}
     </>
-    // <NavLink to={`/dashboard/${id}`}>
-    //   <div className={styles.recipeCard}>
-    //     <div className={clsx(styles.imgContainer, "imgContainer")}>
-    //       <img className={styles.img} src={image_url} alt={title} />
-    //       {user_id && user_id !== null && (
-    //         <button
-    //           className="icon trashIcon"
-    //           onClick={(e) => handleDelete(e, id)}
-    //         >
-    //           <FaRegTrashAlt />
-    //         </button>
-    //       )}
-    //       <button className="icon bookmarkIcon">
-    //         <FaRegBookmark />
-    //       </button>
-    //     </div>
-
-    //     <div className={styles.recipeInfo}>
-    //       <h5 className={styles.recipeTitle}>{title}</h5>
-    //       <span className="prepTime">
-    //         <FaRegClock />
-    //         {prep_time} min
-    //       </span>
-    //     </div>
-    //   </div>
-    // </NavLink>
   );
 };
 

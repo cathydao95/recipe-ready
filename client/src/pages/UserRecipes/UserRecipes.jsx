@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Loading, ResultsLayout } from "../../components";
 import { useAppContext } from "../../context/appContext";
-import { useLocation } from "react-router-dom";
 
 const UserRecipes = () => {
-  const { isLoading, setIsLoading, usersRecipes, setUsersRecipes } =
-    useAppContext();
+  const { usersRecipes, setUsersRecipes } = useAppContext();
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const getPersonalRecipes = async () => {
     try {
@@ -21,22 +21,25 @@ const UserRecipes = () => {
           data: { recipes },
         } = await response.json();
         setUsersRecipes(recipes);
-        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    setIsLoading(true);
     getPersonalRecipes();
   }, []);
 
-  return isLoading ? (
-    <Loading />
-  ) : (
-    <ResultsLayout recipes={usersRecipes} title="My Recipes" page="personal" />
+  return (
+    <ResultsLayout
+      recipes={usersRecipes}
+      title="My Recipes"
+      page="personal"
+      isLoading={isLoading}
+    />
   );
 };
 
