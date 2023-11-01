@@ -49,18 +49,20 @@ const UserSettings = () => {
       }
     } catch (error) {
       console.error(error);
+      toast.error("An unexpected error occurred");
     }
   };
 
-  console.log(currentUser);
   useEffect(() => {
-    setUpdatedUserInfo({
-      firstName: currentUser[0]?.first_name,
-      lastName: currentUser[0]?.last_name,
-      email: currentUser[0]?.email,
-      password: "",
-    });
-    setIsLoading(false);
+    if (currentUser && currentUser.length > 0) {
+      setUpdatedUserInfo({
+        firstName: currentUser[0]?.first_name || "",
+        lastName: currentUser[0]?.last_name || "",
+        email: currentUser[0]?.email || "",
+        password: "",
+      });
+      setIsLoading(false);
+    }
   }, [currentUser]);
 
   return isLoading ? (
