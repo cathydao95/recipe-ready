@@ -28,6 +28,23 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  // Function to logout User
+  const logOutUser = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/auth/logout", {
+        credentials: "include",
+      });
+
+      // If logout is successful, navigate to landing page and display toast message
+      if (response.ok) {
+        const { msg } = await response.json();
+        toast.success(msg);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // Function to get recipes based on keyword or provided ingredients
   const getRecipes = async (ingredients, keyword) => {
     try {
@@ -158,6 +175,7 @@ const AppProvider = ({ children }) => {
         getBookmarkedRecipes,
         getCurrentUser,
         currentUser,
+        logOutUser,
       }}
     >
       {children}

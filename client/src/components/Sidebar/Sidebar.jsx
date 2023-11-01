@@ -3,10 +3,12 @@ import { NavLink } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
+import { useAppContext } from "../../context/appContext";
 
 const Sidebar = () => {
   // Destrcuture functions from context
   const { showSidebar, toggleSidebar } = useDashboardContext();
+  const { logOutUser } = useAppContext();
   return (
     <div
       className={clsx(
@@ -60,9 +62,9 @@ const Sidebar = () => {
               <NavLink to="profile" onClick={toggleSidebar}>
                 Settings
               </NavLink>
-              <a href="#" onClick={toggleSidebar}>
-                Logout
-              </a>
+              <NavLink to="/">
+                <div onClick={logOutUser}>Logout</div>
+              </NavLink>
             </ul>
           </div>
         </div>

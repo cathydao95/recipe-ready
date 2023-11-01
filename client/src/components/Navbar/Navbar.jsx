@@ -3,29 +3,13 @@ import styles from "./styles.module.scss";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDashboardContext } from "../../pages/Layouts/DashboardLayout";
 import { toast } from "react-toastify";
+import { useAppContext } from "../../context/appContext";
 
 const Navbar = () => {
   // Use context to toggle sidebar
   const { toggleSidebar } = useDashboardContext();
-  const navigate = useNavigate();
+  const { logOutUser } = useAppContext();
 
-  // Function to logout User
-  const logOutUser = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/api/v1/auth/logout", {
-        credentials: "include",
-      });
-
-      // If logout is successful, navigate to landing page and display toast message
-      if (response.ok) {
-        const { msg } = await response.json();
-        navigate("/");
-        toast.success(msg);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
   return (
     <nav className={styles.navbar}>
       {/* Navbar for small screens */}
@@ -40,7 +24,11 @@ const Navbar = () => {
         <NavLink to="/dashboard">
           <h4 className={styles.logo}>Recipe Ready</h4>
         </NavLink>
-        <div className={styles.btnContainer}>Logout</div>
+        <NavLink to="/">
+          <button className={styles.logOutBtn} onClick={logOutUser}>
+            Logout
+          </button>
+        </NavLink>
       </div>
       {/* Navbar for large screens */}
       <div className={styles.bigNavItems}>
@@ -77,7 +65,11 @@ const Navbar = () => {
             <button className={styles.dropBtn}>Account</button>
             <div className={styles.dropdownContent}>
               <NavLink to="profile">Settings</NavLink>
-              <button onClick={logOutUser}>Logout</button>
+              <NavLink to="/">
+                <button className={styles.logOutBtn} onClick={logOutUser}>
+                  Logout
+                </button>
+              </NavLink>
             </div>
           </div>
         </div>
