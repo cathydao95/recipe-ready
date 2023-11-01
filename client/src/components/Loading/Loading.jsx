@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 
 const Loading = () => {
+  // Creates a loading spinner
   return (
     <div className={styles.wrapper}>
       <div className={styles.loading}></div>

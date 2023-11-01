@@ -42,3 +42,25 @@
 .instruction {
   padding: 0 0.5rem 0.5rem;
 }
+
+.icon {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  top: 10px;
+  font-size: 2rem;
+  background-color: var(--clr-primary-7);
+  color: var(--clr-primary-red);
+  padding: 0.75rem;
+  z-index: 1;
+  border-radius: 50px;
+  border: none;
+}
+
+.trashIcon {
+  left: 10px;
+}
+
+.bookmarkIcon {
+  right: 10px;
+}

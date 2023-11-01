@@ -12,12 +12,14 @@ const Login = () => {
     password: "",
   });
 
+  // Function to handle login input
   const handleInput = (e) => {
     setLoginInfo((prevInput) => {
       return { ...prevInput, [e.target.name]: e.target.value };
     });
   };
 
+  // Function to login user
   const loginUser = async (e) => {
     e.preventDefault();
     try {
@@ -29,7 +31,7 @@ const Login = () => {
         credentials: "include",
         body: JSON.stringify(loginInfo),
       });
-
+      // If success, log in user and navigate user to dashboard and display toast success
       if (response.ok) {
         let { msg } = await response.json();
         toast.success(msg);

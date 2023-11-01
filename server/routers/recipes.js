@@ -8,6 +8,8 @@ import {
   getRecipeNutrition,
   getUsersRecipes,
   uploadRecipeImage,
+  getUsersBookmarked,
+  bookmarkRecipe,
 } from "../controllers/recipes.js";
 import {
   validateRecipeInput,
@@ -18,6 +20,10 @@ import upload from "../middleware/multerMiddleware.js";
 const router = Router();
 
 router.route("/").get(getRecipes).post(validateRecipeInput, createRecipe);
+
+router.route("/bookmark").get(getUsersBookmarked);
+
+router.route("/bookmark/:id").post(bookmarkRecipe);
 
 router.route("/userRecipes").get(getUsersRecipes);
 

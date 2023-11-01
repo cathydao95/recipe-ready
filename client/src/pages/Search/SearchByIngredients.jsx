@@ -6,9 +6,12 @@ import { useAppContext } from "../../context/appContext";
 
 const SearchByIngredients = () => {
   const navigate = useNavigate();
+  // Destructure functions and states from app context
   const { getRecipes, recipeResults, setIsLoading } = useAppContext();
+  // State to manage the list of selected ingredients
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
+  // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate("/dashboard/results", {
@@ -16,8 +19,6 @@ const SearchByIngredients = () => {
     });
     setIsLoading(true);
   };
-
-  console.log(recipeResults);
 
   return (
     <div className={clsx("wrapper")}>

@@ -13,12 +13,14 @@ const Register = () => {
     password: "",
   });
 
+  // Function to handle registration form input
   const handleInput = (e) => {
     setRegistrationInfo((prevInput) => {
       return { ...prevInput, [e.target.name]: e.target.value };
     });
   };
 
+  // Function to register new user
   const registerUser = async (e) => {
     e.preventDefault();
     try {
@@ -31,9 +33,10 @@ const Register = () => {
         body: JSON.stringify(registrationInfo),
       });
 
+      // If success, register user and navigate user to dashboard
       if (response.ok) {
         let { msg } = await response.json();
-        // console.log(msg);
+
         toast.success(msg);
         navigate("/dashboard");
       } else {
@@ -47,7 +50,6 @@ const Register = () => {
     }
   };
 
-  // console.log(registrationInfo);
   return (
     <div className="pageWrapper">
       <h1 className="title">Recipe Ready</h1>

@@ -4,7 +4,9 @@ import { StatusCodes } from "http-status-codes";
 import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
 import fs from "fs/promises";
 import cloudinary from "cloudinary";
+import { prepareIngredients } from "../utils/recipeUtils.js";
 
+// GET RECIPES BASED ON INGREDIENTS OR KEYWORD
 export const getRecipes = async (req, res) => {
   const { ingredients, keyword } = req.query;
 
@@ -13,6 +15,7 @@ export const getRecipes = async (req, res) => {
 
   if (ingredients) {
     const ingredientsArray = ingredients.split(",");
+    // @> compares the arrays and ensures that all ingredients in the DB are contained in the ingredientsArray
     queryText += " WHERE $1::text[] @> ingredients";
     queryParams = [ingredientsArray];
   }
@@ -33,6 +36,7 @@ export const getRecipes = async (req, res) => {
   res.status(StatusCodes.OK).json(response);
 };
 
+// GET SINGLE RECIPE
 export const getRecipe = async (req, res) => {
   const { id } = req.params;
   if (!id || isNaN(id))
@@ -50,6 +54,7 @@ export const getRecipe = async (req, res) => {
   });
 };
 
+// GET ALL OF THE LOGGED IN USER'S RECIPES
 export const getUsersRecipes = async (req, res) => {
   const { userId } = req.user;
   const { rows: recipes } = await db.query(
@@ -63,6 +68,7 @@ export const getUsersRecipes = async (req, res) => {
   });
 };
 
+// CREATE A NEW RECIPE
 export const createRecipe = async (req, res) => {
   const { userId } = req.user;
   const { title, ingredients, instructions, prep_time, image_url } = req.body;
@@ -70,13 +76,7 @@ export const createRecipe = async (req, res) => {
   const user_id = userId ? userId : null;
   const public_recipe = user_id !== null && false;
 
-  let ingredientsArray = ingredients;
-  if (!Array.isArray(ingredients)) {
-    ingredientsArray = ingredients
-      .split(",")
-      .map((ingredient) => ingredient.trim());
-  }
-  const ingredientsString = `{${ingredientsArray.join(",")}}`;
+  const ingredientsString = prepareIngredients(ingredients);
 
   const { rows: newRecipe } = await db.query(
     "INSERT INTO recipes (title, ingredients, instructions, prep_time, image_url, user_id, public_recipe) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
@@ -96,13 +96,17 @@ export const createRecipe = async (req, res) => {
   });
 };
 
+// EDIT A RECIPE
 export const editRecipe = async (req, res) => {
   const { id } = req.params;
   const { title, ingredients, instructions, prep_time, image_url } = req.body;
 
+  console.log(req.body);
+  const ingredientsString = prepareIngredients(ingredients);
+
   const { rows: updatedRecipe } = await db.query(
     "UPDATE recipes SET (title, ingredients, instructions, prep_time, image_url) = ($1, $2, $3, $4, $5) WHERE id = $6 RETURNING *",
-    [title, ingredients, instructions, prep_time, image_url, id]
+    [title, ingredientsString, instructions, prep_time, image_url, id]
   );
 
   res.status(StatusCodes.OK).json({
@@ -111,6 +115,7 @@ export const editRecipe = async (req, res) => {
   });
 };
 
+// DELETE A RECIPE
 export const deleteRecipe = async (req, res) => {
   const { id } = req.params;
 
@@ -121,6 +126,76 @@ export const deleteRecipe = async (req, res) => {
   });
 };
 
+// GET USERS BOOKMARKS
+export const getUsersBookmarked = async (req, res) => {
+  const { userId } = req.user;
+  const { rows: bookmarks } = await db.query(
+    `SELECT recipes.* FROM bookmarked
+       JOIN recipes ON bookmarked.recipe_id = recipes.id
+       WHERE bookmarked.user_id = $1`,
+    [userId]
+  );
+  res.status(StatusCodes.OK).json({
+    status: "success",
+    results: bookmarks.length,
+    data: { bookmarks },
+  });
+};
+// BOOKMARK RECIPE
+export const bookmarkRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.user;
+
+  try {
+    const { rows: existingBookmark } = await db.query(
+      "SELECT * FROM bookmarked WHERE user_id = $1 AND recipe_id = $2",
+      [userId, id]
+    );
+    if (existingBookmark.length > 0) {
+      await db.query(
+        "DELETE FROM bookmarked WHERE user_id = $1 AND recipe_id = $2",
+        [userId, id]
+      );
+      const { rows: updatedBookmarks } = await db.query(
+        `SELECT recipes.* FROM bookmarked
+       JOIN recipes ON bookmarked.recipe_id = recipes.id
+       WHERE bookmarked.user_id = $1`,
+        [userId]
+      );
+
+      res.status(StatusCodes.OK).json({
+        status: "success",
+        message: "Recipe removed from bookmarks",
+        data: { bookmarks: updatedBookmarks },
+      });
+    } else {
+      await db.query(
+        "INSERT INTO bookmarked (user_id, recipe_id) VALUES ($1, $2)",
+        [userId, id]
+      );
+
+      const { rows: updatedBookmarks } = await db.query(
+        `SELECT recipes.* FROM bookmarked
+       JOIN recipes ON bookmarked.recipe_id = recipes.id
+       WHERE bookmarked.user_id = $1`,
+        [userId]
+      );
+
+      res.status(StatusCodes.CREATED).json({
+        status: "success",
+        message: "Recipe added to bookmarks",
+        data: { bookmarks: updatedBookmarks },
+      });
+    }
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      status: "error",
+      message: "Something went wrong",
+    });
+  }
+};
+
+// GET RECIPE NUTRITION
 export const getRecipeNutrition = async (req, res) => {
   try {
     const { id } = req.params;

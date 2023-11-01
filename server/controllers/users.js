@@ -3,6 +3,7 @@ import "dotenv/config";
 import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "../errors/customErrors.js";
 
+// GET ALL USERS (FOR TESTING PURPOSES ON POSTMAN TO KEEP TRACK OF USER DB <-- WILL BE REMOVED)
 export const getUsers = async (req, res) => {
   const { rows: users } = await db.query("SELECT * FROM users");
   res.status(StatusCodes.OK).json({
@@ -12,6 +13,7 @@ export const getUsers = async (req, res) => {
   });
 };
 
+// GET USER THAT IS CURRENTLY LOGGED IN
 export const getUser = async (req, res) => {
   const currentUserId = req.user.userId;
 
@@ -27,6 +29,7 @@ export const getUser = async (req, res) => {
   });
 };
 
+// EDIT USER
 export const editUser = async (req, res) => {
   const currentUserId = req.user.userId;
   // incorporate password update
@@ -44,6 +47,7 @@ export const editUser = async (req, res) => {
   });
 };
 
+// DELETE USER
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
 
