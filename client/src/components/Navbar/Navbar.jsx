@@ -49,7 +49,7 @@ const Navbar = () => {
             <div className={styles.dropdownContent}>
               <NavLink
                 to={{
-                  pathname: "/create",
+                  pathname: "create",
                   state: { isEditing: false, currentRecipeInfo: [] },
                 }}
               >
