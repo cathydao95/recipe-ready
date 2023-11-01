@@ -5,6 +5,7 @@ import styles from "./styles.module.scss";
 import clsx from "clsx";
 
 const Sidebar = () => {
+  // Destrcuture functions from context
   const { showSidebar, toggleSidebar } = useDashboardContext();
   return (
     <div
@@ -15,6 +16,7 @@ const Sidebar = () => {
     >
       <div>
         <div className={styles.headerContent}>
+          {/* Close button to hide sidebar */}
           <button
             type="button"
             className={styles.closeBtn}

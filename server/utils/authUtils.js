@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+// Function to set an HTTP cookie on client
 export const setTokenCookie = (res, token) => {
   const oneDay = 1000 * 60 * 60 * 24;
   res.cookie("token", token, {
@@ -9,6 +10,7 @@ export const setTokenCookie = (res, token) => {
   });
 };
 
+// Function to generate JWT token for a user
 export const generateToken = (user) => {
   return jwt.sign(
     { userId: user.id, email: user.email },

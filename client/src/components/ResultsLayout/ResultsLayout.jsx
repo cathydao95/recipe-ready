@@ -7,9 +7,11 @@ import cooking from "../../assets/cooking.svg";
 import Loading from "../Loading/Loading";
 
 const ResultsLayout = ({ recipes, title, page, isLoading }) => {
+  // EmptyPageContent renders when there are no recipes to show
   const EmptyPageContent = () => {
     switch (page) {
       case "personal":
+        // Content to display when no recipes and on personal recipes page
         return (
           <div className={styles.noRecipesContainer}>
             <p>You Have Not Created Any Recipes</p>
@@ -19,8 +21,10 @@ const ResultsLayout = ({ recipes, title, page, isLoading }) => {
           </div>
         );
       case "searchResults":
+        // Content to display when no recipes and on recipe results page
         return <div>No Recipes Found</div>;
       case "bookmarked":
+        // Content to display when no recipes and on bookmarked recipes page
         return (
           <div>
             <div>

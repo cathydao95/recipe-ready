@@ -12,9 +12,11 @@ import {
   Bookmarked,
   Create,
   UserSettings,
+  Dashboard,
 } from "./pages";
 import SearchByName from "./pages/Search/SearchByName";
 import UserRecipes from "./pages/UserRecipes/UserRecipes";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const router = createBrowserRouter([
   {
@@ -28,8 +30,9 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <DashboardLayout />,
+
         children: [
-          { index: true, element: <Results /> },
+          { index: true, element: <Dashboard /> },
           { path: "search-ingredients", element: <SearchByIngredients /> },
           { path: "search-name", element: <SearchByName /> },
           { path: "results", element: <Results /> },
@@ -37,7 +40,7 @@ const router = createBrowserRouter([
           { path: "bookmarked", element: <Bookmarked /> },
           { path: "create", element: <Create /> },
           { path: "my-recipes", element: <UserRecipes /> },
-          { path: "settings", element: <UserSettings /> },
+          { path: "profile", element: <UserSettings /> },
         ],
       },
     ],

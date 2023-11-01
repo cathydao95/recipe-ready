@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { Loading, ResultsLayout } from "../../components";
+import { ResultsLayout } from "../../components";
 import { useAppContext } from "../../context/appContext";
-import { useLocation } from "react-router-dom";
 
 const Bookmarked = () => {
+  // Destructuring from App context
   const { isLoading, usersBookmarked } = useAppContext();
 
+  // Pass props to Results Layout
   return (
     <ResultsLayout
       recipes={usersBookmarked}

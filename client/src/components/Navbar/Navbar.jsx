@@ -5,18 +5,21 @@ import { useDashboardContext } from "../../pages/Layouts/DashboardLayout";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
+  // Use context to toggle sidebar
   const { toggleSidebar } = useDashboardContext();
   const navigate = useNavigate();
 
+  // Function to logout User
   const logOutUser = async () => {
     try {
-      navigate("/");
       const response = await fetch("http://localhost:8080/api/v1/auth/logout", {
         credentials: "include",
       });
 
+      // If logout is successful, navigate to landing page and display toast message
       if (response.ok) {
         const { msg } = await response.json();
+        navigate("/");
         toast.success(msg);
       }
     } catch (error) {
@@ -25,6 +28,7 @@ const Navbar = () => {
   };
   return (
     <nav className={styles.navbar}>
+      {/* Navbar for small screens */}
       <div className={styles.smallNavItems}>
         <button
           type="button"
@@ -38,6 +42,7 @@ const Navbar = () => {
         </NavLink>
         <div className={styles.btnContainer}>Logout</div>
       </div>
+      {/* Navbar for large screens */}
       <div className={styles.bigNavItems}>
         <NavLink to="/dashboard">
           <h4 className={styles.logo}>Recipe Ready</h4>

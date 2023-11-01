@@ -180,32 +180,25 @@ button {
   color: var(--clr-dark-red);
 }
 
+.backBtn {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  padding: 2rem 0 0 2rem;
+}
+
 // RECIPE
 
 .imgContainer {
   position: relative;
 }
 
-.icon {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  top: 10px;
-
-  font-size: 1.5rem;
-  background-color: var(--clr-primary-10);
-  color: var(--clr-primary-4);
-  padding: 0.5rem;
-  z-index: 1;
-  border-radius: 10px;
+.bookmarkedIcon {
+  color: var(--clr-primary-red);
 }
 
-.trashIcon {
-  left: 10px;
-}
-
-.bookmarkIcon {
-  right: 10px;
+.notBookmarkedIcon {
+  color: var(--clr-primary-8);
 }
 
 .prepTime {

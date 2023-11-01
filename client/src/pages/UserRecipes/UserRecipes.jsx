@@ -7,6 +7,7 @@ const UserRecipes = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  // Function to fetch a user's personal/created recipes
   const getPersonalRecipes = async () => {
     try {
       const response = await fetch(
@@ -15,7 +16,7 @@ const UserRecipes = () => {
           credentials: "include",
         }
       );
-
+      // If successful, set usersRecipes state to response
       if (response.ok) {
         const {
           data: { recipes },

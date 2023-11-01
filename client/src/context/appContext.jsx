@@ -5,10 +5,30 @@ import "react-toastify/dist/ReactToastify.css";
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
+  // const [currentUser, setCurrentUser] = useState([]);
   const [recipeResults, setRecipeResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [usersRecipes, setUsersRecipes] = useState([]);
   const [usersBookmarked, setUsersBookmarked] = useState([]);
+
+  // const getCurrentUser = async () => {
+  //   try {
+  //     let response = await fetch("http://localhost:8080/api/v1/users/current", {
+  //       credentials: "include",
+  //     });
+
+  //     if (response.ok) {
+  //       const {
+  //         data: { user },
+  //       } = await response.json();
+  //       setCurrentUser(user);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // Function to get recipes based on keyword or provided ingredients
   const getRecipes = async (ingredients, keyword) => {
     try {
       let queryParam = "";
@@ -40,6 +60,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  // Function to fetch current users' bookmarked recipes
   const getBookmarkedRecipes = async () => {
     try {
       let response = await fetch(
@@ -53,13 +74,15 @@ const AppProvider = ({ children }) => {
           data: { bookmarks },
         } = await response.json();
         setUsersBookmarked(bookmarks);
-        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  // Function to add a recipe or remove a recipe from a user's bookmarks
   const bookmarkRecipe = async (id) => {
     try {
       let response = await fetch(
@@ -84,6 +107,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  // Function do delete recipe
   const deleteRecipe = async (id) => {
     try {
       let response = await fetch(`http://localhost:8080/api/v1/recipes/${id}`, {
@@ -109,12 +133,13 @@ const AppProvider = ({ children }) => {
         }
       }
     } catch (error) {
-      console.error(error);
+      toast.error("An unexpected error occurred");
       return { success: false, message: "An error occurred" };
     }
   };
 
   useEffect(() => {
+    // getCurrentUser();
     getBookmarkedRecipes();
   }, []);
   return (
@@ -130,6 +155,8 @@ const AppProvider = ({ children }) => {
         bookmarkRecipe,
         usersBookmarked,
         setUsersBookmarked,
+        getBookmarkedRecipes,
+        // currentUser,
       }}
     >
       {children}

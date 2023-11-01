@@ -8,29 +8,37 @@ import { useAppContext } from "../../context/appContext";
 import Modal from "react-bootstrap/Modal";
 
 const RecipeCard = ({ recipe }) => {
+  // Destructure properties from recipe prop
   const { id, title, prep_time, user_id, image_url } = recipe;
-  const navigate = useNavigate();
-  const { deleteRecipe, bookmarkRecipe, usersBookmarked } = useAppContext();
-  console.log("users bk", usersBookmarked);
 
+  // User navigate hook from react router
+  const navigate = useNavigate();
+
+  // Extract functions and state from App Context
+  const { deleteRecipe, bookmarkRecipe, usersBookmarked } = useAppContext();
+
+  // State to control whether to show modal
   const [show, setShow] = useState(false);
 
+  // Function to close modal
   const handleClose = () => setShow(false);
+  // Function to show modal
   const handleShow = () => setShow(true);
 
-  // When delete button clicked, call deleteRecipe functio and navigate to new screen
+  //Function to handle deleting a recipe
   const handleDelete = async (e, id) => {
     const { success } = await deleteRecipe(id);
+    // If successful, navigate back to personal recipes page
     if (success) {
       navigate("/dashboard/my-recipes");
     }
   };
 
+  // Check if current recipe is included in the current user's bookmarked recipes
   const isBookmarked = usersBookmarked.some(
     (bookmarkedRecipe) => bookmarkedRecipe.id === id
   );
 
-  console.log(isBookmarked);
   return (
     <>
       <NavLink to={`/dashboard/${id}`}>
@@ -72,18 +80,10 @@ const RecipeCard = ({ recipe }) => {
                 }}
               >
                 <FaBookmark
-                  className={clsx(
-                    isBookmarked
-                      ? styles.bookmarkedIcon
-                      : styles.notBookmarkedIcon
-                  )}
+                  className={
+                    isBookmarked ? "bookmarkedIcon" : "notBookmarkedIcon"
+                  }
                 />
-
-                {/* {isBookmarked ? (
-                  <FaBookmark className={styles.bookmarkedIcon} />
-                ) : (
-                  <FaRegBookmark />
-                )} */}
               </button>
             </div>
           </div>

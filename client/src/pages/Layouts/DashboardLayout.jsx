@@ -8,13 +8,13 @@ const DashboardLayout = () => {
   const user = { name: "cathy" };
   const [showSidebar, setShowSidebar] = useState(false);
 
+  // Function to toggle sidebar to show and not show
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
 
-  const logoutUser = async () => {
-    console.log("logout user");
-  };
+  // function to log out user
+  const logoutUser = async () => {};
   return (
     <DashboardContext.Provider
       value={{ user, showSidebar, toggleSidebar, logoutUser }}

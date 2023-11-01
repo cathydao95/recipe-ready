@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FormRow } from "../../components";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { FormRow, Loading } from "../../components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
@@ -9,19 +9,37 @@ import uploadImg from "../../assets/upload-img.svg";
 const Create = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { state } = location;
-  const { isEditing, currentRecipeInfo } = state || {};
+  const [isLoading, setIsLoading] = useState(true);
+  const { isEditing, currentRecipeInfo } = location.state || {};
 
-  const [recipeInfo, setRecipeInfo] = useState({
-    title: currentRecipeInfo?.title || "",
-    ingredients: currentRecipeInfo?.ingredients || "",
-    instructions: currentRecipeInfo?.instructions || "",
-    prep_time: currentRecipeInfo?.prep_time || "",
-    image_url: currentRecipeInfo?.image_url || "",
-  });
+  // Initial state for create recipe form
+  const initialState = {
+    title: "",
+    ingredients: "",
+    instructions: "",
+    prep_time: "",
+    image_url: "",
+  };
 
-  console.log(isEditing, currentRecipeInfo);
+  const [recipeInfo, setRecipeInfo] = useState(initialState);
 
+  //When isEditing and currentRecipeInfo exists, set recipeInfo with info from  current recipe.
+  useEffect(() => {
+    if (isEditing && currentRecipeInfo) {
+      setRecipeInfo({
+        title: currentRecipeInfo.title,
+        ingredients: currentRecipeInfo.ingredients,
+        instructions: currentRecipeInfo.instructions,
+        prep_time: currentRecipeInfo.prep_time,
+        image_url: currentRecipeInfo.image_url,
+      });
+    } else {
+      setRecipeInfo(initialState);
+    }
+    setIsLoading(false);
+  }, [isEditing, currentRecipeInfo]);
+
+  // Function to handle image upload.
   const uploadRecipeImage = async (file) => {
     try {
       const formData = new FormData();
@@ -50,6 +68,7 @@ const Create = () => {
     }
   };
 
+  // Function to handle input changes.
   const handleInput = (e) => {
     if (e.target.name === "image_url") {
       uploadRecipeImage(e.target.files[0]);
@@ -60,7 +79,7 @@ const Create = () => {
     }
   };
 
-  console.log(recipeInfo);
+  // Function to create or edit recipe
   const createRecipe = async (e) => {
     e.preventDefault();
     let url;
@@ -82,7 +101,6 @@ const Create = () => {
         body: JSON.stringify(recipeInfo),
       });
 
-      console.log(response);
       if (response.ok) {
         let { msg } = await response.json();
         toast.success(msg);
@@ -98,9 +116,12 @@ const Create = () => {
     }
   };
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className="pageWrapper">
       <h1 className="title">
+        {/* {currentRecipeInfo ? "Edit Recipe" : "Create New Recipe"} */}
         {isEditing && currentRecipeInfo ? "Edit Recipe" : "Create New Recipe"}
       </h1>
       <form className="form">

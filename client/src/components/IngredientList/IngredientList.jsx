@@ -2,13 +2,13 @@ import styles from "./styles.module.scss";
 import { ingList } from "../../utils/ingList";
 
 const IngredientList = ({ selectedIngredients, setSelectedIngredients }) => {
-  // on check/uncheck
+  // On checked, add ingredient to selectedIngredients, else remove
   const addToIngredientsList = (selectedIng) => {
-    // if ing is not already included in list, add
+    // If ingredient is not already included in list, add
     if (!selectedIngredients.includes(selectedIng)) {
       setSelectedIngredients((prev) => [...prev, selectedIng]);
     } else {
-      // if ing already in list, remove by filtering
+      // If ingredient is already in list, remove by filtering
       setSelectedIngredients((prev) =>
         prev.filter((ing) => ing !== selectedIng)
       );
