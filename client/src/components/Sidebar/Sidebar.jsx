@@ -80,9 +80,15 @@ const Sidebar = () => {
             </>
           ) : (
             <div className={styles.link}>
-              <Link to="/login" onClick={toggleSidebar}>
-                Login
-              </Link>
+              <div className={styles.category}>Account</div>
+              <ul className={styles.linksContainer}>
+                <Link to="register" onClick={toggleSidebar}>
+                  Register
+                </Link>
+                <Link to="login">
+                  <div onClick={toggleSidebar}> Login</div>
+                </Link>
+              </ul>
             </div>
           )}
         </div>

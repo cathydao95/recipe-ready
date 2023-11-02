@@ -25,12 +25,14 @@ const Navbar = () => {
         </Link>
         {isAuthenticated ? (
           <Link to="/">
-            <button className={styles.logOutBtn} onClick={logOutUser}>
+            <button className={styles.logoutBtn} onClick={logOutUser}>
               Logout
             </button>
           </Link>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link to="/login" className={styles.loginBtn}>
+            Login
+          </Link>
         )}
       </div>
       {/* Navbar for large screens */}
@@ -68,7 +70,7 @@ const Navbar = () => {
                 <div className={styles.dropdownContent}>
                   <Link to="profile">Settings</Link>
                   <Link to="login">
-                    <button className={styles.logOutBtn} onClick={logOutUser}>
+                    <button className={styles.logoutBtn} onClick={logOutUser}>
                       Logout
                     </button>
                   </Link>
@@ -77,7 +79,9 @@ const Navbar = () => {
             </>
           ) : (
             <div className={styles.link}>
-              <Link to="/login">Login</Link>
+              <Link to="/login" className={styles.loginBtn}>
+                Login
+              </Link>
             </div>
           )}
         </div>
