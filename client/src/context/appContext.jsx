@@ -175,6 +175,7 @@ const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         isAuthenticated,
+        setIsAuthenticated,
         getRecipes,
         deleteRecipe,
         recipeResults,
@@ -189,7 +190,6 @@ const AppProvider = ({ children }) => {
         getCurrentUser,
         currentUser,
         logOutUser,
-        setIsAuthenticated,
       }}
     >
       {children}
