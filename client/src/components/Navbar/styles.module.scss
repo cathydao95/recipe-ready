@@ -35,6 +35,17 @@
   color: var(--clr-primary-10);
 }
 
+.logOutBtn {
+  background-color: transparent;
+  font-size: 1rem;
+  font-weight: 800;
+  border: none;
+  color: var(--clr-primary-10);
+}
+
+.logOutBtn:hover {
+  color: var(--clr-primary-1);
+}
 .bigNavItems {
   display: none;
 }
@@ -63,7 +74,8 @@
   .linksContainer {
     flex-basis: 60%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
   }
 
   .dropBtn {
@@ -98,6 +110,14 @@
 
   .link:hover .dropdownContent {
     display: block;
+  }
+
+  .logOutBtn {
+    background-color: transparent;
+    font-size: 0.875rem;
+    border: none;
+    font-weight: 400;
+    color: var(--clr-primary-10);
   }
 }
 

@@ -2,6 +2,7 @@ import db from "../db/db-connection.js";
 import "dotenv/config";
 import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "../errors/customErrors.js";
+import bcrypt from "bcrypt";
 
 // GET ALL USERS (FOR TESTING PURPOSES ON POSTMAN TO KEEP TRACK OF USER DB <-- WILL BE REMOVED)
 export const getUsers = async (req, res) => {
@@ -32,13 +33,11 @@ export const getUser = async (req, res) => {
 // EDIT USER
 export const editUser = async (req, res) => {
   const currentUserId = req.user.userId;
-  // incorporate password update
-  const { name, email, password } = req.body;
-  const salt = bcrypt.genSaltSync(10);
-  const hashed_password = bcrypt.hashSync(password, salt);
+  const { firstName, lastName, email } = req.body;
+
   const updatedUser = await db.query(
-    "UPDATE users SET (name, email, hashed_password) = ($1, $2, $3) WHERE id = $4",
-    [name, email, hashed_password, currentUserId]
+    "UPDATE users SET (first_name, last_name, email) = ($1, $2, $3) WHERE id = $4",
+    [firstName, lastName, email, currentUserId]
   );
 
   res.status(StatusCodes.OK).json({

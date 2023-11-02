@@ -64,7 +64,7 @@ const Recipe = () => {
     const { success } = await deleteRecipe(id);
     // If recipe successfully deleted, navigate to user's personal recipes page
     if (success) {
-      navigate("/dashboard/my-recipes");
+      navigate("/recipes/my-recipes");
     }
   };
 

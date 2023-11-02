@@ -11,36 +11,62 @@ import {
   Recipe,
   Bookmarked,
   Create,
+  UserRecipes,
   UserSettings,
-  Dashboard,
+  ProtectedRoute,
+  SearchByName,
 } from "./pages";
-import SearchByName from "./pages/Search/SearchByName";
-import UserRecipes from "./pages/UserRecipes/UserRecipes";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomeLayout />,
+    element: <DashboardLayout />,
     errorElement: <ErrorNotFound />,
     children: [
       { index: true, element: <Landing /> },
       { path: "register", element: <Register /> },
       { path: "login", element: <Login /> },
       {
-        path: "dashboard",
-        element: <DashboardLayout />,
-
+        path: "recipes",
         children: [
-          { index: true, element: <Dashboard /> },
+          { index: true, element: <SearchByName /> },
           { path: "search-ingredients", element: <SearchByIngredients /> },
-          { path: "search-name", element: <SearchByName /> },
           { path: "results", element: <Results /> },
           { path: ":id", element: <Recipe /> },
-          { path: "bookmarked", element: <Bookmarked /> },
-          { path: "create", element: <Create /> },
-          { path: "my-recipes", element: <UserRecipes /> },
-          { path: "profile", element: <UserSettings /> },
+
+          {
+            path: "bookmarked",
+            element: (
+              <ProtectedRoute>
+                <Bookmarked />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "create",
+            element: (
+              <ProtectedRoute>
+                <Create />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "my-recipes",
+            element: (
+              <ProtectedRoute>
+                <UserRecipes />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "profile",
+            element: (
+              <ProtectedRoute>
+                <UserSettings />
+              </ProtectedRoute>
+            ),
+          },
         ],
       },
     ],

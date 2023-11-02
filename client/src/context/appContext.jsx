@@ -5,28 +5,51 @@ import "react-toastify/dist/ReactToastify.css";
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
-  // const [currentUser, setCurrentUser] = useState([]);
+  const [currentUser, setCurrentUser] = useState([]);
   const [recipeResults, setRecipeResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [usersRecipes, setUsersRecipes] = useState([]);
   const [usersBookmarked, setUsersBookmarked] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // const getCurrentUser = async () => {
-  //   try {
-  //     let response = await fetch("http://localhost:8080/api/v1/users/current", {
-  //       credentials: "include",
-  //     });
+  console.log("isAuthenticated", isAuthenticated);
+  const getCurrentUser = async () => {
+    try {
+      let response = await fetch("http://localhost:8080/api/v1/users/current", {
+        credentials: "include",
+      });
 
-  //     if (response.ok) {
-  //       const {
-  //         data: { user },
-  //       } = await response.json();
-  //       setCurrentUser(user);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+      if (response.ok) {
+        const {
+          data: { user },
+        } = await response.json();
+        setCurrentUser(user);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Function to logout User
+  const logOutUser = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/auth/logout", {
+        credentials: "include",
+      });
+
+      // If logout is successful, navigate to landing page and display toast message
+      if (response.ok) {
+        setCurrentUser([]);
+        setUsersRecipes([]);
+        setUsersBookmarked([]);
+        setIsAuthenticated(false);
+        const { msg } = await response.json();
+        toast.success(msg);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // Function to get recipes based on keyword or provided ingredients
   const getRecipes = async (ingredients, keyword) => {
@@ -139,12 +162,20 @@ const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // getCurrentUser();
-    getBookmarkedRecipes();
+    getCurrentUser();
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getBookmarkedRecipes();
+    }
+  }, [isAuthenticated]);
+
   return (
     <AppContext.Provider
       value={{
+        isAuthenticated,
+        setIsAuthenticated,
         getRecipes,
         deleteRecipe,
         recipeResults,
@@ -156,7 +187,9 @@ const AppProvider = ({ children }) => {
         usersBookmarked,
         setUsersBookmarked,
         getBookmarkedRecipes,
-        // currentUser,
+        getCurrentUser,
+        currentUser,
+        logOutUser,
       }}
     >
       {children}
