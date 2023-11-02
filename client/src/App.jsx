@@ -11,11 +11,11 @@ import {
   Recipe,
   Bookmarked,
   Create,
+  UserRecipes,
   UserSettings,
+  ProtectedRoute,
+  SearchByName,
 } from "./pages";
-import ProtectedRoute from "./pages/ProtectedRoute";
-import SearchByName from "./pages/Search/SearchByName";
-import UserRecipes from "./pages/UserRecipes/UserRecipes";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const router = createBrowserRouter([
