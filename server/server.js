@@ -13,7 +13,6 @@ import recipeRouter from "./routers/recipes.js";
 import authRouter from "./routers/auth.js";
 import usersRouter from "./routers/users.js";
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
-import authenticateUser from "./middleware/authenticateMiddleware.js";
 
 // Constants
 const PORT = process.env.PORT || 8080;
@@ -45,7 +44,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 // Routes
-app.use("/api/v1/recipes", authenticateUser, recipeRouter);
+app.use("/api/v1/recipes", recipeRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", usersRouter);
 

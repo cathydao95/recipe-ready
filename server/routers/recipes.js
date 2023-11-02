@@ -16,24 +16,30 @@ import {
   validateOwner,
 } from "../middleware/validationMiddleware.js";
 import upload from "../middleware/multerMiddleware.js";
+import authenticateUser from "../middleware/authenticateMiddleware.js";
 
 const router = Router();
 
-router.route("/").get(getRecipes).post(validateRecipeInput, createRecipe);
+router
+  .route("/")
+  .get(getRecipes)
+  .post(authenticateUser, validateRecipeInput, createRecipe);
 
-router.route("/bookmark").get(getUsersBookmarked);
+router.route("/bookmark").get(authenticateUser, getUsersBookmarked);
 
-router.route("/bookmark/:id").post(bookmarkRecipe);
+router.route("/bookmark/:id").post(authenticateUser, bookmarkRecipe);
 
-router.route("/userRecipes").get(getUsersRecipes);
+router.route("/userRecipes").get(authenticateUser, getUsersRecipes);
 
-router.route("/upload").post(upload.single("file"), uploadRecipeImage);
+router
+  .route("/upload")
+  .post(authenticateUser, upload.single("file"), uploadRecipeImage);
 
 router
   .route("/:id")
   .get(getRecipe)
-  .put(validateRecipeInput, validateOwner, editRecipe)
-  .delete(validateOwner, deleteRecipe);
+  .put(authenticateUser, validateRecipeInput, validateOwner, editRecipe)
+  .delete(authenticateUser, validateOwner, deleteRecipe);
 
 router.route("/:id/nutrition").get(getRecipeNutrition);
 
