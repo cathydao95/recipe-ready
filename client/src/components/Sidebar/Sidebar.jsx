@@ -23,6 +23,7 @@ const Sidebar = () => {
             type="button"
             className={styles.closeBtn}
             onClick={toggleSidebar}
+            aria-label="close"
           >
             <FaTimes />
           </button>
