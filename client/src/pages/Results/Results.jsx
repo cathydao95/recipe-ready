@@ -26,7 +26,7 @@ const Results = () => {
     <ResultsLayout
       recipes={recipeResults}
       title="Recipe Results"
-      name="searchResults"
+      page="searchResults"
       isLoading={isLoading}
     />
   );
