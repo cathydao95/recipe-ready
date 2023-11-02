@@ -1,11 +1,12 @@
 import styles from "./styles.module.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaRegClock, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { useAppContext } from "../../context/appContext";
 import Modal from "react-bootstrap/Modal";
+import LoginModal from "../LoginModal/LoginModal";
 
 const RecipeCard = ({ recipe }) => {
   // Destructure properties from recipe prop
@@ -15,42 +16,30 @@ const RecipeCard = ({ recipe }) => {
   const navigate = useNavigate();
 
   // Extract functions and state from App Context
-  const { deleteRecipe, bookmarkRecipe, usersBookmarked, isAuthenticated } =
+  const { deleteRecipe, usersBookmarked, handleBookmarkClick, setShowLogin } =
     useAppContext();
 
   // State to control whether to show modal
   const [show, setShow] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
+  // const [showLogin, setShowLogin] = useState(false);
 
   // Function to close modal
   const handleClose = () => setShow(false);
   // Function to show modal
   const handleShow = () => setShow(true);
 
-  //Function to handle deleting a recipe
-  const handleDelete = async (e, id) => {
-    const { success } = await deleteRecipe(id);
-    // If successful, navigate back to personal recipes page
-    if (success) {
-      navigate("my-recipes");
-    }
-  };
-
-  const handleBookmarkClick = (id) => {
-    if (isAuthenticated) {
-      bookmarkRecipe(id);
-    } else {
-      setShowLogin(true);
-    }
-  };
   // Check if current recipe is included in the current user's bookmarked recipes
   const isBookmarked = usersBookmarked.some(
     (bookmarkedRecipe) => bookmarkedRecipe.id === id
   );
 
+  useEffect(() => {
+    setShowLogin(false);
+  }, []);
+
   return (
     <>
-      <Link to={`recipes/${id}`}>
+      <Link to={`/recipes/${id}`}>
         <div className={styles.recipeCard}>
           <div className={clsx(styles.imgContainer, "imgContainer")}>
             <img className={styles.img} src={image_url} alt={title} />
@@ -98,21 +87,8 @@ const RecipeCard = ({ recipe }) => {
           </div>
         </div>
       </Link>
-      <Modal
-        show={showLogin}
-        onHide={() => setShowLogin(false)}
-        size="sm"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton className={styles.modalHeader}></Modal.Header>
-        <Modal.Body className={styles.btnContainer}>
-          Please login to bookmark a recipe!
-          <Link to="/login">
-            <button className={styles.actionBtn}>Login</button>
-          </Link>
-        </Modal.Body>
-      </Modal>
+      <LoginModal />
+
       <Modal
         show={show}
         onHide={handleClose}

@@ -11,6 +11,7 @@ const AppProvider = ({ children }) => {
   const [usersRecipes, setUsersRecipes] = useState([]);
   const [usersBookmarked, setUsersBookmarked] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
   console.log("isAuthenticated", isAuthenticated);
   const getCurrentUser = async () => {
@@ -105,6 +106,15 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  // Function to check if bookmark is authenticated to bookmark recipe or show login mofal
+  const handleBookmarkClick = (id) => {
+    if (isAuthenticated) {
+      bookmarkRecipe(id);
+    } else {
+      setShowLogin(true);
+    }
+  };
+
   // Function to add a recipe or remove a recipe from a user's bookmarks
   const bookmarkRecipe = async (id) => {
     try {
@@ -190,6 +200,9 @@ const AppProvider = ({ children }) => {
         getCurrentUser,
         currentUser,
         logOutUser,
+        showLogin,
+        setShowLogin,
+        handleBookmarkClick,
       }}
     >
       {children}
