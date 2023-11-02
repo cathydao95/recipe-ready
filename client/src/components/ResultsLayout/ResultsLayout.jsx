@@ -15,7 +15,13 @@ const ResultsLayout = ({ recipes, title, page, isLoading }) => {
         // Content to display when no recipes and on personal recipes page
         return (
           <div className={styles.container}>
-            <p>You Have Not Created Any Recipes</p>
+            <div>
+              <p>You Have Not Created Any Recipes</p>
+              <Link to="/create">
+                <button className={styles.btn}>Create a Recipe</button>
+              </Link>
+            </div>
+
             <div className={styles.imgContainer}>
               <img className={styles.img} src={cooking} alt="Cooking" />
             </div>
@@ -26,7 +32,7 @@ const ResultsLayout = ({ recipes, title, page, isLoading }) => {
         return (
           <div className={styles.container}>
             <p>No Recipes Found</p>
-            <Link to="/search-ingredients">
+            <Link to="search-ingredients">
               <button className={styles.btn}> Search For Recipes</button>
             </Link>
             {/* <div className={styles.imgContainer}>
@@ -43,7 +49,7 @@ const ResultsLayout = ({ recipes, title, page, isLoading }) => {
             </div>
             <p>You Have Not Bookmarked Any Recipes</p>
 
-            <Link to="/search-ingredients">
+            <Link to="search-ingredients">
               <button className={styles.btn}> Search For Recipes</button>
             </Link>
           </div>

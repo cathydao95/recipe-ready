@@ -104,7 +104,7 @@ const Create = () => {
       if (response.ok) {
         let { msg } = await response.json();
         toast.success(msg);
-        navigate("my-recipes");
+        navigate("/my-recipes");
       } else {
         let { msg } = await response.json();
         if (msg) {
@@ -119,7 +119,7 @@ const Create = () => {
   return isLoading ? (
     <Loading />
   ) : (
-    <div className="pageWrapper">
+    <div className={styles.formContainer}>
       <h1 className="title">
         {/* {currentRecipeInfo ? "Edit Recipe" : "Create New Recipe"} */}
         {isEditing && currentRecipeInfo ? "Edit Recipe" : "Create New Recipe"}
