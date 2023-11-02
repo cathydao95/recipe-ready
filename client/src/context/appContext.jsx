@@ -12,6 +12,7 @@ const AppProvider = ({ children }) => {
   const [usersBookmarked, setUsersBookmarked] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  console.log("isAuthenticated", isAuthenticated);
   const getCurrentUser = async () => {
     try {
       let response = await fetch("http://localhost:8080/api/v1/users/current", {
@@ -39,6 +40,8 @@ const AppProvider = ({ children }) => {
       // If logout is successful, navigate to landing page and display toast message
       if (response.ok) {
         setCurrentUser([]);
+        setUsersRecipes([]);
+        setUsersBookmarked([]);
         setIsAuthenticated(false);
         const { msg } = await response.json();
         toast.success(msg);
@@ -160,12 +163,14 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     getCurrentUser();
-    getBookmarkedRecipes();
   }, []);
 
-  // useEffect(() => {
-  //   setIsAuthenticated(currentUser && Object.keys(currentUser).length > 0);
-  // }, [currentUser]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      getBookmarkedRecipes();
+    }
+  }, [isAuthenticated]);
+
   return (
     <AppContext.Provider
       value={{
