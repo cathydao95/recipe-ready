@@ -32,13 +32,10 @@ const Sidebar = () => {
           <div className={styles.link}>
             <div className={styles.category}>Explore</div>
             <ul className={styles.linksContainer}>
-              <NavLink
-                to="dashboard/search-ingredients"
-                onClick={toggleSidebar}
-              >
+              <NavLink to="recipes/search-ingredients" onClick={toggleSidebar}>
                 Search By Ingredients
               </NavLink>
-              <NavLink to="dashboard/search-name" onClick={toggleSidebar}>
+              <NavLink to="recipes" onClick={toggleSidebar}>
                 Search By Recipe
               </NavLink>
             </ul>
@@ -48,13 +45,13 @@ const Sidebar = () => {
               <div className={styles.link}>
                 <div className={styles.category}>Collection</div>
                 <ul className={styles.linksContainer}>
-                  <NavLink to="dashboard/create" onClick={toggleSidebar}>
+                  <NavLink to="recipes/create" onClick={toggleSidebar}>
                     Create New Recipe
                   </NavLink>
-                  <NavLink to="dashboard/my-recipes" onClick={toggleSidebar}>
+                  <NavLink to="recipes/my-recipes" onClick={toggleSidebar}>
                     Personal Recipes
                   </NavLink>
-                  <NavLink to="dashboard/bookmarked" onClick={toggleSidebar}>
+                  <NavLink to="recipes/bookmarked" onClick={toggleSidebar}>
                     Bookmarked Recipes
                   </NavLink>
                 </ul>
@@ -63,7 +60,7 @@ const Sidebar = () => {
               <div className={styles.link}>
                 <div className={styles.category}>Account</div>
                 <ul className={styles.linksContainer}>
-                  <NavLink to="dashboard/profile" onClick={toggleSidebar}>
+                  <NavLink to="recipes/profile" onClick={toggleSidebar}>
                     Settings
                   </NavLink>
                   <NavLink to="/login">

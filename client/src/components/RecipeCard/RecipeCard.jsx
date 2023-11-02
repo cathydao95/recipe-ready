@@ -15,10 +15,12 @@ const RecipeCard = ({ recipe }) => {
   const navigate = useNavigate();
 
   // Extract functions and state from App Context
-  const { deleteRecipe, bookmarkRecipe, usersBookmarked } = useAppContext();
+  const { deleteRecipe, bookmarkRecipe, usersBookmarked, isAuthenticated } =
+    useAppContext();
 
   // State to control whether to show modal
   const [show, setShow] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
   // Function to close modal
   const handleClose = () => setShow(false);
@@ -30,10 +32,17 @@ const RecipeCard = ({ recipe }) => {
     const { success } = await deleteRecipe(id);
     // If successful, navigate back to personal recipes page
     if (success) {
-      navigate("/dashboard/my-recipes");
+      navigate("/recipes/my-recipes");
     }
   };
 
+  const handleBookmarkClick = (id) => {
+    if (isAuthenticated) {
+      bookmarkRecipe(id);
+    } else {
+      setShowLogin(true);
+    }
+  };
   // Check if current recipe is included in the current user's bookmarked recipes
   const isBookmarked = usersBookmarked.some(
     (bookmarkedRecipe) => bookmarkedRecipe.id === id
@@ -41,7 +50,7 @@ const RecipeCard = ({ recipe }) => {
 
   return (
     <>
-      <NavLink to={`/dashboard/${id}`}>
+      <NavLink to={`/recipes/${id}`}>
         <div className={styles.recipeCard}>
           <div className={clsx(styles.imgContainer, "imgContainer")}>
             <img className={styles.img} src={image_url} alt={title} />
@@ -76,7 +85,7 @@ const RecipeCard = ({ recipe }) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  bookmarkRecipe(id);
+                  handleBookmarkClick(id);
                 }}
               >
                 <FaBookmark
@@ -90,21 +99,34 @@ const RecipeCard = ({ recipe }) => {
         </div>
       </NavLink>
       <Modal
+        show={showLogin}
+        onHide={() => setShowLogin(false)}
+        size="sm"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton className={styles.modalHeader}></Modal.Header>
+        <Modal.Body className={styles.btnContainer}>
+          Please login to bookmark a recipe!
+          <NavLink to="/login">
+            <button className={styles.actionBtn}>Login</button>
+          </NavLink>
+        </Modal.Body>
+      </Modal>
+      <Modal
         show={show}
         onHide={handleClose}
         size="sm"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton className={styles.modalHeader}>
-          {/* <Modal.Title className={styles.modalTitle}></Modal.Title> */}
-        </Modal.Header>
+        <Modal.Header closeButton className={styles.modalHeader}></Modal.Header>
         <Modal.Body className={styles.btnContainer}>
           <button
             className={styles.actionBtn}
             variant="secondary"
             onClick={() =>
-              navigate("/dashboard/create", {
+              navigate("/recipes/create", {
                 state: { isEditing: true, currentRecipeInfo: recipe },
               })
             }

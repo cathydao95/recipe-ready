@@ -104,7 +104,7 @@ const Create = () => {
       if (response.ok) {
         let { msg } = await response.json();
         toast.success(msg);
-        navigate("/dashboard/my-recipes");
+        navigate("/recipes/my-recipes");
       } else {
         let { msg } = await response.json();
         if (msg) {

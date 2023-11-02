@@ -20,7 +20,7 @@ const Navbar = () => {
         >
           <FaAlignLeft />
         </button>
-        <NavLink to="/dashboard">
+        <NavLink to="/recipes">
           <h4 className={styles.logo}>Recipe Ready</h4>
         </NavLink>
         {isAuthenticated ? (
@@ -35,17 +35,17 @@ const Navbar = () => {
       </div>
       {/* Navbar for large screens */}
       <div className={styles.bigNavItems}>
-        <NavLink to="/dashboard">
+        <NavLink to="/recipes">
           <h4 className={styles.logo}>Recipe Ready</h4>
         </NavLink>
         <div className={styles.linksContainer}>
           <div className={styles.link}>
             <button className={styles.dropBtn}>Explore</button>
             <div className={styles.dropdownContent}>
-              <NavLink to="dashboard/search-ingredients">
+              <NavLink to="recipes/search-ingredients">
                 Search By Ingredient
               </NavLink>
-              <NavLink to="dashboard/search-name">Search By Recipe</NavLink>
+              <NavLink to="recipes">Search By Recipe</NavLink>
             </div>
           </div>
           {isAuthenticated ? (
@@ -55,22 +55,20 @@ const Navbar = () => {
                 <div className={styles.dropdownContent}>
                   <NavLink
                     to={{
-                      pathname: "dashboard/create",
+                      pathname: "recipes/create",
                       state: { isEditing: false, currentRecipeInfo: [] },
                     }}
                   >
                     Create New Recipe
                   </NavLink>
-                  <NavLink to="dashboard/my-recipes">Personal Recipes</NavLink>
-                  <NavLink to="dashboard/bookmarked">
-                    Bookmarked Recipes
-                  </NavLink>
+                  <NavLink to="recipes/my-recipes">Personal Recipes</NavLink>
+                  <NavLink to="recipes/bookmarked">Bookmarked Recipes</NavLink>
                 </div>
               </div>
               <div className={styles.link}>
                 <button className={styles.dropBtn}>Account</button>
                 <div className={styles.dropdownContent}>
-                  <NavLink to="dashboard/profile">Settings</NavLink>
+                  <NavLink to="recipes/profile">Settings</NavLink>
                   <NavLink to="/login">
                     <button className={styles.logOutBtn} onClick={logOutUser}>
                       Logout

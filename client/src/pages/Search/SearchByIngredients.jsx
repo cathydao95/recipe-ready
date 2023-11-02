@@ -14,7 +14,7 @@ const SearchByIngredients = () => {
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/dashboard/results", {
+    navigate("/recipes/results", {
       state: { ingredients: selectedIngredients },
     });
     setIsLoading(true);

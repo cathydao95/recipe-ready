@@ -6,7 +6,7 @@ import clsx from "clsx";
 const RecipeArticle = ({ recipe }) => {
   const { id, title, image_url } = recipe;
   return (
-    <NavLink to={`/dashboard/${id}`}>
+    <NavLink to={`/recipes/${id}`}>
       <div className={styles.articleContainer}>
         <div className={styles.imgContainer}>
           <img className={styles.img} src={image_url} alt={title} />
