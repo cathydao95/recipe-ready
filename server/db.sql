@@ -21,6 +21,41 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: bookmarked; Type: TABLE; Schema: public; Owner: tpl1122_1
+--
+
+CREATE TABLE public.bookmarked (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    recipe_id integer NOT NULL
+);
+
+
+ALTER TABLE public.bookmarked OWNER TO tpl1122_1;
+
+--
+-- Name: bookmarked_id_seq; Type: SEQUENCE; Schema: public; Owner: tpl1122_1
+--
+
+CREATE SEQUENCE public.bookmarked_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bookmarked_id_seq OWNER TO tpl1122_1;
+
+--
+-- Name: bookmarked_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tpl1122_1
+--
+
+ALTER SEQUENCE public.bookmarked_id_seq OWNED BY public.bookmarked.id;
+
+
+--
 -- Name: recipes; Type: TABLE; Schema: public; Owner: tpl1122_1
 --
 
@@ -98,6 +133,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: bookmarked id; Type: DEFAULT; Schema: public; Owner: tpl1122_1
+--
+
+ALTER TABLE ONLY public.bookmarked ALTER COLUMN id SET DEFAULT nextval('public.bookmarked_id_seq'::regclass);
+
+
+--
 -- Name: recipes id; Type: DEFAULT; Schema: public; Owner: tpl1122_1
 --
 
@@ -112,23 +154,28 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
+-- Data for Name: bookmarked; Type: TABLE DATA; Schema: public; Owner: tpl1122_1
+--
+
+COPY public.bookmarked (id, user_id, recipe_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: recipes; Type: TABLE DATA; Schema: public; Owner: tpl1122_1
 --
 
 COPY public.recipes (id, title, ingredients, instructions, prep_time, image_url, user_id, public_recipe) FROM stdin;
-1	Mock Recipe 1	{beef,tomatoes,onions,garlic,pasta}	1. Cook beef. 2. Sauté tomatoes, onions, and garlic. 3. Cook pasta. 4. Combine all ingredients.	30	https://res.cloudinary.com/dnu4wptmg/image/upload/v1675149363/recipe-image/tmp-1-1675149361908_imoboq.jpg	\N	t
-2	Mock Recipe 2	{chicken,potatoes,carrots,paprika}	1. Cook chicken. 2. Roast potatoes and carrots with paprika. 3. Combine all ingredients.	45	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150031/recipe-image/tmp-2-1675150030821_frx22v.jpg	\N	t
-3	Mock Recipe 3	{salmon,asparagus,lemon,butter}	1. Grill salmon with asparagus. 2. Add lemon and butter. 3. Serve.	25	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150168/recipe-image/tmp-3-1675150167278_rtbur4.jpg	\N	t
-4	Mock Recipe 4	{pork,apples,cinnamon,onions}	1. Cook pork with apples and onions. 2. Add cinnamon for flavor. 3. Serve.	40	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150175/recipe-image/tmp-4-1675150173932_kru0nm.jpg	\N	t
-5	Mock Recipe 5	{pasta,cheese,milk,butter}	1. Cook pasta. 2. Make a cheese sauce with milk and butter. 3. Combine with pasta.	30	https://res.cloudinary.com/dnu4wptmg/image/upload/v1675149363/recipe-image/tmp-1-1675149361908_imoboq.jpg	\N	t
-6	Mock Recipe 6	{shrimp,garlic,pasta,"olive oil"}	1. Sauté shrimp with garlic. 2. Cook pasta. 3. Drizzle with olive oil.	15	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150031/recipe-image/tmp-2-1675150030821_frx22v.jpg	\N	t
-7	Mock Recipe 7	{turkey,cranberries,stuffing,gravy}	1. Roast turkey. 2. Make stuffing. 3. Serve with cranberries and gravy.	10	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150168/recipe-image/tmp-3-1675150167278_rtbur4.jpg	\N	t
-8	Mock Recipe 8	{beef,tortillas,salsa,lettuce,cheese}	1. Cook beef. 2. Assemble tacos with tortillas, salsa, lettuce, and cheese.	35	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150175/recipe-image/tmp-4-1675150173932_kru0nm.jpg	\N	t
-9	Mock Recipe 9	{chicken,rice,"soy sauce",broccoli}	1. Cook chicken. 2. Cook rice. 3. Add soy sauce and broccoli. 4. Combine all ingredients.	20	https://res.cloudinary.com/dnu4wptmg/image/upload/v1675149363/recipe-image/tmp-1-1675149361908_imoboq.jpg	\N	t
-10	Mock Recipe 10	{salmon,dill,lemon,couscous}	1. Grill salmon with dill and lemon. 2. Serve with couscous.	40	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150168/recipe-image/tmp-3-1675150167278_rtbur4.jpg	\N	t
-11	TEST FOR CATHY	{"Chicken Breast","Mixed Greens",Tomatoes,Cucumbers,"Balsamic Vinaigrette"}	1. Grill chicken until fully cooked. 2. Slice chicken into strips. 3. Toss mixed greens, tomatoes, and cucumbers. 4. Top with grilled chicken. 5. Drizzle with balsamic vinaigrette.	25	https://res.cloudinary.com/dnu4wptmg/image/upload/v1675149363/recipe-image/tmp-1-1675149361908_imoboq.jpg	6	f
-24	beef burger	{asdasd,asd}	1. Grill chicken until fully cooked. 2. Slice chicken into strips. 3. Toss mixed greens, tomatoes, and cucumbers. 4. Top with grilled chicken. 5. Drizzle with balsamic vinaigrette.	25	https://res.cloudinary.com/dnu4wptmg/image/upload/v1675149363/recipe-image/tmp-1-1675149361908_imoboq.jpg	1	f
-25	This works!	{YAY}	YAY	24	https://res.cloudinary.com/dnu4wptmg/image/upload/v1698385398/recipe-image/hand-drawn-healthy-food-landing-page_23-2149080874_xlebmb.jpg	1	f
+1	Spaghetti Carbonara	{Spaghetti,Eggs,Pancetta,"Parmesan Cheese"}	1. Cook pasta. 2. Fry pancetta. 3. Mix eggs and cheese. 4. Combine all.	30	https://res.cloudinary.com/dnu4wptmg/image/upload/v1675149363/recipe-image/tmp-1-1675149361908_imoboq.jpg	\N	t
+2	Chicken Alfredo	{Fettuccine,Chicken,"Alfredo Sauce",Garlic,"Parmesan Cheese"}	1. Cook chicken. 2. Cook pasta. 3. Make sauce. 4. Combine all.	45	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150031/recipe-image/tmp-2-1675150030821_frx22v.jpg	\N	t
+3	Vegetable Stir-Fry	{"Mixed Vegetables",Tofu,"Soy Sauce",Garlic,Ginger}	1. Stir-fry vegetables. 2. Cook tofu. 3. Make sauce. 4. Combine all.	25	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150168/recipe-image/tmp-3-1675150167278_rtbur4.jpg	\N	t
+4	Homemade Pizza	{"Pizza Dough","Tomato Sauce","Mozzarella Cheese",Pepperoni}	1. Roll out dough. 2. Spread sauce. 3. Add toppings. 4. Bake.	40	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150175/recipe-image/tmp-4-1675150173932_kru0nm.jpg	\N	t
+5	Beef Tacos	{"Ground Beef","Taco Seasoning",Tortillas,Lettuce,Tomato}	1. Cook beef. 2. Season. 3. Assemble tacos.	30	https://res.cloudinary.com/dnu4wptmg/image/upload/v1675149363/recipe-image/tmp-1-1675149361908_imoboq.jpg	\N	t
+6	Chocolate Chip Cookies	{Flour,Sugar,Butter,"Chocolate Chips"}	1. Mix ingredients. 2. Bake in the oven.	15	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150031/recipe-image/tmp-2-1675150030821_frx22v.jpg	\N	t
+7	Caesar Salad	{"Romaine Lettuce","Caesar Dressing",Croutons,"Parmesan Cheese"}	1. Toss lettuce with dressing. 2. Add croutons and cheese.	10	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150168/recipe-image/tmp-3-1675150167278_rtbur4.jpg	\N	t
+8	Mushroom Risotto	{"Arborio Rice",Mushrooms,Onion,"White Wine",Broth}	1. Sauté mushrooms and onion. 2. Cook rice with wine and broth.	35	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150175/recipe-image/tmp-4-1675150173932_kru0nm.jpg	\N	t
+9	Grilled Salmon	{"Salmon Fillet",Lemon,Dill,"Olive Oil"}	1. Marinate salmon. 2. Grill until done.	20	https://res.cloudinary.com/dnu4wptmg/image/upload/v1675149363/recipe-image/tmp-1-1675149361908_imoboq.jpg	\N	t
+10	Beef Stroganoff	{"Beef Strips",Onion,Mushrooms,"Sour Cream",Paprika}	1. Sauté beef, onion, and mushrooms. 2. Add sour cream and paprika.	40	http://res.cloudinary.com/dnu4wptmg/image/upload/v1675150168/recipe-image/tmp-3-1675150167278_rtbur4.jpg	\N	t
 \.
 
 
@@ -137,27 +184,37 @@ COPY public.recipes (id, title, ingredients, instructions, prep_time, image_url,
 --
 
 COPY public.users (id, first_name, last_name, email, hashed_password) FROM stdin;
-1	cathy	dao	cathydao@gmail.com	$2b$10$A3PixT0sCjQj8b6f2WY.8u9fkiywg3AjEqx1C4dkFaiGleqAgNsay
-2	ellie	meadows	elliemeadows@gmail.com	$2b$10$Dmt5MTEOK7mXRSPSNxrobuerDlXHsOpjwyx45TG3aO51rj/n2K/Na
-3	bryan	dao	bryandao@gmail.com	$2b$10$5Idy3XMDU7RLIIteDeGRXe8daVD4card3jTPQTjew1a2fqRj4Q42y
-4	patrick	dao	patrickdao@gmail.com	$2b$10$xJlscue7TTGG9PEnO45JmO121/DR3lQgd1c6eOPp27E36gOU2j3/y
-5	thuy	dao	thuydao@gmail.com	$2b$10$6sHcTtilXIAKM/pgocKtg.SvYMOEGf37iktbxTDH7Hb5rvm2Adm3.
-6	can	dao	candao@gmail.com	$2b$10$EoJzI9h3k7sZKLRl46gUH.EAnXhh12HMF0IXquq6Ojbm0DgpnM24K
+1	Cathy	Dao	cathydao@gmail.com	$2b$10$oA4R8CBBJaOpMMFUN4hrke0RWwzWvo/.Q7uYHtmrzw.ww3rxaI/7a
 \.
+
+
+--
+-- Name: bookmarked_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tpl1122_1
+--
+
+SELECT pg_catalog.setval('public.bookmarked_id_seq', 1, false);
 
 
 --
 -- Name: recipes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tpl1122_1
 --
 
-SELECT pg_catalog.setval('public.recipes_id_seq', 28, true);
+SELECT pg_catalog.setval('public.recipes_id_seq', 10, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tpl1122_1
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 6, true);
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+
+
+--
+-- Name: bookmarked bookmarked_pkey; Type: CONSTRAINT; Schema: public; Owner: tpl1122_1
+--
+
+ALTER TABLE ONLY public.bookmarked
+    ADD CONSTRAINT bookmarked_pkey PRIMARY KEY (id);
 
 
 --
@@ -177,11 +234,27 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: bookmarked bookmarked_recipe_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tpl1122_1
+--
+
+ALTER TABLE ONLY public.bookmarked
+    ADD CONSTRAINT bookmarked_recipe_id_fkey FOREIGN KEY (recipe_id) REFERENCES public.recipes(id) ON DELETE CASCADE;
+
+
+--
+-- Name: bookmarked bookmarked_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tpl1122_1
+--
+
+ALTER TABLE ONLY public.bookmarked
+    ADD CONSTRAINT bookmarked_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
 -- Name: recipes recipes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tpl1122_1
 --
 
 ALTER TABLE ONLY public.recipes
-    ADD CONSTRAINT recipes_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
+    ADD CONSTRAINT recipes_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
