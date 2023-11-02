@@ -29,8 +29,6 @@ const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       {
         path: "recipes",
-        // element: <DashboardLayout />,
-
         children: [
           { index: true, element: <SearchByName /> },
           { path: "search-ingredients", element: <SearchByIngredients /> },
