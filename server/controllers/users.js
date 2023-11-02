@@ -33,13 +33,11 @@ export const getUser = async (req, res) => {
 // EDIT USER
 export const editUser = async (req, res) => {
   const currentUserId = req.user.userId;
-  // incorporate password update
-  const { firstName, lastName, email, password } = req.body;
-  const salt = bcrypt.genSaltSync(10);
-  const hashed_password = bcrypt.hashSync(password, salt);
+  const { firstName, lastName, email } = req.body;
+
   const updatedUser = await db.query(
-    "UPDATE users SET (first_name, last_name, email, hashed_password) = ($1, $2, $3, $4) WHERE id = $5",
-    [firstName, lastName, email, hashed_password, currentUserId]
+    "UPDATE users SET (first_name, last_name, email) = ($1, $2, $3) WHERE id = $4",
+    [firstName, lastName, email, currentUserId]
   );
 
   res.status(StatusCodes.OK).json({

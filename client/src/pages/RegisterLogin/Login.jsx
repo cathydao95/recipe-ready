@@ -38,7 +38,7 @@ const Login = () => {
         let { msg } = await response.json();
         setIsAuthenticated(true);
         toast.success(msg);
-        navigate("/dashboard");
+        navigate("/recipes");
       } else {
         let { msg } = await response.json();
         if (msg) {

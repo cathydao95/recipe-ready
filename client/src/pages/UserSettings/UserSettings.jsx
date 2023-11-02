@@ -12,7 +12,6 @@ const UserSettings = () => {
     firstName: "",
     lastName: "",
     email: "",
-    password: "",
   });
 
   console.log("current", currentUser);
@@ -38,7 +37,9 @@ const UserSettings = () => {
 
       // If success, register user and navigate user to dashboard
       if (response.ok) {
-        let { msg } = await response.json();
+        const {
+          data: { msg },
+        } = await response.json();
 
         toast.success(msg);
       } else {
@@ -64,6 +65,10 @@ const UserSettings = () => {
       setIsLoading(false);
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
 
   return isLoading ? (
     <Loading />
@@ -91,7 +96,6 @@ const UserSettings = () => {
           handleInput={handleInput}
           value={updatedUserInfo.email}
         />
-        <FormRow type="password" name="password" handleInput={handleInput} />
 
         <button
           className="formBtn"
