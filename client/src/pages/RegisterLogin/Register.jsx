@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { FormRow } from "../../components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAppContext } from "../../context/appContext";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { setIsAuthenticated } = useAppContext();
   const [registrationInfo, setRegistrationInfo] = useState({
     firstName: "",
     lastName: "",
@@ -36,7 +38,7 @@ const Register = () => {
       // If success, register user and navigate user to dashboard
       if (response.ok) {
         let { msg } = await response.json();
-
+        setIsAuthenticated(true);
         toast.success(msg);
         navigate("/dashboard");
       } else {
@@ -78,7 +80,6 @@ const Register = () => {
         <button className="formBtn" type="submit" onClick={registerUser}>
           Submit
         </button>
-        <p className="formAlert">Error Message</p>
       </form>
     </div>
   );

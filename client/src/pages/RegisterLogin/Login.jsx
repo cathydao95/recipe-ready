@@ -4,9 +4,11 @@ import { FormRow } from "../../components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../../context/appContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setIsAuthenticated } = useAppContext();
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -34,6 +36,7 @@ const Login = () => {
       // If success, log in user and navigate user to dashboard and display toast success
       if (response.ok) {
         let { msg } = await response.json();
+        setIsAuthenticated(true);
         toast.success(msg);
         navigate("/dashboard");
       } else {
@@ -61,7 +64,6 @@ const Login = () => {
         <button className="formBtn" type="submit" onClick={loginUser}>
           Submit
         </button>
-        <p className="formAlert">Error Message</p>
       </form>
     </div>
   );
