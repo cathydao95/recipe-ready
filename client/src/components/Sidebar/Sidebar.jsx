@@ -1,5 +1,5 @@
 import { useDashboardContext } from "../../pages/Layouts/DashboardLayout";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
@@ -26,18 +26,20 @@ const Sidebar = () => {
           >
             <FaTimes />
           </button>
-          <h1 className={styles.title}>Recipe Ready</h1>
+          <Link to="/" onClick={toggleSidebar}>
+            <h1 className={styles.title}>Recipe Ready</h1>
+          </Link>
         </div>
         <div className={styles.container}>
           <div className={styles.link}>
             <div className={styles.category}>Explore</div>
             <ul className={styles.linksContainer}>
-              <NavLink to="recipes/search-ingredients" onClick={toggleSidebar}>
+              <Link to="search-ingredients" onClick={toggleSidebar}>
                 Search By Ingredients
-              </NavLink>
-              <NavLink to="recipes" onClick={toggleSidebar}>
+              </Link>
+              <Link to="/" onClick={toggleSidebar}>
                 Search By Recipe
-              </NavLink>
+              </Link>
             </ul>
           </div>
           {isAuthenticated ? (
@@ -45,25 +47,25 @@ const Sidebar = () => {
               <div className={styles.link}>
                 <div className={styles.category}>Collection</div>
                 <ul className={styles.linksContainer}>
-                  <NavLink to="recipes/create" onClick={toggleSidebar}>
+                  <Link to="create" onClick={toggleSidebar}>
                     Create New Recipe
-                  </NavLink>
-                  <NavLink to="recipes/my-recipes" onClick={toggleSidebar}>
+                  </Link>
+                  <Link to="my-recipes" onClick={toggleSidebar}>
                     Personal Recipes
-                  </NavLink>
-                  <NavLink to="recipes/bookmarked" onClick={toggleSidebar}>
+                  </Link>
+                  <Link to="bookmarked" onClick={toggleSidebar}>
                     Bookmarked Recipes
-                  </NavLink>
+                  </Link>
                 </ul>
               </div>
 
               <div className={styles.link}>
                 <div className={styles.category}>Account</div>
                 <ul className={styles.linksContainer}>
-                  <NavLink to="recipes/profile" onClick={toggleSidebar}>
+                  <Link to="profile" onClick={toggleSidebar}>
                     Settings
-                  </NavLink>
-                  <NavLink to="/login">
+                  </Link>
+                  <Link to="login">
                     <div
                       onClick={() => {
                         logOutUser();
@@ -72,15 +74,15 @@ const Sidebar = () => {
                     >
                       Logout
                     </div>
-                  </NavLink>
+                  </Link>
                 </ul>
               </div>
             </>
           ) : (
             <div className={styles.link}>
-              <NavLink to="/login" onClick={toggleSidebar}>
+              <Link to="/login" onClick={toggleSidebar}>
                 Login
-              </NavLink>
+              </Link>
             </div>
           )}
         </div>

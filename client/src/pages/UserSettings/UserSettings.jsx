@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { FormRow, Loading } from "../../components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,7 +13,6 @@ const UserSettings = () => {
     email: "",
   });
 
-  console.log("current", currentUser);
   // Function to handle edit user form
   const handleInput = (e) => {
     setUpdatedUserInfo((prevInput) => {
@@ -54,18 +52,19 @@ const UserSettings = () => {
     }
   };
 
+  // If currentUser exists and has a length greater than 0, set updatedUserInfo state to the first_name, last_name, and email of current user
   useEffect(() => {
     if (currentUser && currentUser.length > 0) {
       setUpdatedUserInfo({
         firstName: currentUser[0]?.first_name || "",
         lastName: currentUser[0]?.last_name || "",
         email: currentUser[0]?.email || "",
-        password: "",
       });
       setIsLoading(false);
     }
   }, [currentUser]);
 
+  // Fetch current user information
   useEffect(() => {
     getCurrentUser();
   }, []);

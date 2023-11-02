@@ -13,7 +13,7 @@ const SearchByName = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/recipes/results", {
+    navigate("results", {
       state: { keyword },
     });
     setIsLoading(true);
@@ -24,21 +24,24 @@ const SearchByName = () => {
   }, []);
 
   return (
-    <div>
+    <div className="wrapper">
       <div className={styles.searchContainer}>
-        <h2>Find a Recipe</h2>
         <form className={styles.searchForm} onSubmit={handleSubmit}>
           <div className={styles.searchIcon}>
             <FaSearch />
           </div>
           <input
             className={styles.searchInput}
+            placeholder="Search Recipes"
             onChange={(e) => setKeyword(e.target.value)}
           ></input>
         </form>
       </div>
-      <div>
-        {recipeResults.slice(5).map((recipe, index) => {
+      <p className={styles.text}>
+        <span>LATEST RECIPES</span>
+      </p>
+      <div className={styles.recipesContainer}>
+        {recipeResults.map((recipe, index) => {
           return <RecipeArticle key={recipe.id} recipe={recipe} />;
         })}
       </div>

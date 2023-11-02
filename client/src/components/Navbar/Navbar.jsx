@@ -20,32 +20,30 @@ const Navbar = () => {
         >
           <FaAlignLeft />
         </button>
-        <NavLink to="/recipes">
+        <Link to="/">
           <h4 className={styles.logo}>Recipe Ready</h4>
-        </NavLink>
+        </Link>
         {isAuthenticated ? (
-          <NavLink to="/">
+          <Link to="/">
             <button className={styles.logOutBtn} onClick={logOutUser}>
               Logout
             </button>
-          </NavLink>
+          </Link>
         ) : (
-          <NavLink to="/login">Login</NavLink>
+          <Link to="/login">Login</Link>
         )}
       </div>
       {/* Navbar for large screens */}
       <div className={styles.bigNavItems}>
-        <NavLink to="/recipes">
+        <Link to="/">
           <h4 className={styles.logo}>Recipe Ready</h4>
-        </NavLink>
+        </Link>
         <div className={styles.linksContainer}>
           <div className={styles.link}>
             <button className={styles.dropBtn}>Explore</button>
             <div className={styles.dropdownContent}>
-              <NavLink to="recipes/search-ingredients">
-                Search By Ingredient
-              </NavLink>
-              <NavLink to="recipes">Search By Recipe</NavLink>
+              <Link to="search-ingredients">Search By Ingredient</Link>
+              <Link to="/">Search By Recipe</Link>
             </div>
           </div>
           {isAuthenticated ? (
@@ -53,33 +51,33 @@ const Navbar = () => {
               <div className={styles.link}>
                 <button className={styles.dropBtn}>Collection</button>
                 <div className={styles.dropdownContent}>
-                  <NavLink
+                  <Link
                     to={{
-                      pathname: "recipes/create",
+                      pathname: "create",
                       state: { isEditing: false, currentRecipeInfo: [] },
                     }}
                   >
                     Create New Recipe
-                  </NavLink>
-                  <NavLink to="recipes/my-recipes">Personal Recipes</NavLink>
-                  <NavLink to="recipes/bookmarked">Bookmarked Recipes</NavLink>
+                  </Link>
+                  <Link to="my-recipes">Personal Recipes</Link>
+                  <Link to="bookmarked">Bookmarked Recipes</Link>
                 </div>
               </div>
               <div className={styles.link}>
                 <button className={styles.dropBtn}>Account</button>
                 <div className={styles.dropdownContent}>
-                  <NavLink to="recipes/profile">Settings</NavLink>
-                  <NavLink to="/login">
+                  <Link to="profile">Settings</Link>
+                  <Link to="login">
                     <button className={styles.logOutBtn} onClick={logOutUser}>
                       Logout
                     </button>
-                  </NavLink>
+                  </Link>
                 </div>
               </div>
             </>
           ) : (
             <div className={styles.link}>
-              <NavLink to="/login">Login</NavLink>
+              <Link to="/login">Login</Link>
             </div>
           )}
         </div>

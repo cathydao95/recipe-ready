@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Loading } from "../../components";
-import { useParams, useNavigate, NavLink } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import { FaRegClock, FaBookmark, FaRegTrashAlt } from "react-icons/fa";
@@ -64,7 +64,7 @@ const Recipe = () => {
     const { success } = await deleteRecipe(id);
     // If recipe successfully deleted, navigate to user's personal recipes page
     if (success) {
-      navigate("/recipes/my-recipes");
+      navigate("my-recipes");
     }
   };
 

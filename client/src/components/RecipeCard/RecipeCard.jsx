@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 import { useState } from "react";
 import { FaRegClock, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { useAppContext } from "../../context/appContext";
 import Modal from "react-bootstrap/Modal";
@@ -32,7 +32,7 @@ const RecipeCard = ({ recipe }) => {
     const { success } = await deleteRecipe(id);
     // If successful, navigate back to personal recipes page
     if (success) {
-      navigate("/recipes/my-recipes");
+      navigate("my-recipes");
     }
   };
 
@@ -50,7 +50,7 @@ const RecipeCard = ({ recipe }) => {
 
   return (
     <>
-      <NavLink to={`/recipes/${id}`}>
+      <Link to={`recipes/${id}`}>
         <div className={styles.recipeCard}>
           <div className={clsx(styles.imgContainer, "imgContainer")}>
             <img className={styles.img} src={image_url} alt={title} />
@@ -97,7 +97,7 @@ const RecipeCard = ({ recipe }) => {
             </div>
           </div>
         </div>
-      </NavLink>
+      </Link>
       <Modal
         show={showLogin}
         onHide={() => setShowLogin(false)}
@@ -108,9 +108,9 @@ const RecipeCard = ({ recipe }) => {
         <Modal.Header closeButton className={styles.modalHeader}></Modal.Header>
         <Modal.Body className={styles.btnContainer}>
           Please login to bookmark a recipe!
-          <NavLink to="/login">
+          <Link to="/login">
             <button className={styles.actionBtn}>Login</button>
-          </NavLink>
+          </Link>
         </Modal.Body>
       </Modal>
       <Modal
@@ -126,7 +126,7 @@ const RecipeCard = ({ recipe }) => {
             className={styles.actionBtn}
             variant="secondary"
             onClick={() =>
-              navigate("/recipes/create", {
+              navigate("create", {
                 state: { isEditing: true, currentRecipeInfo: recipe },
               })
             }
