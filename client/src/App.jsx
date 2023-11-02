@@ -12,7 +12,6 @@ import {
   Bookmarked,
   Create,
   UserSettings,
-  Dashboard,
 } from "./pages";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import SearchByName from "./pages/Search/SearchByName";
@@ -29,15 +28,15 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "login", element: <Login /> },
       {
-        path: "dashboard",
+        path: "recipes",
         // element: <DashboardLayout />,
 
         children: [
-          { index: true, element: <Dashboard /> },
+          { index: true, element: <SearchByName /> },
           { path: "search-ingredients", element: <SearchByIngredients /> },
-          { path: "search-name", element: <SearchByName /> },
           { path: "results", element: <Results /> },
-          { path: ":id(\\d+)", element: <Recipe /> },
+          { path: ":id", element: <Recipe /> },
+
           {
             path: "bookmarked",
             element: (
