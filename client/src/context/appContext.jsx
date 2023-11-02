@@ -10,6 +10,7 @@ const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [usersRecipes, setUsersRecipes] = useState([]);
   const [usersBookmarked, setUsersBookmarked] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const getCurrentUser = async () => {
     try {
@@ -37,6 +38,8 @@ const AppProvider = ({ children }) => {
 
       // If logout is successful, navigate to landing page and display toast message
       if (response.ok) {
+        setCurrentUser([]);
+        setIsAuthenticated(false);
         const { msg } = await response.json();
         toast.success(msg);
       }
@@ -159,9 +162,14 @@ const AppProvider = ({ children }) => {
     getCurrentUser();
     getBookmarkedRecipes();
   }, []);
+
+  // useEffect(() => {
+  //   setIsAuthenticated(currentUser && Object.keys(currentUser).length > 0);
+  // }, [currentUser]);
   return (
     <AppContext.Provider
       value={{
+        isAuthenticated,
         getRecipes,
         deleteRecipe,
         recipeResults,
@@ -176,6 +184,7 @@ const AppProvider = ({ children }) => {
         getCurrentUser,
         currentUser,
         logOutUser,
+        setIsAuthenticated,
       }}
     >
       {children}
