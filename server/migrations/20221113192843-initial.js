@@ -1,9 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-// Since __dirname is not available with ES modules, we simulate it
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -21,29 +19,35 @@ export function setup(options, seedLink) {
 }
 
 export function up(db) {
-  const filePath = path.join(__dirname, 'sqls', '20221113192843-initial-up.sql');
+  const filePath = path.join(
+    __dirname,
+    "sqls",
+    "20221113192843-initial-up.sql"
+  );
   return new Promise((resolve, reject) => {
-    fs.readFile(filePath, { encoding: 'utf-8' }, (err, data) => {
+    fs.readFile(filePath, { encoding: "utf-8" }, (err, data) => {
       if (err) return reject(err);
-      console.log('received data: ' + data);
+      console.log("received data: " + data);
       resolve(data);
     });
-  })
-  .then((data) => {
+  }).then((data) => {
     return db.runSql(data);
   });
 }
 
 export function down(db) {
-  const filePath = path.join(__dirname, 'sqls', '20221113192843-initial-down.sql');
+  const filePath = path.join(
+    __dirname,
+    "sqls",
+    "20221113192843-initial-down.sql"
+  );
   return new Promise((resolve, reject) => {
-    fs.readFile(filePath, { encoding: 'utf-8' }, (err, data) => {
+    fs.readFile(filePath, { encoding: "utf-8" }, (err, data) => {
       if (err) return reject(err);
-      console.log('received data: ' + data);
+      console.log("received data: " + data);
       resolve(data);
     });
-  })
-  .then((data) => {
+  }).then((data) => {
     return db.runSql(data);
   });
 }
