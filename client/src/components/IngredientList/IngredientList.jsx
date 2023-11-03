@@ -26,7 +26,7 @@ const IngredientList = ({ selectedIngredients, setSelectedIngredients }) => {
             </h5>
             {examples.map((ing) => {
               return (
-                <div key={ing}>
+                <div className={styles.ingContainer} key={ing}>
                   <input
                     key={ing}
                     type="checkbox"

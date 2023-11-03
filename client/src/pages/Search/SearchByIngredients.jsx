@@ -23,17 +23,16 @@ const SearchByIngredients = () => {
   return (
     <div className={clsx("wrapper")}>
       <h2>What Ingredients Do You Have?</h2>
-      <div>
-        <h4>Ingredients</h4>
 
-        <form>
-          <IngredientList
-            selectedIngredients={selectedIngredients}
-            setSelectedIngredients={setSelectedIngredients}
-          />
-          <button onClick={(e) => handleSubmit(e)}>Search For Recipes</button>
-        </form>
-      </div>
+      <form>
+        <IngredientList
+          selectedIngredients={selectedIngredients}
+          setSelectedIngredients={setSelectedIngredients}
+        />
+        <button className="formBtn" onClick={(e) => handleSubmit(e)}>
+          Search For Recipes
+        </button>
+      </form>
     </div>
   );
 };
