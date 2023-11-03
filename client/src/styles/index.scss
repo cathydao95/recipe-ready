@@ -141,10 +141,14 @@ button {
   border-bottom: 1px solid var(--clr-primary-1);
   color: var(--clr-primary-1);
   // text-transform: capitalize;
-  padding: 0;
+  padding: 0.5rem;
 }
 .formInput {
   height: 35px;
+}
+
+.formInput:focus {
+  outline: none;
 }
 .formRow {
   margin-bottom: 1rem;
