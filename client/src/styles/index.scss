@@ -209,8 +209,9 @@ button {
 .prepTime {
   font-size: 0.75rem;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.25rem;
   align-items: center;
+  flex-basis: 40%;
 }
 
 @media (min-width: 481px) {
@@ -219,9 +220,23 @@ button {
   }
 }
 
+@media (min-width: 500px) {
+  .prepTime {
+    flex-basis: 20%;
+    justify-content: end;
+  }
+}
+
 @media (min-width: 769px) {
   .wrapper {
     margin: 4rem 6rem;
+  }
+  .formBtn {
+    width: 50%;
+  }
+  .prepTime {
+    flex-basis: 15%;
+    justify-content: end;
   }
 }
 @media (min-width: 1025px) {

@@ -106,7 +106,7 @@ const Recipe = () => {
         <div className={clsx(styles.recipeWrapper, "wrapper")}>
           <div className={styles.btnContainer}>
             <button onClick={() => navigate(-1)} className={styles.actionBtn}>
-              Back To Search
+              Back
             </button>
             <button
               onClick={(e) => {
@@ -119,9 +119,8 @@ const Recipe = () => {
                 "Bookmarked"
               ) : (
                 <>
-                  <span>
-                    <FaBookmark />
-                    Bookmark Recipe
+                  <span className={styles.bookmarkContainer}>
+                    <FaBookmark /> Bookmark
                   </span>
                 </>
               )}
@@ -136,74 +135,90 @@ const Recipe = () => {
           </div>
           <div className={styles.recipeInfoContainer}>
             <div className={styles.recipeHeader}>
-              <h3>{recipeInfo.title}</h3>
+              <h3 className={styles.recipeTitle}>{recipeInfo.title}</h3>
               <span className="prepTime">
                 <FaRegClock />
                 {recipeInfo.prep_time} min
               </span>
             </div>
-            <div className={styles.ingContainer}>
-              <h4>Ingredients</h4>
-              <ul className={styles.ingContainer}>
-                {recipeInfo?.ingredients?.map((ing) => {
-                  return (
-                    <li key={ing} className={styles.ing}>
-                      {ing}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-            <div className={styles.instructionsContainer}>
-              <h4>Instructions</h4>
-              <ol className={styles.instructionsList}>
-                {recipeInfo.instructions
-                  // split by 1. , 2.,
-                  .split(/\d+\.\s+/)
-                  // remove empty string at index 0
-                  .slice(1)
-                  .map((instruction) => {
+            <div className={styles.ingInstrContainer}>
+              <div className={styles.ingContainer}>
+                <h4>Ingredients</h4>
+                <ul className={styles.ingContainer}>
+                  {recipeInfo?.ingredients?.map((ing) => {
                     return (
-                      <li key={instruction} className={styles.instruction}>
-                        {instruction}
+                      <li key={ing} className={styles.ing}>
+                        {ing[0].toUpperCase() + ing.slice(1)}
                       </li>
                     );
                   })}
-              </ol>
+                </ul>
+              </div>
+              <div className={styles.instructionsContainer}>
+                <h4>Instructions</h4>
+                <ol className={styles.instructionsList}>
+                  {recipeInfo.instructions
+                    // split by 1. , 2.,
+                    .split(/\d+\.\s+/)
+                    // remove empty string at index 0
+                    .slice(1)
+                    .map((instruction) => {
+                      return (
+                        <li key={instruction} className={styles.instruction}>
+                          {instruction}
+                        </li>
+                      );
+                    })}
+                </ol>
+              </div>
             </div>
-            <button onClick={() => getRecipeNutrition(recipeInfo.id)}>
-              See Nutrition Info
-            </button>
+            <div className={styles.nutrBtnContainer}>
+              <button
+                className="formBtn"
+                onClick={() => getRecipeNutrition(recipeInfo.id)}
+              >
+                See Nutrition Info
+              </button>
+            </div>
             {showNutrition && (
-              <div>
-                <h6>
-                  Calories:
-                  <span>
-                    {recipeNutrition.calories.value}
-                    {recipeNutrition.calories.unit}
-                  </span>
-                </h6>
-                <h6>
-                  Carbs:
-                  <span>
-                    {recipeNutrition.carbs.value}
-                    {recipeNutrition.carbs.unit}
-                  </span>
-                </h6>
-                <h6>
-                  Protein:
-                  <span>
-                    {recipeNutrition.protein.value}
-                    {recipeNutrition.protein.unit}
-                  </span>
-                </h6>
-                <h6>
-                  Fat:
-                  <span>
-                    {recipeNutrition.fat.value}
-                    {recipeNutrition.fat.unit}
-                  </span>
-                </h6>
+              <div className={styles.nutritionContainer}>
+                <table className={styles.nutritionTable}>
+                  <thead>
+                    <tr>
+                      <th>Nutrition</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Calories</td>
+                      <td>
+                        {recipeNutrition.calories.value}{" "}
+                        {recipeNutrition.calories.unit}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Carbs</td>
+                      <td>
+                        {recipeNutrition.carbs.value}{" "}
+                        {recipeNutrition.carbs.unit}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Protein</td>
+                      <td>
+                        {recipeNutrition.protein.value}{" "}
+                        {recipeNutrition.protein.unit}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Fat</td>
+                      <td>
+                        {recipeNutrition.fat.value} {recipeNutrition.fat.unit}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             )}
           </div>
