@@ -227,13 +227,17 @@ button {
   }
 }
 
+@media (min-width: 750px) {
+  .formBtn {
+    width: 60%;
+  }
+}
+
 @media (min-width: 769px) {
   .wrapper {
     margin: 4rem 6rem;
   }
-  .formBtn {
-    width: 50%;
-  }
+
   .prepTime {
     flex-basis: 15%;
     justify-content: end;
