@@ -13,7 +13,7 @@ const SearchByName = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("results", {
+    navigate("/results", {
       state: { keyword },
     });
     setIsLoading(true);

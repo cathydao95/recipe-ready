@@ -13,7 +13,6 @@ const AppProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
 
-  console.log("isAuthenticated", isAuthenticated);
   const getCurrentUser = async () => {
     try {
       let response = await fetch("http://localhost:8080/api/v1/users/current", {

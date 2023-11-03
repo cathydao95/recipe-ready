@@ -32,7 +32,7 @@ const ResultsLayout = ({ recipes, title, page, isLoading }) => {
         return (
           <div className={styles.container}>
             <p>No Recipes Found</p>
-            <Link to="search-ingredients">
+            <Link to="/search-ingredients">
               <button className={styles.btn}> Search For Recipes</button>
             </Link>
             {/* <div className={styles.imgContainer}>
@@ -49,7 +49,7 @@ const ResultsLayout = ({ recipes, title, page, isLoading }) => {
             </div>
             <p>You Have Not Bookmarked Any Recipes</p>
 
-            <Link to="search-ingredients">
+            <Link to="/search-ingredients">
               <button className={styles.btn}> Search For Recipes</button>
             </Link>
           </div>

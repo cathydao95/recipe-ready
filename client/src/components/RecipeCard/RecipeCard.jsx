@@ -102,7 +102,7 @@ const RecipeCard = ({ recipe }) => {
             className={styles.actionBtn}
             variant="secondary"
             onClick={() =>
-              navigate("create", {
+              navigate("/create", {
                 state: { isEditing: true, currentRecipeInfo: recipe },
               })
             }

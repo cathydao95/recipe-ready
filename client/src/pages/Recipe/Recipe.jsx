@@ -62,14 +62,14 @@ const Recipe = () => {
     const { success } = await deleteRecipe(id);
     // If recipe successfully deleted, navigate to user's personal recipes page
     if (success) {
-      navigate("my-recipes");
+      navigate("/my-recipes");
     }
   };
 
   // Function to retrieve recipe's nutritional information
   const getRecipeNutrition = async (recipeId) => {
     let url = `http://localhost:8080/api/v1/recipes/${id}/nutrition`;
-    console.log(url);
+
     try {
       const response = await fetch(url, {
         credentials: "include",
