@@ -50,33 +50,33 @@
 }
 
 // MODAL
-// .modalHeader {
-//   background-color: var(--clr-primary-red);
-//   text-align: center;
-// }
+.modalHeader {
+  background-color: var(--clr-primary-red);
+  text-align: center;
+}
 
-// .btnContainer {
-//   text-align: center;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   background-color: var(--clr-primary-10);
-// }
+.btnContainer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--clr-primary-10);
+}
 
-// .actionBtn {
-//   width: 200px;
-//   padding: 0.5rem;
-//   margin: 1rem 0;
-//   background-color: var(--clr-primary-red);
-//   color: var(--clr-primary-10);
-//   border: none;
-// }
+.actionBtn {
+  width: 200px;
+  padding: 0.5rem;
+  margin: 1rem 0;
+  background-color: var(--clr-primary-red);
+  color: var(--clr-primary-10);
+  border: none;
+}
 
-// .actionBtn:hover {
-//   background-color: var(--clr-dark-red);
-//   color: var(--clr-primary-10);
-// }
+.actionBtn:hover {
+  background-color: var(--clr-dark-red);
+  color: var(--clr-primary-10);
+}
 
 @media (min-width: 481px) {
 }
