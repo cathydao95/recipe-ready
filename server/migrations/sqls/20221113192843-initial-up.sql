@@ -18,16 +18,6 @@ CREATE TABLE recipes (
     public_recipe boolean DEFAULT true
 );
 
-
-CREATE TABLE users (
-    id integer NOT NULL,
-    first_name character varying(255) NOT NULL,
-    last_name character varying(255) NOT NULL,
-    email character varying(255) NOT NULL,
-    hashed_password character varying(255) NOT NULL
-);
-
-
 CREATE TABLE bookmarked (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
