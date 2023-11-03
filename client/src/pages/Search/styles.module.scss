@@ -3,14 +3,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // margin: 1rem 0;
 }
 .searchForm {
   display: flex;
   justify-content: center;
   align-items: center;
-  // width: 70%;
   width: 100%;
+  padding: 2rem 0;
 }
 .searchIcon {
   font-size: 1.5rem;
@@ -45,12 +44,12 @@
   text-align: center;
   border-bottom: 1px solid var(--clr-primary-7);
   line-height: 0.1em;
-  // margin: 10px 0 20px;
   margin: 3rem 0;
 }
 
 .text span {
   background: var(--clr-primary-10);
+  font-size: 1.15rem;
   padding: 0 10px;
 }
 @media (min-width: 481px) {
