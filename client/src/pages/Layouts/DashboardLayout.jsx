@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useState, createContext, useContext } from "react";
 import { Sidebar, Navbar } from "../../components";
 
-const DashboardContext = createContext();
+export const DashboardContext = createContext();
 
 const DashboardLayout = () => {
   const user = { name: "cathy" };

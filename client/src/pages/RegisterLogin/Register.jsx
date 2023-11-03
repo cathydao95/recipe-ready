@@ -40,7 +40,7 @@ const Register = () => {
         let { msg } = await response.json();
         setIsAuthenticated(true);
         toast.success(msg);
-        navigate("/recipes");
+        navigate("/");
       } else {
         let { msg } = await response.json();
         if (msg) {

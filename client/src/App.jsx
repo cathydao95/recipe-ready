@@ -1,8 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
-  HomeLayout,
   DashboardLayout,
-  Landing,
   Register,
   Login,
   ErrorNotFound,
@@ -24,50 +22,44 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     errorElement: <ErrorNotFound />,
     children: [
-      { index: true, element: <Landing /> },
+      { index: true, element: <SearchByName /> },
       { path: "register", element: <Register /> },
       { path: "login", element: <Login /> },
-      {
-        path: "recipes",
-        children: [
-          { index: true, element: <SearchByName /> },
-          { path: "search-ingredients", element: <SearchByIngredients /> },
-          { path: "results", element: <Results /> },
-          { path: ":id", element: <Recipe /> },
+      { path: "search-ingredients", element: <SearchByIngredients /> },
+      { path: "results", element: <Results /> },
+      { path: "recipes/:id", element: <Recipe /> },
 
-          {
-            path: "bookmarked",
-            element: (
-              <ProtectedRoute>
-                <Bookmarked />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: "create",
-            element: (
-              <ProtectedRoute>
-                <Create />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: "my-recipes",
-            element: (
-              <ProtectedRoute>
-                <UserRecipes />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: "profile",
-            element: (
-              <ProtectedRoute>
-                <UserSettings />
-              </ProtectedRoute>
-            ),
-          },
-        ],
+      {
+        path: "bookmarked",
+        element: (
+          <ProtectedRoute>
+            <Bookmarked />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "create",
+        element: (
+          <ProtectedRoute>
+            <Create />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "my-recipes",
+        element: (
+          <ProtectedRoute>
+            <UserRecipes />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <ProtectedRoute>
+            <UserSettings />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

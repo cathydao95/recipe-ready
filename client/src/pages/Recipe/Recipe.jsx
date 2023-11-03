@@ -1,24 +1,23 @@
 import { useEffect, useState } from "react";
 import { Loading } from "../../components";
-import { useParams, useNavigate, NavLink } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
-import { FaRegClock, FaBookmark, FaRegTrashAlt } from "react-icons/fa";
+import { FaRegClock, FaBookmark } from "react-icons/fa";
 import { useAppContext } from "../../context/appContext";
-import { IoMdArrowRoundBack } from "react-icons/io";
+import LoginModal from "../../components/LoginModal/LoginModal";
 
 const Recipe = () => {
   const {
     setIsLoading,
     isLoading,
     deleteRecipe,
-    bookmarkRecipe,
     usersBookmarked,
+    handleBookmarkClick,
+    setShowLogin,
   } = useAppContext();
   const { id } = useParams();
   const navigate = useNavigate();
-
-  console.log(usersBookmarked);
 
   const [recipeNutrition, setRecipeNutrition] = useState();
   const [recipeInfo, setRecipeInfo] = useState([]);
@@ -29,7 +28,6 @@ const Recipe = () => {
     (bookmarkedRecipe) => bookmarkedRecipe.id == id
   );
 
-  console.log(isBookmarked, "bookmarked");
   // Function to get recipe information using id
   const getRecipe = async () => {
     try {
@@ -64,14 +62,14 @@ const Recipe = () => {
     const { success } = await deleteRecipe(id);
     // If recipe successfully deleted, navigate to user's personal recipes page
     if (success) {
-      navigate("/recipes/my-recipes");
+      navigate("/my-recipes");
     }
   };
 
   // Function to retrieve recipe's nutritional information
   const getRecipeNutrition = async (recipeId) => {
     let url = `http://localhost:8080/api/v1/recipes/${id}/nutrition`;
-    console.log(url);
+
     try {
       const response = await fetch(url, {
         credentials: "include",
@@ -92,51 +90,49 @@ const Recipe = () => {
   // Run get recipe function when page renders
   useEffect(() => {
     getRecipe();
+    setShowLogin(false);
   }, []);
 
   return isLoading ? (
     <Loading />
   ) : recipeNotFound ? (
     <div>
-      <button onClick={() => navigate(-1)}>
-        <IoMdArrowRoundBack /> BACK
-      </button>
+      <button onClick={() => navigate(-1)}>Back to Search</button>
       <h1>Recipe Not Found</h1>
     </div>
   ) : (
     <div>
-      <button className="backBtn" onClick={() => navigate(-1)}>
-        <IoMdArrowRoundBack /> BACK
-      </button>
       {recipeInfo.id && (
         <div className={clsx(styles.recipeWrapper, "wrapper")}>
+          <div className={styles.btnContainer}>
+            <button onClick={() => navigate(-1)} className={styles.actionBtn}>
+              Back To Search
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleBookmarkClick(id);
+              }}
+              className={styles.actionBtn}
+            >
+              {isBookmarked ? (
+                "Bookmarked"
+              ) : (
+                <>
+                  <span>
+                    <FaBookmark />
+                    Bookmark Recipe
+                  </span>
+                </>
+              )}
+            </button>
+          </div>
           <div className={clsx(styles.imgContainer, "imgContainer")}>
             <img
               className={styles.img}
               src={recipeInfo.image_url}
               alt={recipeInfo.title}
             />
-            {recipeInfo.user_id && recipeInfo.user_id !== null && (
-              <button
-                className={`${styles.icon} ${styles.trashIcon}`}
-                onClick={(e) => handleDelete(e, id)}
-              >
-                <FaRegTrashAlt />
-              </button>
-            )}
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                bookmarkRecipe(id);
-              }}
-              className={`${styles.icon} ${styles.bookmarkIcon}`}
-            >
-              <FaBookmark
-                className={
-                  isBookmarked ? "bookmarkedIcon" : "notBookmarkedIcon"
-                }
-              />
-            </button>
           </div>
           <div className={styles.recipeInfoContainer}>
             <div className={styles.recipeHeader}>
@@ -213,6 +209,7 @@ const Recipe = () => {
           </div>
         </div>
       )}
+      <LoginModal />
     </div>
   );
 };

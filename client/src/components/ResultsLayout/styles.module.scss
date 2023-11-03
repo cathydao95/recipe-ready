@@ -1,7 +1,9 @@
-.noRecipesContainer {
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 .imgContainer {
@@ -17,6 +19,18 @@
   display: grid;
   grid-template-columns: repeat(250px, 1fr);
   gap: 2rem;
+}
+
+.bookmarkIcon {
+  font-size: 12rem;
+  color: var(--clr-primary-red);
+}
+
+.btn {
+  padding: 0.75rem;
+  border: none;
+  background-color: var(--clr-primary-red);
+  color: white;
 }
 
 @media (min-width: 600px) {

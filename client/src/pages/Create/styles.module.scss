@@ -1,3 +1,10 @@
+.formContainer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .imgInputContainer {
   height: 250px;
   margin: 4rem 0;
