@@ -34,10 +34,11 @@ export const getUser = async (req, res) => {
 export const editUser = async (req, res) => {
   const currentUserId = req.user.userId;
   const { firstName, lastName, email } = req.body;
+  const emailLowerCase = email.toLowerCase();
 
   const updatedUser = await db.query(
     "UPDATE users SET (first_name, last_name, email) = ($1, $2, $3) WHERE id = $4",
-    [firstName, lastName, email, currentUserId]
+    [firstName, lastName, emailLowerCase, currentUserId]
   );
 
   res.status(StatusCodes.OK).json({

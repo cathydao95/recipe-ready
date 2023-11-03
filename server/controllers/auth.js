@@ -9,13 +9,14 @@ import { generateToken, setTokenCookie } from "../utils/authUtils.js";
 export const register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
+  const emailLowerCase = email.toLowerCase();
   // Add a salt to add randomn elements and security to the password
   const salt = bcrypt.genSaltSync(10);
   // hash password to create more secure password
   const hashed_password = bcrypt.hashSync(password, salt);
   const { rows: registeredUser } = await db.query(
     "INSERT INTO users (first_name, last_name, email, hashed_password) VALUES ($1, $2, $3, $4) RETURNING id,email",
-    [firstName, lastName, email, hashed_password]
+    [firstName, lastName, emailLowerCase, hashed_password]
   );
 
   // pulling functions from util files
@@ -32,10 +33,11 @@ export const register = async (req, res) => {
 // LOGIN USER
 export const login = async (req, res) => {
   const { email, password } = req.body;
+  const emailLowerCase = email.toLowerCase();
 
   const { rows: users } = await db.query(
     `SELECT * FROM users WHERE email =$1`,
-    [email]
+    [emailLowerCase]
   );
 
   if (users.length === 0) throw new UnauthenticatedError("invalid credentials");

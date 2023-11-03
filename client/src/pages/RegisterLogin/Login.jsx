@@ -53,8 +53,18 @@ const Login = () => {
     <div className="pageWrapper">
       <h1 className="title">Recipe Ready</h1>
       <form className="form">
-        <FormRow type="email" name="email" handleInput={handleInput} />
-        <FormRow type="password" name="password" handleInput={handleInput} />
+        <FormRow
+          type="email"
+          name="email"
+          handleInput={handleInput}
+          labelText="Email"
+        />
+        <FormRow
+          type="password"
+          name="password"
+          handleInput={handleInput}
+          labelText="Password"
+        />
         <div className="formLinkContainer">
           <p className="formText">Not a member?</p>
           <Link to="/register" className="formLink">

@@ -59,17 +59,27 @@ const Register = () => {
         <FormRow
           type="text"
           name="firstName"
-          labelText="first name"
+          labelText="First Name"
           handleInput={handleInput}
         />
         <FormRow
           type="text"
           name="lastName"
-          labelText="last name"
+          labelText="Last Name"
           handleInput={handleInput}
         />
-        <FormRow type="email" name="email" handleInput={handleInput} />
-        <FormRow type="password" name="password" handleInput={handleInput} />
+        <FormRow
+          type="email"
+          name="email"
+          handleInput={handleInput}
+          labelText="Email"
+        />
+        <FormRow
+          type="password"
+          name="password"
+          handleInput={handleInput}
+          labelText="Password"
+        />
         <div className="formLinkContainer">
           <p className="formText">Already a member? </p>
           <Link to="/login" className="formLink">
