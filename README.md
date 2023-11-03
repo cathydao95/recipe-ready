@@ -72,16 +72,16 @@ This project uses Spoonacular API. Get your API Key at https://spoonacular.com/f
    ```
 3. Setup Environment Variables
    ```js
-   Copy the instructions from both .env.example files in the server.
+   Copy the instructions from the .env.example files in the server.
    ```
 4. Connect the database
    ```js
- cd server
- psql recipe-ready -f db.sql
+   cd server
+   psql recipe-ready -f db.sql
    ```
-4. Start the program
+5. Start the program
    ```js
- cd server && npm run dev
+   cd server && npm run dev
    ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
