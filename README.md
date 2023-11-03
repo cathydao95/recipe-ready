@@ -5,12 +5,12 @@
 
   <ul>
         <li><a href="#introduction">Introduction</a></li>
-        <li><a href="#demo">Demo</a></li>
+        <li><a href="#built-with">Built With</a></li>
      <li><a href="#installation">Installation</a></li>
-    <li><a href="#userflow">Userflow</a></li>
-    <li><a href="#databaseschema">Database Schema</a></li>
-    <li><a href="#screenshows">Screenshots</a></li>
-    <li><a href="#technologies">Technologies</a></li>
+       <li><a href="#screenshots">Screenshots</a></li>
+           <li><a href="#nice">Nice To Have/Secondary</a></li>
+  
+
   </ul>
 
 
@@ -30,9 +30,73 @@ It’s sustainable, makes meal planning easier, and also adds flavor and variety
 
 <a href="https://trello.com/b/kChiDk7N/recipe-ready" target=”_blank”>Trello Board</a>
 
+## Built With
 
+This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+
+
+* [![Node.js][Node.js-badge]][Node-url]
+* [![Express][Express-badge]][Express-url]
+* [![PostgreSQL][PostgreSQL-badge]][PostgreSQL-url]
+* [![React][React-badge]][React-url]
+* [![Bootstrap][Bootstrap-badge]][Bootstrap-url]
+* [![Vite][Vite-badge]][Vite-url]
+
+[Node.js-badge]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node-dot-js&logoColor=white
+[Express-badge]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
+[PostgreSQL-badge]: https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white
+[React-badge]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[Bootstrap-badge]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Vite-badge]: https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E
+
+[Node-url]: https://nodejs.org/
+[Express-url]: https://expressjs.com/
+[PostgreSQL-url]: https://www.postgresql.org/
+[React-url]: https://reactjs.org/
+[Bootstrap-url]: https://getbootstrap.com/
+[Vite-url]: https://vitejs.dev/
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Installation
+
+This project uses Spoonacular API. Get your API Key at https://spoonacular.com/food-api/docs#Authentication
+1. Clone project & switch into the project directory.
+   ```sh
+   git clone https://github.com/cathydao95/recipe-ready
+   cd recipe-ready
+   ```
+2. Install NPM packages on the client and server
+   ```sh
+     cd client && npm install && cd ../server && npm install
+   ```
+3. Setup Environment Variables
+   ```js
+   Copy the instructions from the .env.example files in the server.
+   ```
+4. Connect the database
+   ```js
+   cd server
+   psql recipe-ready -f db.sql
+   ```
+5. Start the program
+   ```js
+   cd server && npm run dev
+   ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+### Screenshots
+![2](https://github.com/cathydao95/recipe-ready/assets/79618165/767acd48-658e-4c1b-89d4-0c99df0dd2d8)
+![1](https://github.com/cathydao95/recipe-ready/assets/79618165/7f7829c9-b952-40ab-9b55-c3252c48e7db)
+
+
+
+### Nice To Have/Secondary
+- Implement web scraping to obtain recipes from the internet
+- User Profiles that allow users to customize their profile and add dietary preferences to provide more tailored recipe suggestions. 
+- Shopping List/Meal Planning Integration
+- Allow users to rate and review recipes, comment on recipes, and share tips. 
+- Recipe filtering to allow filtering for dietary preferences, cuisine, and difficulty.
 
 
