@@ -16,7 +16,8 @@ import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 
 // Constants
 const PORT = process.env.PORT || 8080;
-const ORIGIN = "http://localhost:5173" || process.env.ORIGIN;
+const ORIGIN = "https://server-z8fl.onrender.com";
+// const ORIGIN = "http://localhost:5173" || process.env.ORIGIN;
 
 const app = express();
 
@@ -28,6 +29,7 @@ cloudinary.config({
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "dist");
+
 app.use(express.static(REACT_BUILD_DIR));
 
 // Middleware
