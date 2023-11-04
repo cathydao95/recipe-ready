@@ -209,14 +209,6 @@ button {
   color: var(--clr-primary-8);
 }
 
-.prepTime {
-  font-size: 0.75rem;
-  display: flex;
-  gap: 0.25rem;
-  align-items: center;
-  flex-basis: 40%;
-}
-
 @media (min-width: 481px) {
   h1 {
     font-size: 3rem;
@@ -232,13 +224,6 @@ button {
   .form {
     padding: 1rem 4rem;
     gap: 0.5rem;
-  }
-}
-
-@media (min-width: 500px) {
-  .prepTime {
-    flex-basis: 20%;
-    justify-content: end;
   }
 }
 
@@ -266,11 +251,6 @@ button {
 
   .wrapper {
     margin: 4rem 6rem;
-  }
-
-  .prepTime {
-    flex-basis: 15%;
-    justify-content: end;
   }
 }
 @media (min-width: 1025px) {

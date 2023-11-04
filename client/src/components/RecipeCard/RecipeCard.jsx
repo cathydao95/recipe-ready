@@ -65,7 +65,7 @@ const RecipeCard = ({ recipe }) => {
             </div>
 
             <div className={styles.infoContainer}>
-              <span className="prepTime">
+              <span className={styles.prepTime}>
                 <FaRegClock />
                 {prep_time} minutes
               </span>

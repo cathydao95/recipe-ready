@@ -45,6 +45,15 @@
   font-size: 1.5rem;
   text-align: left;
 }
+
+.prepTime {
+  font-size: 0.75rem;
+  display: flex;
+  gap: 0.25rem;
+  justify-content: end;
+  flex-basis: 40%;
+}
+
 .ingInstrContainer {
   display: flex;
   flex-direction: column;
@@ -106,6 +115,11 @@
     display: flex;
     justify-content: center;
     gap: 1rem;
+  }
+
+  .prepTime {
+    flex-basis: 20%;
+    justify-content: center;
   }
   .ingInstrContainer {
     flex-direction: row;

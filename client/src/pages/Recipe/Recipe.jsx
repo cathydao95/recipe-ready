@@ -136,7 +136,7 @@ const Recipe = () => {
           <div className={styles.recipeInfoContainer}>
             <div className={styles.recipeHeader}>
               <h3 className={styles.recipeTitle}>{recipeInfo.title}</h3>
-              <span className="prepTime">
+              <span className={styles.prepTime}>
                 <FaRegClock />
                 {recipeInfo.prep_time} min
               </span>
