@@ -16,7 +16,11 @@ import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 
 // Constants
 const PORT = process.env.PORT || 8080;
-const ORIGIN = "http://localhost:5173";
+
+// TODO: CHANGE ORIGIN FOR CORS AND FIGURE OUT WHY MIGRATIONS ARE NOT WORKIN
+
+// const ORIGIN = "https://server-z8fl.onrender.com";
+const ORIGIN = "http://localhost:5173" || process.env.ORIGIN;
 
 const app = express();
 
