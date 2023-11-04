@@ -78,20 +78,21 @@ const UserSettings = () => {
         <FormRow
           type="text"
           name="firstName"
-          labelText="first name"
+          labelText="First Name"
           handleInput={handleInput}
           value={updatedUserInfo.firstName}
         />
         <FormRow
           type="text"
           name="lastName"
-          labelText="last name"
+          labelText="Last Name"
           handleInput={handleInput}
           value={updatedUserInfo.lastName}
         />
         <FormRow
           type="email"
           name="email"
+          labelText="Email"
           handleInput={handleInput}
           value={updatedUserInfo.email}
         />

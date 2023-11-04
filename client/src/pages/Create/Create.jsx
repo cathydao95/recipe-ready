@@ -159,17 +159,19 @@ const Create = () => {
             name="ingredients"
             value={recipeInfo.ingredients}
             handleInput={handleInput}
+            labelText="Ingredients"
           />
           <FormRow
             type="text"
             name="instructions"
             value={recipeInfo.instructions}
             handleInput={handleInput}
+            labelText="Instructions"
           />
           <FormRow
             type="number"
             name="prep_time"
-            labelText="prep time (in minutes)"
+            labelText="Prep Time (Minutes)"
             value={recipeInfo.prep_time}
             handleInput={handleInput}
           />
