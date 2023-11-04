@@ -16,7 +16,7 @@ import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 
 // Constants
 const PORT = process.env.PORT || 8080;
-const ORIGIN = "http://localhost:5173";
+const ORIGIN = "http://localhost:5173" || process.env.ORIGIN;
 
 const app = express();
 
