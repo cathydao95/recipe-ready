@@ -32,6 +32,7 @@ cloudinary.config({
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "dist");
+
 app.use(express.static(REACT_BUILD_DIR));
 
 // Middleware
