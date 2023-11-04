@@ -26,7 +26,6 @@ const AppProvider = ({ children }) => {
 
         setCurrentUser(user);
         setIsAuthenticated(true);
-        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);

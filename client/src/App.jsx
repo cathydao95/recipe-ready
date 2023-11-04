@@ -15,6 +15,8 @@ import {
   SearchByName,
 } from "./pages";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Loading } from "./components";
+import { useAppContext } from "./context/appContext";
 
 const router = createBrowserRouter([
   {
@@ -66,7 +68,8 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  const { isLoading } = useAppContext();
+  return isLoading ? <Loading /> : <RouterProvider router={router} />;
 }
 
 export default App;
