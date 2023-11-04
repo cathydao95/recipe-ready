@@ -11,7 +11,6 @@ import { formatStringInstructions } from "../../utils/utils";
 const Create = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setResultsLoaded } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
   const { isEditing, currentRecipeInfo } = location.state || {};
 

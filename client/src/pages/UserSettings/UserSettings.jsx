@@ -74,37 +74,39 @@ const UserSettings = () => {
   ) : (
     <div className="pageWrapper">
       <h1 className="title">User Profile</h1>
-      <form className="form">
-        <FormRow
-          type="text"
-          name="firstName"
-          labelText="First Name"
-          handleInput={handleInput}
-          value={updatedUserInfo.firstName}
-        />
-        <FormRow
-          type="text"
-          name="lastName"
-          labelText="Last Name"
-          handleInput={handleInput}
-          value={updatedUserInfo.lastName}
-        />
-        <FormRow
-          type="email"
-          name="email"
-          labelText="Email"
-          handleInput={handleInput}
-          value={updatedUserInfo.email}
-        />
+      <div className="formContainer">
+        <form className="form">
+          <FormRow
+            type="text"
+            name="firstName"
+            labelText="First Name"
+            handleInput={handleInput}
+            value={updatedUserInfo.firstName}
+          />
+          <FormRow
+            type="text"
+            name="lastName"
+            labelText="Last Name"
+            handleInput={handleInput}
+            value={updatedUserInfo.lastName}
+          />
+          <FormRow
+            type="email"
+            name="email"
+            labelText="Email"
+            handleInput={handleInput}
+            value={updatedUserInfo.email}
+          />
 
-        <button
-          className="formBtn"
-          type="submit"
-          onClick={(e) => editUserInformation(e)}
-        >
-          Update User
-        </button>
-      </form>
+          <button
+            className="formBtn"
+            type="submit"
+            onClick={(e) => editUserInformation(e)}
+          >
+            Update User
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
