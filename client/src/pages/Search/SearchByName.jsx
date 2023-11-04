@@ -17,7 +17,6 @@ const SearchByName = () => {
     navigate("/results", {
       state: { keyword },
     });
-    setIsLoading(true);
   };
 
   useEffect(() => {

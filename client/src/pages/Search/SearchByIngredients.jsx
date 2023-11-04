@@ -17,7 +17,6 @@ const SearchByIngredients = () => {
     navigate("/results", {
       state: { ingredients: selectedIngredients },
     });
-    setIsLoading(true);
   };
 
   return (

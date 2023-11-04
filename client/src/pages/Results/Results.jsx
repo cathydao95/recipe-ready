@@ -5,7 +5,8 @@ import { useLocation } from "react-router-dom";
 
 const Results = () => {
   // Destructure from app context
-  const { getRecipes, recipeResults, isLoading } = useAppContext();
+  const { getRecipes, recipeResults, isLoading, setIsLoading } =
+    useAppContext();
   // Obtain the current location
   const location = useLocation();
 

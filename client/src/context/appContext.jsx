@@ -26,6 +26,7 @@ const AppProvider = ({ children }) => {
 
         setCurrentUser(user);
         setIsAuthenticated(true);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
@@ -100,11 +101,10 @@ const AppProvider = ({ children }) => {
           data: { bookmarks },
         } = await response.json();
         setUsersBookmarked(bookmarks);
+        // setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
