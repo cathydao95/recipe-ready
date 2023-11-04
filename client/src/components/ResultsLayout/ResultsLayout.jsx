@@ -3,23 +3,25 @@ import clsx from "clsx";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import Loading from "../Loading/Loading";
 import EmptyPageContent from "../EmptyPageContent/EmptyPageContent";
+import { useAppContext } from "../../context/appContext";
 
-const ResultsLayout = ({ recipes, title, page, isLoading }) => {
+const ResultsLayout = ({ recipes, title, page }) => {
+  const { resultsLoaded } = useAppContext();
   return (
-    <div className={clsx("wrapper")}>
-      <h2 className={styles.title}>{title}</h2>
-      {isLoading ? (
-        <Loading />
-      ) : recipes.length === 0 ? (
-        <EmptyPageContent page={page} />
-      ) : (
-        <div className={styles.recipesContainer}>
-          {recipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
-        </div>
-      )}
-    </div>
+    resultsLoaded && (
+      <div className={clsx("wrapper")}>
+        <h2 className={styles.title}>{title}</h2>
+        {recipes.length === 0 ? (
+          <EmptyPageContent page={page} />
+        ) : (
+          <div className={styles.recipesContainer}>
+            {recipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
+          </div>
+        )}
+      </div>
+    )
   );
 };
 
