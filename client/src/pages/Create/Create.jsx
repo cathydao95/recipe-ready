@@ -4,6 +4,7 @@ import { FormRow, Loading } from "../../components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
+import clsx from "clsx";
 import uploadImg from "../../assets/upload-img.svg";
 
 const Create = () => {
@@ -119,65 +120,70 @@ const Create = () => {
   return isLoading ? (
     <Loading />
   ) : (
-    <div className={styles.formContainer}>
+    <div className="wrapper">
       <h1 className="title">
-        {/* {currentRecipeInfo ? "Edit Recipe" : "Create New Recipe"} */}
         {isEditing && currentRecipeInfo ? "Edit Recipe" : "Create New Recipe"}
       </h1>
-      <form className="form">
-        <FormRow
-          type="text"
-          name="title"
-          value={recipeInfo.title}
-          handleInput={handleInput}
-        />
-
-        <div className={styles.imgInputContainer}>
-          <img
-            className={styles.uploadImg}
-            src={recipeInfo.image_url !== "" ? recipeInfo.image_url : uploadImg}
+      <div className="formContainer">
+        <form className="form">
+          <FormRow
+            type="text"
+            name="title"
+            value={recipeInfo.title}
+            labelText="Recipe Title"
+            handleInput={handleInput}
           />
-        </div>
 
-        <div className="formRow">
-          <input
-            className="formInput"
-            type="file"
-            name="image_url"
-            accept="image/*"
-            onChange={handleInput}
+          <div className={styles.imgInputContainer}>
+            <img
+              className={styles.uploadImg}
+              src={
+                recipeInfo.image_url !== "" ? recipeInfo.image_url : uploadImg
+              }
+            />
+          </div>
+
+          <div className={clsx("formRow", styles.imgFormRow)}>
+            <input
+              className={styles.imgInput}
+              // className="formInput"
+              type="file"
+              name="image_url"
+              accept="image/*"
+              onChange={handleInput}
+            />
+          </div>
+
+          <FormRow
+            type="text"
+            name="ingredients"
+            value={recipeInfo.ingredients}
+            handleInput={handleInput}
           />
-        </div>
+          <FormRow
+            type="text"
+            name="instructions"
+            value={recipeInfo.instructions}
+            handleInput={handleInput}
+          />
+          <FormRow
+            type="number"
+            name="prep_time"
+            labelText="prep time (in minutes)"
+            value={recipeInfo.prep_time}
+            handleInput={handleInput}
+          />
 
-        <FormRow
-          type="text"
-          name="ingredients"
-          value={recipeInfo.ingredients}
-          handleInput={handleInput}
-        />
-        <FormRow
-          type="text"
-          name="instructions"
-          value={recipeInfo.instructions}
-          handleInput={handleInput}
-        />
-        <FormRow
-          type="number"
-          name="prep_time"
-          labelText="prep time (in minutes)"
-          value={recipeInfo.prep_time}
-          handleInput={handleInput}
-        />
-
-        <button
-          className="formBtn"
-          type="submit"
-          onClick={createRecipe}
-          disabled={recipeInfo.image_url === ""}
-        >
-          Submit
-        </button>
-      </form>
+          <button
+            className="formBtn"
+            type="submit"
+            onClick={createRecipe}
+            disabled={recipeInfo.image_url === ""}
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
