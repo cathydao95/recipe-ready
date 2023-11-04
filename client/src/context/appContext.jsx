@@ -37,7 +37,6 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  console.log("testing for current user", currentUser);
   // Function to logout User
   const logOutUser = async () => {
     try {
@@ -199,7 +198,11 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  console.log("testing if loading", isLoading);
   console.log("testing if results loaded", resultsLoaded);
+  console.log("testing for current user", currentUser);
+  console.log("recipe results", recipeSearchResults);
+
   return (
     <AppContext.Provider
       value={{

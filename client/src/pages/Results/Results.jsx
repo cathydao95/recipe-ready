@@ -21,17 +21,16 @@ const Results = () => {
     const keyword = state && state.keyword ? state.keyword : "";
 
     // Function to get recipes and passing in selected ingredients or keyword
+    console.log("running now");
     getRecipes(selectedIngredients, keyword);
   }, []);
 
   return (
-    resultsLoaded && (
-      <ResultsLayout
-        recipes={recipeSearchResults}
-        title="Recipe Results"
-        page="searchResults"
-      />
-    )
+    <ResultsLayout
+      recipes={recipeSearchResults}
+      title="Recipe Results"
+      page="searchResults"
+    />
   );
 };
 
