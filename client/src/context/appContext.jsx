@@ -6,12 +6,13 @@ export const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState([]);
-  const [recipeResults, setRecipeResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [usersRecipes, setUsersRecipes] = useState([]);
   const [usersBookmarked, setUsersBookmarked] = useState([]);
+  const [recipeSearchResults, setRecipeSearchResults] = useState([]);
+  const [resultsLoaded, setResultsLoaded] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getCurrentUser = async () => {
     try {
@@ -26,6 +27,8 @@ const AppProvider = ({ children }) => {
 
         setCurrentUser(user);
         setIsAuthenticated(true);
+        getBookmarkedRecipes();
+        getPersonalRecipes();
         setIsLoading(false);
       }
     } catch (error) {
@@ -33,7 +36,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  console.log("current user", currentUser);
+  console.log("testing for current user", currentUser);
   // Function to logout User
   const logOutUser = async () => {
     try {
@@ -79,8 +82,30 @@ const AppProvider = ({ children }) => {
         const {
           data: { recipes },
         } = await response.json();
-        setRecipeResults(recipes);
-        setIsLoading(false);
+        setRecipeSearchResults(recipes);
+        setResultsLoaded(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Function to fetch a user's personal/created recipes
+  const getPersonalRecipes = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/v1/recipes/userRecipes",
+        {
+          credentials: "include",
+        }
+      );
+      // If successful, set usersRecipes state to response
+      if (response.ok) {
+        const {
+          data: { recipes },
+        } = await response.json();
+        setUsersRecipes(recipes);
+        setResultsLoaded(true);
       }
     } catch (error) {
       console.error(error);
@@ -101,7 +126,7 @@ const AppProvider = ({ children }) => {
           data: { bookmarks },
         } = await response.json();
         setUsersBookmarked(bookmarks);
-        // setIsLoading(false);
+        setResultsLoaded(true);
       }
     } catch (error) {
       console.error(error);
@@ -173,12 +198,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     getBookmarkedRecipes();
-  //   }
-  // }, [isAuthenticated]);
-
+  console.log("testing if results loaded", resultsLoaded);
   return (
     <AppContext.Provider
       value={{
@@ -186,7 +206,7 @@ const AppProvider = ({ children }) => {
         setIsAuthenticated,
         getRecipes,
         deleteRecipe,
-        recipeResults,
+        recipeSearchResults,
         isLoading,
         setIsLoading,
         usersRecipes,
@@ -201,6 +221,9 @@ const AppProvider = ({ children }) => {
         showLogin,
         setShowLogin,
         handleBookmarkClick,
+        resultsLoaded,
+        setResultsLoaded,
+        getPersonalRecipes,
       }}
     >
       {children}
