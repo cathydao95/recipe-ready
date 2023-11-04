@@ -7,7 +7,7 @@ import { useAppContext } from "../../context/appContext";
 const SearchByIngredients = () => {
   const navigate = useNavigate();
   // Destructure functions and states from app context
-  const { getRecipes, recipeResults, setIsLoading } = useAppContext();
+  const { getRecipes, recipeSearchResults, setIsLoading } = useAppContext();
   // State to manage the list of selected ingredients
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 

@@ -8,8 +8,7 @@ import { RecipeArticle, Loading } from "../../components";
 
 const SearchByName = () => {
   const navigate = useNavigate();
-  const { getRecipes, recipeResults, setIsLoading, isLoading } =
-    useAppContext();
+  const { getRecipes, recipeSearchResults, setResultsLoaded } = useAppContext();
   const [keyword, setKeyword] = useState("");
 
   const handleSubmit = (e) => {
@@ -17,15 +16,14 @@ const SearchByName = () => {
     navigate("/results", {
       state: { keyword },
     });
+    setResultsLoaded(false);
   };
 
   useEffect(() => {
     getRecipes();
   }, []);
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     <div className="wrapper">
       <div className={styles.searchContainer}>
         <form className={styles.searchForm} onSubmit={handleSubmit}>
@@ -43,7 +41,7 @@ const SearchByName = () => {
         <span>LATEST RECIPES</span>
       </p>
       <div className={styles.recipesContainer}>
-        {recipeResults.map((recipe, index) => {
+        {recipeSearchResults.map((recipe, index) => {
           return <RecipeArticle key={recipe.id} recipe={recipe} />;
         })}
       </div>
