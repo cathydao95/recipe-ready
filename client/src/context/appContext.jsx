@@ -173,15 +173,11 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      getBookmarkedRecipes();
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     getBookmarkedRecipes();
+  //   }
+  // }, [isAuthenticated]);
 
   return (
     <AppContext.Provider

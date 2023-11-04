@@ -1,33 +1,38 @@
 import { Outlet } from "react-router-dom";
-import { useState, createContext, useContext } from "react";
-import { Sidebar, Navbar } from "../../components";
+import { useState, createContext, useContext, useEffect } from "react";
+import { Sidebar, Navbar, Loading } from "../../components";
+import { useAppContext } from "../../context/appContext";
 
 export const DashboardContext = createContext();
 
 const DashboardLayout = () => {
-  const user = { name: "cathy" };
   const [showSidebar, setShowSidebar] = useState(false);
+  const { getCurrentUser, isLoading } = useAppContext();
 
   // Function to toggle sidebar to show and not show
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
 
-  // function to log out user
-  const logoutUser = async () => {};
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   return (
-    <DashboardContext.Provider
-      value={{ user, showSidebar, toggleSidebar, logoutUser }}
-    >
-      <div>
-        <Sidebar />
+    <DashboardContext.Provider value={{ showSidebar, toggleSidebar }}>
+      {isLoading ? (
+        <Loading />
+      ) : (
         <div>
-          <Navbar />
+          <Sidebar />
           <div>
-            <Outlet />
+            <Navbar />
+            <div>
+              <Outlet />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </DashboardContext.Provider>
   );
 };
