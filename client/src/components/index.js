@@ -6,3 +6,4 @@ export { default as ResultsLayout } from "./ResultsLayout/ResultsLayout";
 export { default as IngredientList } from "./IngredientList/IngredientList";
 export { default as RecipeArticle } from "./RecipeArticle/RecipeArticle";
 export { default as RecipeCard } from "./RecipeCard/RecipeCard";
+export { default as EmptyPageContent } from "./EmptyPageContent/EmptyPageContent";
