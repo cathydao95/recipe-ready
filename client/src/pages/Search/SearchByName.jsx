@@ -4,11 +4,12 @@ import styles from "./styles.module.scss";
 import clsx from "clsx";
 import { useAppContext } from "../../context/appContext";
 import { FaSearch } from "react-icons/fa";
-import { RecipeArticle } from "../../components";
+import { RecipeArticle, Loading } from "../../components";
 
 const SearchByName = () => {
   const navigate = useNavigate();
-  const { getRecipes, recipeResults, setIsLoading } = useAppContext();
+  const { getRecipes, recipeResults, setIsLoading, isLoading } =
+    useAppContext();
   const [keyword, setKeyword] = useState("");
 
   const handleSubmit = (e) => {
@@ -23,7 +24,9 @@ const SearchByName = () => {
     getRecipes();
   }, []);
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className="wrapper">
       <div className={styles.searchContainer}>
         <form className={styles.searchForm} onSubmit={handleSubmit}>

@@ -23,13 +23,17 @@ const AppProvider = ({ children }) => {
         const {
           data: { user },
         } = await response.json();
+
         setCurrentUser(user);
+        setIsAuthenticated(true);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
+  console.log("current user", currentUser);
   // Function to logout User
   const logOutUser = async () => {
     try {
