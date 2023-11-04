@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import uploadImg from "../../assets/upload-img.svg";
+import { formatStringInstructions } from "../../utils/utils";
 
 const Create = () => {
   const navigate = useNavigate();
@@ -29,7 +30,10 @@ const Create = () => {
     if (isEditing && currentRecipeInfo) {
       setRecipeInfo({
         title: currentRecipeInfo.title,
-        ingredients: currentRecipeInfo.ingredients,
+        // takes the ingredients array and joins each element by a comma and removes and trailing punctuation and white space
+        ingredients: currentRecipeInfo.ingredients
+          .join(", ")
+          .replace(/[.,;!?]+\s*$/, ""),
         instructions: currentRecipeInfo.instructions,
         prep_time: currentRecipeInfo.prep_time,
         image_url: currentRecipeInfo.image_url,
@@ -83,6 +87,16 @@ const Create = () => {
   // Function to create or edit recipe
   const createRecipe = async (e) => {
     e.preventDefault();
+
+    // Use utils function to format recipe instructions into an ordered list.
+    const formattedInstructions = formatStringInstructions(
+      recipeInfo.instructions
+    );
+
+    const updatedRecipeInfo = {
+      ...recipeInfo,
+      instructions: formattedInstructions,
+    };
     let url;
     let method;
     if (isEditing) {
@@ -99,7 +113,7 @@ const Create = () => {
           "Content-type": "application/JSON",
         },
         credentials: "include",
-        body: JSON.stringify(recipeInfo),
+        body: JSON.stringify(updatedRecipeInfo),
       });
 
       if (response.ok) {
