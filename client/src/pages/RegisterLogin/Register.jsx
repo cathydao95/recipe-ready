@@ -7,7 +7,7 @@ import { useAppContext } from "../../context/appContext";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useAppContext();
+  const { setIsAuthenticated, getCurrentUser } = useAppContext();
   const [registrationInfo, setRegistrationInfo] = useState({
     firstName: "",
     lastName: "",
@@ -38,9 +38,11 @@ const Register = () => {
       // If success, register user and navigate user to dashboard
       if (response.ok) {
         let { msg } = await response.json();
-        setIsAuthenticated(true);
+        getCurrentUser();
         toast.success(msg);
-        navigate("/");
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       } else {
         let { msg } = await response.json();
         if (msg) {

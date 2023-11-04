@@ -26,7 +26,7 @@ export const register = async (req, res) => {
   setTokenCookie(res, token);
 
   res.status(StatusCodes.CREATED).json({
-    msg: "user registered in...logging in",
+    msg: "User registered...logging in",
   });
 };
 
@@ -49,14 +49,14 @@ export const login = async (req, res) => {
   );
 
   if (!passwordMatch) {
-    throw new UnauthenticatedError("invalid credentials");
+    throw new UnauthenticatedError("Invalid credentials");
   }
   const token = generateToken(users[0]);
 
   setTokenCookie(res, token);
 
   res.status(StatusCodes.OK).json({
-    msg: "user logged in",
+    msg: "Logging in...",
   });
 };
 
@@ -68,5 +68,5 @@ export const logout = (req, res) => {
     expires: new Date(Date.now()),
   });
 
-  res.status(StatusCodes.OK).json({ msg: "user logged out" });
+  res.status(StatusCodes.OK).json({ msg: "User logged out" });
 };

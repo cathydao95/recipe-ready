@@ -8,7 +8,7 @@ import { useAppContext } from "../../context/appContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useAppContext();
+  const { getCurrentUser } = useAppContext();
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -36,9 +36,11 @@ const Login = () => {
       // If success, log in user and navigate user to dashboard and display toast success
       if (response.ok) {
         let { msg } = await response.json();
-        setIsAuthenticated(true);
+        getCurrentUser();
         toast.success(msg);
-        navigate("/");
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       } else {
         let { msg } = await response.json();
         if (msg) {

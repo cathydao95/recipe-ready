@@ -29,10 +29,11 @@ const AppProvider = ({ children }) => {
         setIsAuthenticated(true);
         getBookmarkedRecipes();
         getPersonalRecipes();
-        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -183,12 +184,12 @@ const AppProvider = ({ children }) => {
           prevRecipes.filter((recipe) => recipe.id !== id)
         );
         let { msg } = await response.json();
-        toast.success(msg);
+        toast.success("Recipe Deleted!");
         return { success: true, message: msg };
       } else {
         let { msg } = await response.json();
         if (msg) {
-          toast.error(msg);
+          toast.error("Could not delete recipe");
           return { success: false, message: msg };
         }
       }

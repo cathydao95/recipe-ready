@@ -11,6 +11,7 @@ import { formatStringInstructions } from "../../utils/utils";
 const Create = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setResultsLoaded } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
   const { isEditing, currentRecipeInfo } = location.state || {};
 
@@ -118,8 +119,10 @@ const Create = () => {
 
       if (response.ok) {
         let { msg } = await response.json();
-        toast.success(msg);
-        navigate("/my-recipes");
+        toast.success(isEditing ? "Updating Recipe..." : "Creating Recipe...");
+        setTimeout(() => {
+          navigate("/my-recipes");
+        }, 3000);
       } else {
         let { msg } = await response.json();
         if (msg) {
