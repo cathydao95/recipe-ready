@@ -23,4 +23,10 @@ export const pageContent = {
     imageSrc: bookmarkImg,
     altText: "Bookmark",
   },
+  noRecipe: {
+    text: "Recipe Not Found",
+    buttonText: "Back to Search",
+    imageSrc: noResults,
+    altText: "No Results",
+  },
 };

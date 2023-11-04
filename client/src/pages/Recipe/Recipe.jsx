@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Loading } from "../../components";
+import { EmptyPageContent, Loading } from "../../components";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
@@ -8,14 +8,8 @@ import { useAppContext } from "../../context/appContext";
 import LoginModal from "../../components/LoginModal/LoginModal";
 
 const Recipe = () => {
-  const {
-    setIsLoading,
-    isLoading,
-    deleteRecipe,
-    usersBookmarked,
-    handleBookmarkClick,
-    setShowLogin,
-  } = useAppContext();
+  const { isLoading, usersBookmarked, handleBookmarkClick, setShowLogin } =
+    useAppContext();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -39,7 +33,6 @@ const Recipe = () => {
       );
       if (response.status === 404) {
         setRecipeNotFound(true);
-        setIsLoading(false);
       }
 
       if (response.ok) {
@@ -48,21 +41,9 @@ const Recipe = () => {
         } = await response.json();
 
         setRecipeInfo(recipe[0]);
-
-        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
-    }
-  };
-
-  // Function to handle recipe deletion
-  const handleDelete = async (e, id) => {
-    e.preventDefault();
-    const { success } = await deleteRecipe(id);
-    // If recipe successfully deleted, navigate to user's personal recipes page
-    if (success) {
-      navigate("/my-recipes");
     }
   };
 
@@ -96,9 +77,9 @@ const Recipe = () => {
   return isLoading ? (
     <Loading />
   ) : recipeNotFound ? (
-    <div>
-      <button onClick={() => navigate(-1)}>Back to Search</button>
-      <h1>Recipe Not Found</h1>
+    <div className={clsx("wrapper")}>
+      <h2 className={styles.title}>Recipe Not Found</h2>
+      <EmptyPageContent page="noRecipe" />
     </div>
   ) : (
     <div>
