@@ -52,29 +52,31 @@ const Login = () => {
   return (
     <div className="pageWrapper">
       <h1 className="title">Recipe Ready</h1>
-      <form className="form">
-        <FormRow
-          type="email"
-          name="email"
-          handleInput={handleInput}
-          labelText="Email"
-        />
-        <FormRow
-          type="password"
-          name="password"
-          handleInput={handleInput}
-          labelText="Password"
-        />
-        <div className="formLinkContainer">
-          <p className="formText">Not a member?</p>
-          <Link to="/register" className="formLink">
-            Register
-          </Link>
-        </div>
-        <button className="formBtn" type="submit" onClick={loginUser}>
-          Submit
-        </button>
-      </form>
+      <div className="formContainer">
+        <form className="form">
+          <FormRow
+            type="email"
+            name="email"
+            handleInput={handleInput}
+            labelText="Email"
+          />
+          <FormRow
+            type="password"
+            name="password"
+            handleInput={handleInput}
+            labelText="Password"
+          />
+          <div className="formLinkContainer">
+            <p className="formText">Not a member?</p>
+            <Link to="/register" className="formLink">
+              Register
+            </Link>
+          </div>
+          <button className="formBtn" type="submit" onClick={loginUser}>
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

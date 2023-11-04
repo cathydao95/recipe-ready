@@ -174,7 +174,7 @@ const Recipe = () => {
             </div>
             <div className={styles.nutrBtnContainer}>
               <button
-                className="formBtn"
+                className="btn"
                 onClick={() => getRecipeNutrition(recipeInfo.id)}
               >
                 See Nutrition Info
