@@ -6,13 +6,19 @@
   gap: 1rem;
 }
 
+.title {
+  padding: 2rem 0;
+}
 .imgContainer {
-  height: 400px;
+  // height: 400px;
+  width: 300px;
+  text-align: center;
 }
 
 .img {
-  object-fit: contain;
-  height: 100%;
+  object-fit: conver;
+  // height: 100%;
+  width: 100%;
 }
 
 .recipesContainer {
@@ -21,16 +27,20 @@
   gap: 2rem;
 }
 
-.bookmarkIcon {
-  font-size: 12rem;
-  color: var(--clr-primary-red);
+.text {
+  margin: 0;
 }
 
 .btn {
-  padding: 0.75rem;
+  background-color: var(--clr-primary-gold);
+  padding: 0.5rem;
   border: none;
+  margin: 1rem 0 1rem;
+  width: 300px;
+}
+
+.btn:hover {
   background-color: var(--clr-primary-red);
-  color: white;
 }
 
 @media (min-width: 600px) {
@@ -50,4 +60,7 @@
   }
 }
 @media (min-width: 1201px) {
+  .imgContainer {
+    width: 400px;
+  }
 }
