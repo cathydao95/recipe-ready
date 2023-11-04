@@ -3,7 +3,7 @@ import { Loading } from "../../components";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
-import { FaRegClock, FaBookmark } from "react-icons/fa";
+import { FaRegClock, FaBookmark, FaCheck } from "react-icons/fa";
 import { useAppContext } from "../../context/appContext";
 import LoginModal from "../../components/LoginModal/LoginModal";
 
@@ -116,7 +116,11 @@ const Recipe = () => {
               className={styles.actionBtn}
             >
               {isBookmarked ? (
-                "Bookmarked"
+                <>
+                  <span className={styles.bookmarkContainer}>
+                    Bookmarked <FaCheck />
+                  </span>
+                </>
               ) : (
                 <>
                   <span className={styles.bookmarkContainer}>

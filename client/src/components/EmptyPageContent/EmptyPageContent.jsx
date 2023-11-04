@@ -10,13 +10,17 @@ const EmptyPageContent = ({ page }) => {
     <div className={styles.container}>
       <div className={styles.noRecipesContainer}>
         <p className={styles.text}>{content.text}</p>
-        <Link to="/create">
+        <Link to={content.buttonLink}>
           <button className={styles.btn}>{content.buttonText}</button>
         </Link>
       </div>
 
       <div className={styles.imgContainer}>
-        <img className={styles.img} src={content.imageSrc} alt="Cooking" />
+        <img
+          className={styles.img}
+          src={content.imageSrc}
+          alt={content.altText}
+        />
       </div>
     </div>
   );

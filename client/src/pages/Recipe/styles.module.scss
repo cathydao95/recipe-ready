@@ -10,6 +10,13 @@
   padding: 1rem 0;
 }
 
+.bookmarkContainer {
+  font-size: 0.875rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
 .actionBtn {
   width: 200px;
   padding: 0.25rem;
