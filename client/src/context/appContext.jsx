@@ -77,7 +77,7 @@ const AppProvider = ({ children }) => {
       if (page === 1) {
         setRecipeSearchResults(recipes);
       } else {
-        setRecipeSearchResults((prevRecipes) => [...prevRecipes, recipes]);
+        setRecipeSearchResults((prevRecipes) => [...prevRecipes, ...recipes]);
       }
       setHasMore(updatedHasMore);
       setResultsLoaded(true);
@@ -195,6 +195,7 @@ const AppProvider = ({ children }) => {
         getPersonalRecipes,
         page,
         setPage,
+        loadMoreRecipes,
       }}
     >
       {children}
