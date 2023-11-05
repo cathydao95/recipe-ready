@@ -40,7 +40,7 @@ const AppProvider = ({ children }) => {
   // Function to logout User
   const logOutUser = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/v1/auth/logout`);
+      const response = await axios.get(`${API_BASE_URL}/api/v1/auth/logout`);
       setCurrentUser([]);
       setUsersRecipes([]);
       setUsersBookmarked([]);
@@ -66,20 +66,15 @@ const AppProvider = ({ children }) => {
         queryParam += `?keyword=${keyword}`;
       }
 
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes${queryParam}`,
-        {
-          credentials: "include",
-        }
+      const response = await axios.get(
+        `${API_BASE_URL}/api/v1/recipes${queryParam}`
       );
 
-      if (response.ok) {
-        const {
-          data: { recipes },
-        } = await response.json();
-        setRecipeSearchResults(recipes);
-        setResultsLoaded(true);
-      }
+      const {
+        data: { recipes },
+      } = await response.data;
+      setRecipeSearchResults(recipes);
+      setResultsLoaded(true);
     } catch (error) {
       console.error(error);
     }
@@ -88,20 +83,16 @@ const AppProvider = ({ children }) => {
   // Function to fetch a user's personal/created recipes
   const getPersonalRecipes = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/userRecipes`,
-        {
-          credentials: "include",
-        }
+      const response = await axios.get(
+        `${API_BASE_URL}/api/v1/recipes/userRecipes`
       );
       // If successful, set usersRecipes state to response
-      if (response.ok) {
-        const {
-          data: { recipes },
-        } = await response.json();
-        setUsersRecipes(recipes);
-        setResultsLoaded(true);
-      }
+
+      const {
+        data: { recipes },
+      } = await response.data;
+      setUsersRecipes(recipes);
+      setResultsLoaded(true);
     } catch (error) {
       console.error(error);
     }
@@ -110,19 +101,15 @@ const AppProvider = ({ children }) => {
   // Function to fetch current users' bookmarked recipes
   const getBookmarkedRecipes = async () => {
     try {
-      let response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/bookmark`,
-        {
-          credentials: "include",
-        }
+      let response = await axios.get(
+        `${API.VITE_BASE_URL}/api/v1/recipes/bookmark`
       );
-      if (response.ok) {
-        const {
-          data: { bookmarks },
-        } = await response.json();
-        setUsersBookmarked(bookmarks);
-        setResultsLoaded(true);
-      }
+
+      const {
+        data: { bookmarks },
+      } = await response.data;
+      setUsersBookmarked(bookmarks);
+      setResultsLoaded(true);
     } catch (error) {
       console.error(error);
     }
@@ -140,23 +127,14 @@ const AppProvider = ({ children }) => {
   // Function to add a recipe or remove a recipe from a user's bookmarks
   const bookmarkRecipe = async (id) => {
     try {
-      let response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/bookmark/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/JSON",
-          },
-          credentials: "include",
-        }
+      let response = await axios.post(
+        `${API_BASE_URL}/api/v1/recipes/bookmark/${id}`
       );
 
-      if (response.ok) {
-        const {
-          data: { bookmarks },
-        } = await response.json();
-        setUsersBookmarked(bookmarks);
-      }
+      const {
+        data: { bookmarks },
+      } = await response.data;
+      setUsersBookmarked(bookmarks);
     } catch (error) {
       console.error(error);
     }
@@ -165,37 +143,17 @@ const AppProvider = ({ children }) => {
   // Function do delete recipe
   const deleteRecipe = async (id) => {
     try {
-      let response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-type": "application/JSON",
-          },
-          credentials: "include",
-        }
+      let response = await axios.delete(`${API_BASE_URL}/api/v1/recipes/${id}`);
+
+      setUsersRecipes((prevRecipes) =>
+        prevRecipes.filter((recipe) => recipe.id !== id)
       );
 
-      if (response.ok) {
-        // setUsersBookmarked((prevBookmarked) => {
-        //   prevBookmarked.filter((recipe) => recipe.id !== id);
-        // });
-        setUsersRecipes((prevRecipes) =>
-          prevRecipes.filter((recipe) => recipe.id !== id)
-        );
-
-        let { msg } = await response.json();
-        toast.success("Recipe Deleted!");
-        return { success: true, message: msg };
-      } else {
-        let { msg } = await response.json();
-        if (msg) {
-          toast.error("Could not delete recipe");
-          return { success: false, message: msg };
-        }
-      }
+      let { msg } = await response.data;
+      toast.success("Recipe Deleted!");
+      return { success: true, message: msg };
     } catch (error) {
-      toast.error("An unexpected error occurred");
+      toast.error("Error deleting recipe");
       return { success: false, message: "An error occurred" };
     }
   };
