@@ -11,7 +11,7 @@ const UserRecipes = () => {
   const getPersonalRecipes = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/v1/recipes/userRecipes",
+        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/userRecipes`,
         {
           credentials: "include",
         }

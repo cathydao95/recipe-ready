@@ -32,7 +32,7 @@ const Recipe = () => {
   const getRecipe = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/recipes/${id}`,
+        `import.meta.env.VITE_API_URL/api/v1/recipes/${id}`,
         {
           credentials: "include",
         }
@@ -68,7 +68,7 @@ const Recipe = () => {
 
   // Function to retrieve recipe's nutritional information
   const getRecipeNutrition = async (recipeId) => {
-    let url = `http://localhost:8080/api/v1/recipes/${id}/nutrition`;
+    let url = `import.meta.env.VITE_API_URL/api/v1/recipes/${id}/nutrition`;
 
     try {
       const response = await fetch(url, {

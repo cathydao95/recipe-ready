@@ -45,7 +45,7 @@ const Create = () => {
       const formData = new FormData();
       formData.append("file", file);
       const response = await fetch(
-        "http://localhost:8080/api/v1/recipes/upload",
+        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/upload`,
         {
           method: "POST",
           credentials: "include",
@@ -85,10 +85,10 @@ const Create = () => {
     let url;
     let method;
     if (isEditing) {
-      url = `http://localhost:8080/api/v1/recipes/${currentRecipeInfo.id}`;
+      url = `import.meta.env.VITE_API_URL/api/v1/recipes/${currentRecipeInfo.id}`;
       method = "PUT";
     } else {
-      url = "http://localhost:8080/api/v1/recipes";
+      url = `${import.meta.env.VITE_BASE_URL}/api/v1/recipes`;
       method = "POST";
     }
     try {
