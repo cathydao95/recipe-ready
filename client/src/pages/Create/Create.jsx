@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import axios from "../../utils/axiosConfig";
 import { FormRow, Loading } from "../../components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,9 +26,6 @@ const Create = () => {
 
   const [recipeInfo, setRecipeInfo] = useState(initialState);
 
-  axios.defaults.withCredentials = true;
-  const API_BASE_URL = import.meta.env.VITE_BASE_URL;
-
   //When isEditing and currentRecipeInfo exists, set recipeInfo with info from  current recipe.
   useEffect(() => {
     if (isEditing && currentRecipeInfo) {
@@ -53,11 +50,8 @@ const Create = () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const response = await axios.post(
-        `${API_BASE_URL}/api/v1/recipes/upload`,
-        formData
-      );
-      const data = await response.data;
+      const response = await axios.post(`/api/v1/recipes/upload`, formData);
+      const data = response.data;
       if (data.secure_url) {
         setRecipeInfo((prevInfo) => ({
           ...prevInfo,
@@ -97,9 +91,9 @@ const Create = () => {
     let url;
     let axiosMethod = isEditing ? axios.put : axios.post;
     if (isEditing) {
-      url = `${API_BASE_URL}/api/v1/recipes/${currentRecipeInfo.id}`;
+      url = `/api/v1/recipes/${currentRecipeInfo.id}`;
     } else {
-      url = `${API_BASE_URL}/api/v1/recipes`;
+      url = `/api/v1/recipes`;
     }
     try {
       let response = await axiosMethod(url, updatedRecipeInfo);

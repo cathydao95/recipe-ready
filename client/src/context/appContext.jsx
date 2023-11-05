@@ -1,14 +1,9 @@
 import { useState, createContext, useEffect, useContext } from "react";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const AppContext = createContext();
-
-axios.defaults.withCredentials = true;
-
-// Create variable for env
-const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState([]);
@@ -22,7 +17,7 @@ const AppProvider = ({ children }) => {
 
   const getCurrentUser = async () => {
     try {
-      let response = await axios.get(`${API_BASE_URL}/api/v1/users/current`);
+      let response = await axios.get(`/api/v1/users/current`);
       const {
         data: { user },
       } = response.data;
@@ -31,7 +26,10 @@ const AppProvider = ({ children }) => {
       getBookmarkedRecipes();
       getPersonalRecipes();
     } catch (error) {
-      console.error(error);
+      const {
+        data: { msg },
+      } = error.response;
+      console.error(msg);
     } finally {
       setIsLoading(false);
     }
@@ -40,7 +38,7 @@ const AppProvider = ({ children }) => {
   // Function to logout User
   const logOutUser = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/v1/auth/logout`);
+      const response = await axios.get(`/api/v1/auth/logout`);
       setCurrentUser([]);
       setUsersRecipes([]);
       setUsersBookmarked([]);
@@ -48,7 +46,7 @@ const AppProvider = ({ children }) => {
       const { msg } = response.data;
       toast.success(msg);
     } catch (error) {
-      console.error(error);
+      console.error(error.response);
       toast.error("Logout Failed");
     }
   };
@@ -66,50 +64,46 @@ const AppProvider = ({ children }) => {
         queryParam += `?keyword=${keyword}`;
       }
 
-      const response = await axios.get(
-        `${API_BASE_URL}/api/v1/recipes${queryParam}`
-      );
+      const response = await axios.get(`/api/v1/recipes${queryParam}`);
 
       const {
         data: { recipes },
-      } = await response.data;
+      } = response.data;
       setRecipeSearchResults(recipes);
       setResultsLoaded(true);
     } catch (error) {
-      console.error(error);
+      console.error(error.response);
     }
   };
 
   // Function to fetch a user's personal/created recipes
   const getPersonalRecipes = async () => {
     try {
-      const response = await axios.get(
-        `${API_BASE_URL}/api/v1/recipes/userRecipes`
-      );
+      const response = await axios.get(`/api/v1/recipes/userRecipes`);
       // If successful, set usersRecipes state to response
 
       const {
         data: { recipes },
-      } = await response.data;
+      } = response.data;
       setUsersRecipes(recipes);
       setResultsLoaded(true);
     } catch (error) {
-      console.error(error);
+      console.error(error.response);
     }
   };
 
   // Function to fetch current users' bookmarked recipes
   const getBookmarkedRecipes = async () => {
     try {
-      let response = await axios.get(`${API_BASE_URL}/api/v1/recipes/bookmark`);
+      let response = await axios.get(`/api/v1/recipes/bookmark`);
 
       const {
         data: { bookmarks },
-      } = await response.data;
+      } = response.data;
       setUsersBookmarked(bookmarks);
       setResultsLoaded(true);
     } catch (error) {
-      console.error(error);
+      console.error(error.response);
     }
   };
 
@@ -125,29 +119,27 @@ const AppProvider = ({ children }) => {
   // Function to add a recipe or remove a recipe from a user's bookmarks
   const bookmarkRecipe = async (id) => {
     try {
-      let response = await axios.post(
-        `${API_BASE_URL}/api/v1/recipes/bookmark/${id}`
-      );
+      let response = await axios.post(`/api/v1/recipes/bookmark/${id}`);
 
       const {
         data: { bookmarks },
-      } = await response.data;
+      } = response.data;
       setUsersBookmarked(bookmarks);
     } catch (error) {
-      console.error(error);
+      console.error(error.response);
     }
   };
 
   // Function do delete recipe
   const deleteRecipe = async (id) => {
     try {
-      let response = await axios.delete(`${API_BASE_URL}/api/v1/recipes/${id}`);
+      let response = await axios.delete(`/api/v1/recipes/${id}`);
 
       setUsersRecipes((prevRecipes) =>
         prevRecipes.filter((recipe) => recipe.id !== id)
       );
 
-      let { msg } = await response.data;
+      let { msg } = response.data;
       toast.success("Recipe Deleted!");
       return { success: true, message: msg };
     } catch (error) {
@@ -156,10 +148,10 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  console.log("testing if loading", isLoading);
-  console.log("testing if results loaded", resultsLoaded);
-  console.log("testing for current user", currentUser);
-  console.log("recipe results", recipeSearchResults);
+  // console.log("testing if loading", isLoading);
+  // console.log("testing if results loaded", resultsLoaded);
+  // console.log("testing for current user", currentUser);
+  // console.log("recipe results", recipeSearchResults);
 
   return (
     <AppContext.Provider

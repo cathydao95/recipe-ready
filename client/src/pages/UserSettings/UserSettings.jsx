@@ -3,6 +3,7 @@ import { FormRow, Loading } from "../../components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppContext } from "../../context/appContext";
+import axios from "../../utils/axiosConfig";
 
 const UserSettings = () => {
   const { getCurrentUser, currentUser } = useAppContext();
@@ -24,34 +25,22 @@ const UserSettings = () => {
   const editUserInformation = async (e) => {
     e.preventDefault();
     try {
-      let response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/users/current`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-type": "application/JSON",
-          },
-          credentials: "include",
-          body: JSON.stringify(updatedUserInfo),
-        }
-      );
-
-      // If success, register user and navigate user to dashboard
-      if (response.ok) {
-        const {
-          data: { msg },
-        } = await response.json();
-
-        toast.success(msg);
-      } else {
-        let { msg } = await response.json();
-        if (msg) {
-          toast.error(msg);
-        }
-      }
+      let response = await axios.put(`/api/v1/users/current`, updatedUserInfo);
+      console.log(response);
+      const {
+        data: { msg },
+      } = response.data;
+      toast.success(msg);
     } catch (error) {
-      console.error(error);
-      toast.error("An unexpected error occurred");
+      const {
+        data: { msg },
+      } = error.response;
+      if (msg) {
+        toast.error(msg);
+      } else {
+        console.error(error);
+        toast.error("An unexpected error occurred");
+      }
     }
   };
 
