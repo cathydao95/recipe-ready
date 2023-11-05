@@ -5,11 +5,20 @@ import clsx from "clsx";
 import { useAppContext } from "../../context/appContext";
 import { FaSearch } from "react-icons/fa";
 import { RecipeArticle, Loading } from "../../components";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const SearchByName = () => {
   const navigate = useNavigate();
-  const { getRecipes, recipeSearchResults, resultsLoaded, setResultsLoaded } =
-    useAppContext();
+  const {
+    getRecipes,
+    recipeSearchResults,
+    setRecipeSearchResults,
+    page,
+    setPage,
+    hasMore,
+    resultsLoaded,
+    setResultsLoaded,
+  } = useAppContext();
   const [keyword, setKeyword] = useState("");
 
   const handleSubmit = (e) => {
@@ -21,9 +30,10 @@ const SearchByName = () => {
     });
   };
 
+  console.log(page);
   useEffect(() => {
     console.log("running now");
-    getRecipes();
+    getRecipes([], "", page);
   }, []);
 
   return (
