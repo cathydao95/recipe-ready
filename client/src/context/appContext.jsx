@@ -179,9 +179,13 @@ const AppProvider = ({ children }) => {
       });
 
       if (response.ok) {
+        // setUsersBookmarked((prevBookmarked) => {
+        //   prevBookmarked.filter((recipe) => recipe.id !== id);
+        // });
         setUsersRecipes((prevRecipes) =>
           prevRecipes.filter((recipe) => recipe.id !== id)
         );
+
         let { msg } = await response.json();
         toast.success("Recipe Deleted!");
         return { success: true, message: msg };

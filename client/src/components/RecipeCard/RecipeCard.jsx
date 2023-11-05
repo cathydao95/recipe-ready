@@ -7,8 +7,9 @@ import clsx from "clsx";
 import { useAppContext } from "../../context/appContext";
 import Modal from "react-bootstrap/Modal";
 import LoginModal from "../LoginModal/LoginModal";
+import { pageContent } from "../../utils/pageContent";
 
-const RecipeCard = ({ recipe }) => {
+const RecipeCard = ({ recipe, page }) => {
   // Destructure properties from recipe prop
   const { id, title, prep_time, user_id, image_url } = recipe;
 
@@ -49,7 +50,7 @@ const RecipeCard = ({ recipe }) => {
             <div className={styles.titleContainer}>
               <h5 className={styles.recipeTitle}>{title}</h5>
 
-              {user_id && user_id !== null && (
+              {user_id && user_id !== null && page != "bookmarked" && (
                 <button
                   variant="primary"
                   className={styles.icon}

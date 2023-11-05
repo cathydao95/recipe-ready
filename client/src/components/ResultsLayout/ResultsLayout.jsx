@@ -11,12 +11,12 @@ const ResultsLayout = ({ recipes, title, page }) => {
     resultsLoaded && (
       <div className={clsx("wrapper")}>
         <h2 className={styles.title}>{title}</h2>
-        {recipes.length === 0 ? (
+        {!recipes || recipes.length === 0 ? (
           <EmptyPageContent page={page} />
         ) : (
           <div className={styles.recipesContainer}>
             {recipes.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} />
+              <RecipeCard key={recipe.id} recipe={recipe} page={page} />
             ))}
           </div>
         )}
