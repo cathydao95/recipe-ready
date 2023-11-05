@@ -225,7 +225,8 @@ export const getRecipeNutrition = async (req, res) => {
   } catch (error) {
     console.error(error);
     if (error.response) {
-      res.status(error.response.status).json({ error: error.response.data });
+      const { status, data } = error.response;
+      res.status(status).json({ error: data });
     } else {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
