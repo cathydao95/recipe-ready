@@ -16,9 +16,12 @@ const AppProvider = ({ children }) => {
 
   const getCurrentUser = async () => {
     try {
-      let response = await fetch("http://localhost:8080/api/v1/users/current", {
-        credentials: "include",
-      });
+      let response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/users/current`,
+        {
+          credentials: "include",
+        }
+      );
 
       if (response.ok) {
         const {
@@ -40,9 +43,12 @@ const AppProvider = ({ children }) => {
   // Function to logout User
   const logOutUser = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/auth/logout", {
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/auth/logout`,
+        {
+          credentials: "include",
+        }
+      );
 
       // If logout is successful, navigate to landing page and display toast message
       if (response.ok) {
@@ -72,7 +78,7 @@ const AppProvider = ({ children }) => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/api/v1/recipes${queryParam}`,
+        `import.meta.env.VITE_API_URL/api/v1/recipes${queryParam}`,
         {
           credentials: "include",
         }
@@ -116,7 +122,7 @@ const AppProvider = ({ children }) => {
   const getBookmarkedRecipes = async () => {
     try {
       let response = await fetch(
-        "http://localhost:8080/api/v1/recipes/bookmark",
+        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/bookmark`,
         {
           credentials: "include",
         }
@@ -146,7 +152,7 @@ const AppProvider = ({ children }) => {
   const bookmarkRecipe = async (id) => {
     try {
       let response = await fetch(
-        `http://localhost:8080/api/v1/recipes/bookmark/${id}`,
+        `import.meta.env.VITE_API_URL/api/v1/recipes/bookmark/${id}`,
         {
           method: "POST",
           headers: {
@@ -170,13 +176,16 @@ const AppProvider = ({ children }) => {
   // Function do delete recipe
   const deleteRecipe = async (id) => {
     try {
-      let response = await fetch(`http://localhost:8080/api/v1/recipes/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-type": "application/JSON",
-        },
-        credentials: "include",
-      });
+      let response = await fetch(
+        `import.meta.env.VITE_API_URL/api/v1/recipes/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-type": "application/JSON",
+          },
+          credentials: "include",
+        }
+      );
 
       if (response.ok) {
         // setUsersBookmarked((prevBookmarked) => {

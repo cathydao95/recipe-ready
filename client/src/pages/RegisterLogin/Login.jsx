@@ -25,14 +25,17 @@ const Login = () => {
   const loginUser = async (e) => {
     e.preventDefault();
     try {
-      let response = await fetch("http://localhost:8080/api/v1/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/JSON",
-        },
-        credentials: "include",
-        body: JSON.stringify(loginInfo),
-      });
+      let response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/JSON",
+          },
+          credentials: "include",
+          body: JSON.stringify(loginInfo),
+        }
+      );
       // If success, log in user and navigate user to dashboard and display toast success
       if (response.ok) {
         let { msg } = await response.json();

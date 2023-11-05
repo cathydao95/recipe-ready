@@ -24,14 +24,17 @@ const UserSettings = () => {
   const editUserInformation = async (e) => {
     e.preventDefault();
     try {
-      let response = await fetch("http://localhost:8080/api/v1/users/current", {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/JSON",
-        },
-        credentials: "include",
-        body: JSON.stringify(updatedUserInfo),
-      });
+      let response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/users/current`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/JSON",
+          },
+          credentials: "include",
+          body: JSON.stringify(updatedUserInfo),
+        }
+      );
 
       // If success, register user and navigate user to dashboard
       if (response.ok) {
