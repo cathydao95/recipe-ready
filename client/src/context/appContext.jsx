@@ -78,7 +78,7 @@ const AppProvider = ({ children }) => {
       }
 
       const response = await fetch(
-        `import.meta.env.VITE_API_URL/api/v1/recipes${queryParam}`,
+        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes${queryParam}`,
         {
           credentials: "include",
         }
@@ -100,7 +100,7 @@ const AppProvider = ({ children }) => {
   const getPersonalRecipes = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/v1/recipes/userRecipes",
+        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/userRecipes`,
         {
           credentials: "include",
         }
@@ -152,7 +152,7 @@ const AppProvider = ({ children }) => {
   const bookmarkRecipe = async (id) => {
     try {
       let response = await fetch(
-        `import.meta.env.VITE_API_URL/api/v1/recipes/bookmark/${id}`,
+        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/bookmark/${id}`,
         {
           method: "POST",
           headers: {
@@ -177,7 +177,7 @@ const AppProvider = ({ children }) => {
   const deleteRecipe = async (id) => {
     try {
       let response = await fetch(
-        `import.meta.env.VITE_API_URL/api/v1/recipes/${id}`,
+        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/${id}`,
         {
           method: "DELETE",
           headers: {

@@ -100,7 +100,9 @@ const Create = () => {
     let url;
     let method;
     if (isEditing) {
-      url = `import.meta.env.VITE_API_URL/api/v1/recipes/${currentRecipeInfo.id}`;
+      url = `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/${
+        currentRecipeInfo.id
+      }`;
       method = "PUT";
     } else {
       url = `${import.meta.env.VITE_BASE_URL}/api/v1/recipes`;
