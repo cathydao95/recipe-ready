@@ -2,9 +2,9 @@ import db from "../db/db-connection.js";
 import "dotenv/config";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
-import fs from "fs/promises";
 import cloudinary from "cloudinary";
 import streamifier from "streamifier";
+import axios from "axios";
 import { prepareIngredients } from "../utils/recipeUtils.js";
 
 // GET RECIPES BASED ON INGREDIENTS OR KEYWORD
@@ -144,6 +144,7 @@ export const getUsersBookmarked = async (req, res) => {
   });
 };
 // BOOKMARK RECIPE
+// CHECKS IF RECIPE ALREADY EXISTS IN BOOKMARKED TABLE. IF DOES, REMOVE, ELSE ADD
 export const bookmarkRecipe = async (req, res) => {
   const { id } = req.params;
   const { userId } = req.user;
@@ -211,26 +212,25 @@ export const getRecipeNutrition = async (req, res) => {
     let title = recipe[0].title.replace(/ /g, "+");
     let apiKey = process.env.SPOONACULAR_API_KEY;
 
-    const response = await fetch(
+    const response = await axios.get(
       `https://api.spoonacular.com/recipes/guessNutrition?apiKey=${apiKey}&title=${title}`
     );
 
-    if (!response.ok) {
-      return res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ error: "Failed to fetch nutrition data" });
-    }
-
-    const recipeNutrition = await response.json();
+    console.log(response);
+    const recipeNutrition = response.data;
     res.status(StatusCodes.OK).json({
       status: "success",
       data: { recipeNutrition },
     });
   } catch (error) {
     console.error(error);
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Internal server error" });
+    if (error.response) {
+      res.status(error.response.status).json({ error: error.response.data });
+    } else {
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: "Recipe not found" });
+    }
   }
 };
 
