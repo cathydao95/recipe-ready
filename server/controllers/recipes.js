@@ -9,7 +9,9 @@ import { prepareIngredients } from "../utils/recipeUtils.js";
 
 // GET RECIPES BASED ON INGREDIENTS OR KEYWORD
 export const getRecipes = async (req, res) => {
-  const { ingredients, keyword } = req.query;
+  const { ingredients, keyword, limit = 8, page = 1 } = req.query;
+
+  const offset = (page - 1) * limit;
 
   let queryText = "SELECT * FROM recipes";
   let queryParams = [];
@@ -26,12 +28,31 @@ export const getRecipes = async (req, res) => {
     queryParams = [`%${keyword}%`];
   }
 
-  const { rows: recipes } = await db.query(queryText, queryParams);
+  // QUERY RECIPES TO FIND TOTAL RECIPES
+  const { rows: count } = await db.query(queryText, queryParams);
+  const totalRecipes = count.length;
+
+  // SET LIMIT AND OFFSET BASED ON QUERY PARAMS
+  if (queryParams.length === 0) {
+    queryText += " LIMIT $1 OFFSET $2";
+  } else {
+    queryText += " LIMIT $2 OFFSET $3";
+  }
+
+  queryParams.push(limit, offset);
+
+  // QUERY RECIPES BASED ON LIMITS
+  const { rows: recipes, rowCount } = await db.query(queryText, queryParams);
+
+  // CHECK IF MORE RECIPES THAT HAVE NO BEEN LOADED BY CHECKING IF TOTALRECIPES > OFFSET + LENGTH OF CURRENT SEARCH
+  const hasMore = totalRecipes > offset + recipes.length;
 
   const response = {
     status: "success",
     results: recipes.length,
     data: { recipes },
+    page,
+    hasMore,
   };
 
   res.status(StatusCodes.OK).json(response);
