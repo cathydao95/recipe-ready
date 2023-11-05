@@ -10,3 +10,14 @@ export const formatStringInstructions = (str) => {
 
   return formattedString;
 };
+
+export const limitScreenSize = (screenWidth) => {
+  // Base on current media query breakpoints
+  if (screenWidth >= 1025) {
+    return 8;
+  } else if (screenWidth >= 769) {
+    return 6;
+  } else {
+    return 4;
+  }
+};
