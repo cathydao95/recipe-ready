@@ -101,9 +101,7 @@ const AppProvider = ({ children }) => {
   // Function to fetch current users' bookmarked recipes
   const getBookmarkedRecipes = async () => {
     try {
-      let response = await axios.get(
-        `${API.VITE_BASE_URL}/api/v1/recipes/bookmark`
-      );
+      let response = await axios.get(`${API_BASE_URL}/api/v1/recipes/bookmark`);
 
       const {
         data: { bookmarks },
