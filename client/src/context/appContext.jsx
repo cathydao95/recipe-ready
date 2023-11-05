@@ -14,6 +14,8 @@ const AppProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   const getCurrentUser = async () => {
     try {
@@ -52,28 +54,41 @@ const AppProvider = ({ children }) => {
   };
 
   // Function to get recipes based on keyword or provided ingredients
-  const getRecipes = async (ingredients, keyword) => {
+  const getRecipes = async (ingredients = [], keyword = "", pageNumber) => {
     try {
-      let queryParam = "";
+      let queryParam = `?page=${pageNumber}`;
 
       if (ingredients && ingredients.length > 0) {
-        queryParam += `?ingredients=${ingredients.join(",")}`;
+        queryParam += `&ingredients=${ingredients.join(",")}`;
       }
 
       if (keyword && keyword !== "") {
-        queryParam += `?keyword=${keyword}`;
+        queryParam += `&keyword=${keyword}`;
       }
 
+      console.log(queryParam);
       const response = await axios.get(`/api/v1/recipes${queryParam}`);
 
+      console.log(response.data);
       const {
-        data: { recipes },
+        data: { recipes, hasMore: updatedHasMore },
       } = response.data;
-      setRecipeSearchResults(recipes);
+
+      if (page === 1) {
+        setRecipeSearchResults(recipes);
+      } else {
+        setRecipeSearchResults((prevRecipes) => [...prevRecipes, recipes]);
+      }
+      setHasMore(updatedHasMore);
       setResultsLoaded(true);
     } catch (error) {
       console.error(error.response);
     }
+  };
+
+  const loadMoreRecipes = async () => {
+    setPage((prevPage) => prevPage + 1);
+    await getRecipes(ingredients, key, page + 1);
   };
 
   // Function to fetch a user's personal/created recipes
@@ -178,6 +193,8 @@ const AppProvider = ({ children }) => {
         resultsLoaded,
         setResultsLoaded,
         getPersonalRecipes,
+        page,
+        setPage,
       }}
     >
       {children}
