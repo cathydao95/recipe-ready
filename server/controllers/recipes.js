@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
 import fs from "fs/promises";
 import cloudinary from "cloudinary";
+import streamifier from "streamifier";
 import { prepareIngredients } from "../utils/recipeUtils.js";
 
 // GET RECIPES BASED ON INGREDIENTS OR KEYWORD
@@ -233,6 +234,7 @@ export const getRecipeNutrition = async (req, res) => {
   }
 };
 
+// Function to upload recipe image to memory storage on cloudinary
 export const uploadRecipeImage = async (req, res) => {
   if (!req.file) {
     return res
@@ -240,12 +242,33 @@ export const uploadRecipeImage = async (req, res) => {
       .json({ error: "No file provided" });
   }
 
-  const result = await cloudinary.v2.uploader.upload(req.file.path, {
-    use_filename: true,
-    folder: "recipe-image",
-  });
-  await fs.unlink(req.file.path);
+  // Helper function to upload the file buffer to Cloudinary
+  const uploadToCloudinary = (buffer) => {
+    return new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.v2.uploader.upload_stream(
+        {
+          use_filename: true,
+          folder: "recipe-image",
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
 
-  console.log(result);
-  res.status(StatusCodes.OK).json({ secure_url: result.secure_url });
+      streamifier.createReadStream(buffer).pipe(uploadStream);
+    });
+  };
+
+  try {
+    // Wait for the uploadToCloudinary function to resolve
+    const result = await uploadToCloudinary(req.file.buffer);
+    console.log(result);
+    res.status(StatusCodes.OK).json({ secure_url: result.secure_url });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: "Error uploading file to Cloudinary" });
+  }
 };
