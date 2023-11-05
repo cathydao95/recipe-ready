@@ -40,24 +40,16 @@ const AppProvider = ({ children }) => {
   // Function to logout User
   const logOutUser = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/auth/logout`,
-        {
-          credentials: "include",
-        }
-      );
-
-      // If logout is successful, navigate to landing page and display toast message
-      if (response.ok) {
-        setCurrentUser([]);
-        setUsersRecipes([]);
-        setUsersBookmarked([]);
-        setIsAuthenticated(false);
-        const { msg } = await response.json();
-        toast.success(msg);
-      }
+      const response = await fetch(`${API_BASE_URL}/api/v1/auth/logout`);
+      setCurrentUser([]);
+      setUsersRecipes([]);
+      setUsersBookmarked([]);
+      setIsAuthenticated(false);
+      const { msg } = response.data;
+      toast.success(msg);
     } catch (error) {
       console.error(error);
+      toast.error("Logout Failed");
     }
   };
 
