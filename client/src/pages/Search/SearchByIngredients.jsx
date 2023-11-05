@@ -7,7 +7,7 @@ import { useAppContext } from "../../context/appContext";
 const SearchByIngredients = () => {
   const navigate = useNavigate();
   // Destructure functions and states from app context
-  const { getRecipes, recipeResults, setIsLoading } = useAppContext();
+  const { getRecipes, recipeSearchResults, setIsLoading } = useAppContext();
   // State to manage the list of selected ingredients
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
@@ -17,23 +17,21 @@ const SearchByIngredients = () => {
     navigate("/results", {
       state: { ingredients: selectedIngredients },
     });
-    setIsLoading(true);
   };
 
   return (
     <div className={clsx("wrapper")}>
       <h2>What Ingredients Do You Have?</h2>
-      <div>
-        <h4>Ingredients</h4>
 
-        <form>
-          <IngredientList
-            selectedIngredients={selectedIngredients}
-            setSelectedIngredients={setSelectedIngredients}
-          />
-          <button onClick={(e) => handleSubmit(e)}>Search For Recipes</button>
-        </form>
-      </div>
+      <form>
+        <IngredientList
+          selectedIngredients={selectedIngredients}
+          setSelectedIngredients={setSelectedIngredients}
+        />
+        <button className="formBtn" onClick={(e) => handleSubmit(e)}>
+          Search For Recipes
+        </button>
+      </form>
     </div>
   );
 };

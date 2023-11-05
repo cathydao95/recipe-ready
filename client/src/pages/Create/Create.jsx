@@ -4,7 +4,9 @@ import { FormRow, Loading } from "../../components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
+import clsx from "clsx";
 import uploadImg from "../../assets/upload-img.svg";
+import { formatStringInstructions } from "../../utils/utils";
 
 const Create = () => {
   const navigate = useNavigate();
@@ -28,7 +30,10 @@ const Create = () => {
     if (isEditing && currentRecipeInfo) {
       setRecipeInfo({
         title: currentRecipeInfo.title,
-        ingredients: currentRecipeInfo.ingredients,
+        // takes the ingredients array and joins each element by a comma and removes and trailing punctuation and white space
+        ingredients: currentRecipeInfo.ingredients
+          .join(", ")
+          .replace(/[.,;!?]+\s*$/, ""),
         instructions: currentRecipeInfo.instructions,
         prep_time: currentRecipeInfo.prep_time,
         image_url: currentRecipeInfo.image_url,
@@ -82,6 +87,16 @@ const Create = () => {
   // Function to create or edit recipe
   const createRecipe = async (e) => {
     e.preventDefault();
+
+    // Use utils function to format recipe instructions into an ordered list.
+    const formattedInstructions = formatStringInstructions(
+      recipeInfo.instructions
+    );
+
+    const updatedRecipeInfo = {
+      ...recipeInfo,
+      instructions: formattedInstructions,
+    };
     let url;
     let method;
     if (isEditing) {
@@ -98,13 +113,15 @@ const Create = () => {
           "Content-type": "application/JSON",
         },
         credentials: "include",
-        body: JSON.stringify(recipeInfo),
+        body: JSON.stringify(updatedRecipeInfo),
       });
 
       if (response.ok) {
         let { msg } = await response.json();
-        toast.success(msg);
-        navigate("/my-recipes");
+        toast.success(isEditing ? "Updating Recipe..." : "Creating Recipe...");
+        setTimeout(() => {
+          navigate("/my-recipes");
+        }, 3000);
       } else {
         let { msg } = await response.json();
         if (msg) {
@@ -119,65 +136,72 @@ const Create = () => {
   return isLoading ? (
     <Loading />
   ) : (
-    <div className={styles.formContainer}>
+    <div className="wrapper">
       <h1 className="title">
-        {/* {currentRecipeInfo ? "Edit Recipe" : "Create New Recipe"} */}
         {isEditing && currentRecipeInfo ? "Edit Recipe" : "Create New Recipe"}
       </h1>
-      <form className="form">
-        <FormRow
-          type="text"
-          name="title"
-          value={recipeInfo.title}
-          handleInput={handleInput}
-        />
-
-        <div className={styles.imgInputContainer}>
-          <img
-            className={styles.uploadImg}
-            src={recipeInfo.image_url !== "" ? recipeInfo.image_url : uploadImg}
+      <div className="formContainer">
+        <form className="form">
+          <FormRow
+            type="text"
+            name="title"
+            value={recipeInfo.title}
+            labelText="Recipe Title"
+            handleInput={handleInput}
           />
-        </div>
 
-        <div className="formRow">
-          <input
-            className="formInput"
-            type="file"
-            name="image_url"
-            accept="image/*"
-            onChange={handleInput}
+          <div className={styles.imgInputContainer}>
+            <img
+              className={styles.uploadImg}
+              src={
+                recipeInfo.image_url !== "" ? recipeInfo.image_url : uploadImg
+              }
+            />
+          </div>
+
+          <div className={clsx("formRow", styles.imgFormRow)}>
+            <input
+              className={styles.imgInput}
+              // className="formInput"
+              type="file"
+              name="image_url"
+              accept="image/*"
+              onChange={handleInput}
+            />
+          </div>
+
+          <FormRow
+            type="text"
+            name="ingredients"
+            value={recipeInfo.ingredients}
+            handleInput={handleInput}
+            labelText="Ingredients"
           />
-        </div>
+          <FormRow
+            type="text"
+            name="instructions"
+            value={recipeInfo.instructions}
+            handleInput={handleInput}
+            labelText="Instructions"
+          />
+          <FormRow
+            type="number"
+            name="prep_time"
+            labelText="Prep Time (Minutes)"
+            value={recipeInfo.prep_time}
+            handleInput={handleInput}
+          />
 
-        <FormRow
-          type="text"
-          name="ingredients"
-          value={recipeInfo.ingredients}
-          handleInput={handleInput}
-        />
-        <FormRow
-          type="text"
-          name="instructions"
-          value={recipeInfo.instructions}
-          handleInput={handleInput}
-        />
-        <FormRow
-          type="number"
-          name="prep_time"
-          labelText="prep time (in minutes)"
-          value={recipeInfo.prep_time}
-          handleInput={handleInput}
-        />
-
-        <button
-          className="formBtn"
-          type="submit"
-          onClick={createRecipe}
-          disabled={recipeInfo.image_url === ""}
-        >
-          Submit
-        </button>
-      </form>
+          <button
+            className="formBtn"
+            type="submit"
+            onClick={createRecipe}
+            disabled={recipeInfo.image_url === ""}
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

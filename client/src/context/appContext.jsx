@@ -6,12 +6,13 @@ export const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState([]);
-  const [recipeResults, setRecipeResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [usersRecipes, setUsersRecipes] = useState([]);
   const [usersBookmarked, setUsersBookmarked] = useState([]);
+  const [recipeSearchResults, setRecipeSearchResults] = useState([]);
+  const [resultsLoaded, setResultsLoaded] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getCurrentUser = async () => {
     try {
@@ -26,10 +27,16 @@ const AppProvider = ({ children }) => {
         const {
           data: { user },
         } = await response.json();
+
         setCurrentUser(user);
+        setIsAuthenticated(true);
+        getBookmarkedRecipes();
+        getPersonalRecipes();
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -81,8 +88,30 @@ const AppProvider = ({ children }) => {
         const {
           data: { recipes },
         } = await response.json();
-        setRecipeResults(recipes);
-        setIsLoading(false);
+        setRecipeSearchResults(recipes);
+        setResultsLoaded(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Function to fetch a user's personal/created recipes
+  const getPersonalRecipes = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/v1/recipes/userRecipes",
+        {
+          credentials: "include",
+        }
+      );
+      // If successful, set usersRecipes state to response
+      if (response.ok) {
+        const {
+          data: { recipes },
+        } = await response.json();
+        setUsersRecipes(recipes);
+        setResultsLoaded(true);
       }
     } catch (error) {
       console.error(error);
@@ -103,11 +132,10 @@ const AppProvider = ({ children }) => {
           data: { bookmarks },
         } = await response.json();
         setUsersBookmarked(bookmarks);
+        setResultsLoaded(true);
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -160,16 +188,20 @@ const AppProvider = ({ children }) => {
       );
 
       if (response.ok) {
+        // setUsersBookmarked((prevBookmarked) => {
+        //   prevBookmarked.filter((recipe) => recipe.id !== id);
+        // });
         setUsersRecipes((prevRecipes) =>
           prevRecipes.filter((recipe) => recipe.id !== id)
         );
+
         let { msg } = await response.json();
-        toast.success(msg);
+        toast.success("Recipe Deleted!");
         return { success: true, message: msg };
       } else {
         let { msg } = await response.json();
         if (msg) {
-          toast.error(msg);
+          toast.error("Could not delete recipe");
           return { success: false, message: msg };
         }
       }
@@ -179,15 +211,10 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      getBookmarkedRecipes();
-    }
-  }, [isAuthenticated]);
+  console.log("testing if loading", isLoading);
+  console.log("testing if results loaded", resultsLoaded);
+  console.log("testing for current user", currentUser);
+  console.log("recipe results", recipeSearchResults);
 
   return (
     <AppContext.Provider
@@ -196,7 +223,7 @@ const AppProvider = ({ children }) => {
         setIsAuthenticated,
         getRecipes,
         deleteRecipe,
-        recipeResults,
+        recipeSearchResults,
         isLoading,
         setIsLoading,
         usersRecipes,
@@ -211,6 +238,9 @@ const AppProvider = ({ children }) => {
         showLogin,
         setShowLogin,
         handleBookmarkClick,
+        resultsLoaded,
+        setResultsLoaded,
+        getPersonalRecipes,
       }}
     >
       {children}

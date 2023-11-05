@@ -158,8 +158,21 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 --
 
 COPY public.bookmarked (id, user_id, recipe_id) FROM stdin;
-3	1	11
-4	1	2
+16	1	76
+22	2	13
+23	2	63
+24	3	2
+25	3	16
+28	1	83
+32	1	86
+33	1	87
+34	1	88
+35	1	89
+36	1	90
+39	1	92
+40	1	91
+41	1	93
+42	1	96
 \.
 
 
@@ -240,6 +253,10 @@ COPY public.recipes (id, title, ingredients, instructions, prep_time, image_url,
 70	French Onion Soup	{onions,"beef broth",thyme,bread,cheese}	1. Caramelize onions. 2. Add broth and thyme. 3. Top with bread and cheese, then broil.	45	https://images.pexels.com/photos/5038909/pexels-photo-5038909.jpeg?auto=compress&cs=tinysrgb&w=600	\N	t
 71	Mac and Cheese	{pasta,cheese,milk,butter,flour}	1. Make cheese sauce. 2. Combine with cooked pasta and bake.	35	https://images.pexels.com/photos/15483262/pexels-photo-15483262/free-photo-of-photo-of-mac-and-cheese-on-a-plate.jpeg?auto=compress&cs=tinysrgb&w=600	\N	t
 72	Chicken Caesar Wrap	{chicken,lettuce,parmesan,tortilla,"caesar dressing"}	1. Toss chicken with lettuce and dressing. 2. Wrap in tortilla.	15	https://images.pexels.com/photos/9624298/pexels-photo-9624298.jpeg?auto=compress&cs=tinysrgb&w=600	\N	t
+95	asdasd	{asdasd}	1. asdasd	334	https://res.cloudinary.com/dnu4wptmg/image/upload/v1699145936/recipe-image/salmonbowl_fbxjo4.jpg	1	f
+98	asdasd	{asdasd}	1. asdasd	34	https://res.cloudinary.com/dnu4wptmg/image/upload/v1699146171/recipe-image/ramen_bj2o92.jpg	1	f
+82	Ellie's Test Recipe	{asd,asd,asd}	1. asdasd. 2. asudhasd asasdasd . 3. asdasdasd 	45	https://res.cloudinary.com/dnu4wptmg/image/upload/v1699122449/recipe-image/salmonbowl_fdmlcd.jpg	2	f
+100	23	{2}	1. 1. 2. 2	2	https://res.cloudinary.com/dnu4wptmg/image/upload/v1699146273/recipe-image/noresults_caapsd.png	1	f
 \.
 
 
@@ -248,7 +265,11 @@ COPY public.recipes (id, title, ingredients, instructions, prep_time, image_url,
 --
 
 COPY public.users (id, first_name, last_name, email, hashed_password) FROM stdin;
-1	Cat	Dao	catdao@gmail.com	$2b$10$oA4R8CBBJaOpMMFUN4hrke0RWwzWvo/.Q7uYHtmrzw.ww3rxaI/7a
+2	Ellie	Meadows	elliemeadows@gmail.com	$2b$10$Mtd1Rdd0f3gJOpuzXNUzyeLHqED/gn2wwNOG97HTO/JUGuxxtDMFm
+3	Test	Account	test@gmail.com	$2b$10$Nfne1J9UlFYaVxj8BC/ieuqe2Pai9uFoaV1.GM9O5c2mitU2PiMU6
+4	test	account	testaccount@gmail.com	$2b$10$gbMShC5eDOTlc9.PxpSPm.RfZIgGnyPE/ug3tq5Fc5XS8fK1c/cFu
+5	new	account	newaccount@gmail.com	$2b$10$SQfyXalhF2YzjT9UM5QLju1bL/5DRg.anAlPNsvf4J1B5M8vQ2cIK
+1	cat	Dao	catdao@gmail.com	$2b$10$oA4R8CBBJaOpMMFUN4hrke0RWwzWvo/.Q7uYHtmrzw.ww3rxaI/7a
 \.
 
 
@@ -256,21 +277,21 @@ COPY public.users (id, first_name, last_name, email, hashed_password) FROM stdin
 -- Name: bookmarked_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tpl1122_1
 --
 
-SELECT pg_catalog.setval('public.bookmarked_id_seq', 4, true);
+SELECT pg_catalog.setval('public.bookmarked_id_seq', 57, true);
 
 
 --
 -- Name: recipes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tpl1122_1
 --
 
-SELECT pg_catalog.setval('public.recipes_id_seq', 72, true);
+SELECT pg_catalog.setval('public.recipes_id_seq', 100, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tpl1122_1
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+SELECT pg_catalog.setval('public.users_id_seq', 5, true);
 
 
 --

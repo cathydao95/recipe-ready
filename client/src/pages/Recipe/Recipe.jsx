@@ -1,21 +1,15 @@
 import { useEffect, useState } from "react";
-import { Loading } from "../../components";
+import { EmptyPageContent, Loading } from "../../components";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
-import { FaRegClock, FaBookmark } from "react-icons/fa";
+import { FaRegClock, FaBookmark, FaCheck } from "react-icons/fa";
 import { useAppContext } from "../../context/appContext";
 import LoginModal from "../../components/LoginModal/LoginModal";
 
 const Recipe = () => {
-  const {
-    setIsLoading,
-    isLoading,
-    deleteRecipe,
-    usersBookmarked,
-    handleBookmarkClick,
-    setShowLogin,
-  } = useAppContext();
+  const { isLoading, usersBookmarked, handleBookmarkClick, setShowLogin } =
+    useAppContext();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -39,7 +33,6 @@ const Recipe = () => {
       );
       if (response.status === 404) {
         setRecipeNotFound(true);
-        setIsLoading(false);
       }
 
       if (response.ok) {
@@ -48,21 +41,9 @@ const Recipe = () => {
         } = await response.json();
 
         setRecipeInfo(recipe[0]);
-
-        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
-    }
-  };
-
-  // Function to handle recipe deletion
-  const handleDelete = async (e, id) => {
-    e.preventDefault();
-    const { success } = await deleteRecipe(id);
-    // If recipe successfully deleted, navigate to user's personal recipes page
-    if (success) {
-      navigate("/my-recipes");
     }
   };
 
@@ -96,9 +77,9 @@ const Recipe = () => {
   return isLoading ? (
     <Loading />
   ) : recipeNotFound ? (
-    <div>
-      <button onClick={() => navigate(-1)}>Back to Search</button>
-      <h1>Recipe Not Found</h1>
+    <div className={clsx("wrapper")}>
+      <h2 className={styles.title}>Recipe Not Found</h2>
+      <EmptyPageContent page="noRecipe" />
     </div>
   ) : (
     <div>
@@ -106,7 +87,7 @@ const Recipe = () => {
         <div className={clsx(styles.recipeWrapper, "wrapper")}>
           <div className={styles.btnContainer}>
             <button onClick={() => navigate(-1)} className={styles.actionBtn}>
-              Back To Search
+              Back
             </button>
             <button
               onClick={(e) => {
@@ -116,12 +97,15 @@ const Recipe = () => {
               className={styles.actionBtn}
             >
               {isBookmarked ? (
-                "Bookmarked"
+                <>
+                  <span className={styles.bookmarkContainer}>
+                    Bookmarked <FaCheck />
+                  </span>
+                </>
               ) : (
                 <>
-                  <span>
-                    <FaBookmark />
-                    Bookmark Recipe
+                  <span className={styles.bookmarkContainer}>
+                    <FaBookmark /> Bookmark
                   </span>
                 </>
               )}
@@ -136,74 +120,90 @@ const Recipe = () => {
           </div>
           <div className={styles.recipeInfoContainer}>
             <div className={styles.recipeHeader}>
-              <h3>{recipeInfo.title}</h3>
-              <span className="prepTime">
+              <h3 className={styles.recipeTitle}>{recipeInfo.title}</h3>
+              <span className={styles.prepTime}>
                 <FaRegClock />
                 {recipeInfo.prep_time} min
               </span>
             </div>
-            <div className={styles.ingContainer}>
-              <h4>Ingredients</h4>
-              <ul className={styles.ingContainer}>
-                {recipeInfo?.ingredients?.map((ing) => {
-                  return (
-                    <li key={ing} className={styles.ing}>
-                      {ing}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-            <div className={styles.instructionsContainer}>
-              <h4>Instructions</h4>
-              <ol className={styles.instructionsList}>
-                {recipeInfo.instructions
-                  // split by 1. , 2.,
-                  .split(/\d+\.\s+/)
-                  // remove empty string at index 0
-                  .slice(1)
-                  .map((instruction) => {
+            <div className={styles.ingInstrContainer}>
+              <div className={styles.ingContainer}>
+                <h4>Ingredients</h4>
+                <ul className={styles.ingContainer}>
+                  {recipeInfo?.ingredients?.map((ing) => {
                     return (
-                      <li key={instruction} className={styles.instruction}>
-                        {instruction}
+                      <li key={ing} className={styles.ing}>
+                        {ing[0].toUpperCase() + ing.slice(1)}
                       </li>
                     );
                   })}
-              </ol>
+                </ul>
+              </div>
+              <div className={styles.instructionsContainer}>
+                <h4>Instructions</h4>
+                <ol className={styles.instructionsList}>
+                  {recipeInfo.instructions
+                    // split by 1. , 2.,
+                    .split(/\d+\.\s+/)
+                    // remove empty string at index 0
+                    .slice(1)
+                    .map((instruction) => {
+                      return (
+                        <li key={instruction} className={styles.instruction}>
+                          {instruction}
+                        </li>
+                      );
+                    })}
+                </ol>
+              </div>
             </div>
-            <button onClick={() => getRecipeNutrition(recipeInfo.id)}>
-              See Nutrition Info
-            </button>
+            <div className={styles.nutrBtnContainer}>
+              <button
+                className="btn"
+                onClick={() => getRecipeNutrition(recipeInfo.id)}
+              >
+                See Nutrition Info
+              </button>
+            </div>
             {showNutrition && (
-              <div>
-                <h6>
-                  Calories:
-                  <span>
-                    {recipeNutrition.calories.value}
-                    {recipeNutrition.calories.unit}
-                  </span>
-                </h6>
-                <h6>
-                  Carbs:
-                  <span>
-                    {recipeNutrition.carbs.value}
-                    {recipeNutrition.carbs.unit}
-                  </span>
-                </h6>
-                <h6>
-                  Protein:
-                  <span>
-                    {recipeNutrition.protein.value}
-                    {recipeNutrition.protein.unit}
-                  </span>
-                </h6>
-                <h6>
-                  Fat:
-                  <span>
-                    {recipeNutrition.fat.value}
-                    {recipeNutrition.fat.unit}
-                  </span>
-                </h6>
+              <div className={styles.nutritionContainer}>
+                <table className={styles.nutritionTable}>
+                  <thead>
+                    <tr>
+                      <th>Nutrition</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Calories</td>
+                      <td>
+                        {recipeNutrition.calories.value}{" "}
+                        {recipeNutrition.calories.unit}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Carbs</td>
+                      <td>
+                        {recipeNutrition.carbs.value}{" "}
+                        {recipeNutrition.carbs.unit}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Protein</td>
+                      <td>
+                        {recipeNutrition.protein.value}{" "}
+                        {recipeNutrition.protein.unit}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Fat</td>
+                      <td>
+                        {recipeNutrition.fat.value} {recipeNutrition.fat.unit}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             )}
           </div>

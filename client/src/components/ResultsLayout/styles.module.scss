@@ -1,18 +1,5 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-}
-
-.imgContainer {
-  height: 400px;
-}
-
-.img {
-  object-fit: contain;
-  height: 100%;
+.title {
+  padding: 2rem 0;
 }
 
 .recipesContainer {
@@ -21,23 +8,7 @@
   gap: 2rem;
 }
 
-.bookmarkIcon {
-  font-size: 12rem;
-  color: var(--clr-primary-red);
-}
-
-.btn {
-  padding: 0.75rem;
-  border: none;
-  background-color: var(--clr-primary-red);
-  color: white;
-}
-
 @media (min-width: 600px) {
-  .imgContainer {
-    height: 550px;
-  }
-
   .recipesContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -48,6 +19,4 @@
   .recipesContainer {
     grid-template-columns: repeat(3, 1fr);
   }
-}
-@media (min-width: 1201px) {
 }

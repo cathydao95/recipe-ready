@@ -33,6 +33,14 @@
   flex-basis: 60%;
 }
 
+.prepTime {
+  font-size: 0.75rem;
+  display: flex;
+  gap: 0.25rem;
+  justify-content: baseline;
+  flex-basis: 50%;
+}
+
 .infoContainer {
   display: flex;
   justify-content: space-between;

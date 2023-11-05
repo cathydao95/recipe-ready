@@ -7,7 +7,7 @@ import { useAppContext } from "../../context/appContext";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useAppContext();
+  const { setIsAuthenticated, getCurrentUser } = useAppContext();
   const [registrationInfo, setRegistrationInfo] = useState({
     firstName: "",
     lastName: "",
@@ -41,9 +41,11 @@ const Register = () => {
       // If success, register user and navigate user to dashboard
       if (response.ok) {
         let { msg } = await response.json();
-        setIsAuthenticated(true);
+        getCurrentUser();
         toast.success(msg);
-        navigate("/");
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       } else {
         let { msg } = await response.json();
         if (msg) {
@@ -58,32 +60,44 @@ const Register = () => {
   return (
     <div className="pageWrapper">
       <h1 className="title">Recipe Ready</h1>
-      <form className="form">
-        <FormRow
-          type="text"
-          name="firstName"
-          labelText="first name"
-          handleInput={handleInput}
-        />
-        <FormRow
-          type="text"
-          name="lastName"
-          labelText="last name"
-          handleInput={handleInput}
-        />
-        <FormRow type="email" name="email" handleInput={handleInput} />
-        <FormRow type="password" name="password" handleInput={handleInput} />
-        <div className="formLinkContainer">
-          <p className="formText">Already a member? </p>
-          <Link to="/login" className="formLink">
-            Login
-          </Link>
-        </div>
+      <div className="formContainer">
+        <form className="form">
+          <FormRow
+            type="text"
+            name="firstName"
+            labelText="First Name"
+            handleInput={handleInput}
+          />
+          <FormRow
+            type="text"
+            name="lastName"
+            labelText="Last Name"
+            handleInput={handleInput}
+          />
+          <FormRow
+            type="email"
+            name="email"
+            handleInput={handleInput}
+            labelText="Email"
+          />
+          <FormRow
+            type="password"
+            name="password"
+            handleInput={handleInput}
+            labelText="Password"
+          />
+          <div className="formLinkContainer">
+            <p className="formText">Already a member? </p>
+            <Link to="/login" className="formLink">
+              Login
+            </Link>
+          </div>
 
-        <button className="formBtn" type="submit" onClick={registerUser}>
-          Submit
-        </button>
-      </form>
+          <button className="formBtn" type="submit" onClick={registerUser}>
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

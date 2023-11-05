@@ -8,7 +8,7 @@ import { useAppContext } from "../../context/appContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useAppContext();
+  const { getCurrentUser } = useAppContext();
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -39,9 +39,11 @@ const Login = () => {
       // If success, log in user and navigate user to dashboard and display toast success
       if (response.ok) {
         let { msg } = await response.json();
-        setIsAuthenticated(true);
+        getCurrentUser();
         toast.success(msg);
-        navigate("/");
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       } else {
         let { msg } = await response.json();
         if (msg) {
@@ -55,19 +57,31 @@ const Login = () => {
   return (
     <div className="pageWrapper">
       <h1 className="title">Recipe Ready</h1>
-      <form className="form">
-        <FormRow type="email" name="email" handleInput={handleInput} />
-        <FormRow type="password" name="password" handleInput={handleInput} />
-        <div className="formLinkContainer">
-          <p className="formText">Not a member?</p>
-          <Link to="/register" className="formLink">
-            Register
-          </Link>
-        </div>
-        <button className="formBtn" type="submit" onClick={loginUser}>
-          Submit
-        </button>
-      </form>
+      <div className="formContainer">
+        <form className="form">
+          <FormRow
+            type="email"
+            name="email"
+            handleInput={handleInput}
+            labelText="Email"
+          />
+          <FormRow
+            type="password"
+            name="password"
+            handleInput={handleInput}
+            labelText="Password"
+          />
+          <div className="formLinkContainer">
+            <p className="formText">Not a member?</p>
+            <Link to="/register" className="formLink">
+              Register
+            </Link>
+          </div>
+          <button className="formBtn" type="submit" onClick={loginUser}>
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

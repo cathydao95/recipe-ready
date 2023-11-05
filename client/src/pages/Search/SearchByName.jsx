@@ -4,22 +4,25 @@ import styles from "./styles.module.scss";
 import clsx from "clsx";
 import { useAppContext } from "../../context/appContext";
 import { FaSearch } from "react-icons/fa";
-import { RecipeArticle } from "../../components";
+import { RecipeArticle, Loading } from "../../components";
 
 const SearchByName = () => {
   const navigate = useNavigate();
-  const { getRecipes, recipeResults, setIsLoading } = useAppContext();
+  const { getRecipes, recipeSearchResults, resultsLoaded, setResultsLoaded } =
+    useAppContext();
   const [keyword, setKeyword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("JUST SUBMITTED");
+    setResultsLoaded(false);
     navigate("/results", {
       state: { keyword },
     });
-    setIsLoading(true);
   };
 
   useEffect(() => {
+    console.log("running now");
     getRecipes();
   }, []);
 
@@ -41,9 +44,10 @@ const SearchByName = () => {
         <span>LATEST RECIPES</span>
       </p>
       <div className={styles.recipesContainer}>
-        {recipeResults.map((recipe, index) => {
-          return <RecipeArticle key={recipe.id} recipe={recipe} />;
-        })}
+        {resultsLoaded &&
+          recipeSearchResults.map((recipe, index) => {
+            return <RecipeArticle key={recipe.id} recipe={recipe} />;
+          })}
       </div>
     </div>
   );

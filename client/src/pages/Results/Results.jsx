@@ -5,12 +5,14 @@ import { useLocation } from "react-router-dom";
 
 const Results = () => {
   // Destructure from app context
-  const { getRecipes, recipeResults, isLoading } = useAppContext();
+  const { getRecipes, recipeSearchResults, setResultsLoaded, resultsLoaded } =
+    useAppContext();
   // Obtain the current location
   const location = useLocation();
 
   // Load recipes based on the selected ingredients
   useEffect(() => {
+    setResultsLoaded(false);
     const { state } = location;
     // If ingredients are passed, set selectedIngredients to ingredients, else set as empty array
     const selectedIngredients =
@@ -19,15 +21,15 @@ const Results = () => {
     const keyword = state && state.keyword ? state.keyword : "";
 
     // Function to get recipes and passing in selected ingredients or keyword
+    console.log("running now");
     getRecipes(selectedIngredients, keyword);
   }, []);
 
   return (
     <ResultsLayout
-      recipes={recipeResults}
+      recipes={recipeSearchResults}
       title="Recipe Results"
       page="searchResults"
-      isLoading={isLoading}
     />
   );
 };

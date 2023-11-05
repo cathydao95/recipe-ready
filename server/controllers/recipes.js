@@ -118,6 +118,7 @@ export const editRecipe = async (req, res) => {
 // DELETE A RECIPE
 export const deleteRecipe = async (req, res) => {
   const { id } = req.params;
+  console.log(req);
 
   await db.query("DELETE FROM recipes WHERE id = $1", [id]);
 

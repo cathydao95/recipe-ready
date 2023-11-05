@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.recipesContainer {
+  display: grid;
+  grid-template-columns: repeat(250px, 1fr);
+  gap: 2rem;
+}
+
+.text {
+  margin: 0;
+}
+
+.btn {
+  background-color: var(--clr-primary-gold);
+  padding: 0.5rem;
+  border: none;
+  margin: 1rem 0 1rem;
+  width: 300px;
+}
+
+.btn:hover {
+  background-color: var(--clr-primary-red);
+}
+
+.imgContainer {
+  width: 300px;
+  text-align: center;
+}
+
+.img {
+  object-fit: cover;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .imgContainer {
+    height: 550px;
+  }
+}
+
+@media (min-width: 1201px) {
+  .imgContainer {
+    width: 400px;
+  }
+}
