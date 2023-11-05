@@ -1,8 +1,14 @@
 import { useState, createContext, useEffect, useContext } from "react";
+import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const AppContext = createContext();
+
+axios.defaults.withCredentials = true;
+
+// Create variable for env
+const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState([]);
@@ -16,23 +22,14 @@ const AppProvider = ({ children }) => {
 
   const getCurrentUser = async () => {
     try {
-      let response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/users/current`,
-        {
-          credentials: "include",
-        }
-      );
-
-      if (response.ok) {
-        const {
-          data: { user },
-        } = await response.json();
-
-        setCurrentUser(user);
-        setIsAuthenticated(true);
-        getBookmarkedRecipes();
-        getPersonalRecipes();
-      }
+      let response = await axios.get(`${API_BASE_URL}/api/v1/users/current`);
+      const {
+        data: { user },
+      } = response.data;
+      setCurrentUser(user);
+      setIsAuthenticated(true);
+      getBookmarkedRecipes();
+      getPersonalRecipes();
     } catch (error) {
       console.error(error);
     } finally {
