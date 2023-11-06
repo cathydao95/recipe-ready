@@ -1,3 +1,4 @@
+// Function to format instructions
 export const formatStringInstructions = (str) => {
   // Split a string into an array where there is a period followed by a space.
   const strParts = str.split(". ");
@@ -11,6 +12,7 @@ export const formatStringInstructions = (str) => {
   return formattedString;
 };
 
+// Function that informs how many recipes to load at a time depending on screen size
 export const limitScreenSize = (screenWidth) => {
   // Base on current media query breakpoints
   if (screenWidth >= 1025) {
