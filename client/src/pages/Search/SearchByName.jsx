@@ -59,6 +59,7 @@ const SearchByName = () => {
             className={styles.searchInput}
             placeholder="Search Recipes"
             onChange={(e) => setKeyword(e.target.value)}
+            autoComplete="off"
           ></input>
         </form>
       </div>
