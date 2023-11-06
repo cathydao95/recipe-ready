@@ -9,7 +9,7 @@ import { prepareIngredients } from "../utils/recipeUtils.js";
 
 // GET RECIPES BASED ON INGREDIENTS OR KEYWORD
 export const getRecipes = async (req, res) => {
-  const { ingredients, keyword, limit = 8, page = 1 } = req.query;
+  const { ingredients, keyword, limit = 12, page = 1 } = req.query;
 
   const offset = (page - 1) * limit;
 
