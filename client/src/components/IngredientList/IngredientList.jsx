@@ -20,7 +20,7 @@ const IngredientList = ({ selectedIngredients, setSelectedIngredients }) => {
       {ingList.map((category, index) => {
         const { name, examples } = category;
         return (
-          <div key={name}>
+          <div key={index}>
             <h5 key={index} className={styles.category}>
               {name}
             </h5>
