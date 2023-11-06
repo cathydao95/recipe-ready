@@ -55,6 +55,7 @@ const SearchByName = () => {
             <FaSearch />
           </div>
           <input
+            name="search"
             className={styles.searchInput}
             placeholder="Search Recipes"
             onChange={(e) => setKeyword(e.target.value)}
