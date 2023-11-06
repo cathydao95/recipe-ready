@@ -50,7 +50,7 @@ const RecipeCard = ({ recipe, page }) => {
             <div className={styles.titleContainer}>
               <h5 className={styles.recipeTitle}>{title}</h5>
 
-              {user_id && user_id !== null && page != "bookmarked" && (
+              {user_id && user_id !== null && (
                 <button
                   variant="primary"
                   className={styles.icon}
@@ -102,18 +102,22 @@ const RecipeCard = ({ recipe, page }) => {
           <button
             className={styles.actionBtn}
             variant="secondary"
-            onClick={() =>
+            onClick={() => {
               navigate("/create", {
                 state: { isEditing: true, currentRecipeInfo: recipe },
-              })
-            }
+              });
+              handleClose();
+            }}
           >
             Edit Recipe
           </button>
           <button
             className={styles.actionBtn}
             variant="primary"
-            onClick={() => deleteRecipe(id)}
+            onClick={() => {
+              deleteRecipe(id);
+              handleClose();
+            }}
           >
             Delete Recipe
           </button>
