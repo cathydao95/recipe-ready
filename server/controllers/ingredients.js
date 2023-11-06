@@ -10,15 +10,18 @@ export const getIngredients = async (req, res) => {
 
     // QUERY RECIPES TO FIND TOTAL RECIPES
     const { rows: ingredients } = await db.query(
-      "SELECT * FROM ingredients WHERE name ILIKE $1 LIMIT $2",
+      "SELECT name FROM ingredients WHERE name ILIKE $1 ORDER BY name ASC LIMIT $2",
       // wild to match ingredients starting with the input
       [`${input}%`, limit]
     );
 
+    const ingredientsList = ingredients.map((ing) => ing.name);
+    console.log(ingredientsList);
+
     const response = {
       status: "success",
       results: ingredients.length,
-      data: { ingredients },
+      data: { ingredientsList },
     };
 
     res.status(StatusCodes.OK).json(response);
