@@ -1,36 +1,59 @@
 import { useEffect, useState } from "react";
-import { Loading, ResultsLayout } from "../../components";
+import { ResultsLayout } from "../../components";
 import { useAppContext } from "../../context/appContext";
 import { useLocation } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoader from "../../components/SmallLoader/SmallLoader";
+import { limitScreenSize } from "../../utils/utils";
 
 const Results = () => {
-  // Destructure from app context
-  const { getRecipes, recipeSearchResults, setResultsLoaded, resultsLoaded } =
+  const { getRecipes, recipeSearchResults, hasMore, setResultsLoaded } =
     useAppContext();
-  // Obtain the current location
-  const location = useLocation();
 
-  // Load recipes based on the selected ingredients
+  const [localPage, setLocalPage] = useState(1);
+  const location = useLocation();
+  const { state } = location;
+  // If ingredients are passed, set selectedIngredients to ingredients, else set as empty array
+  const selectedIngredients =
+    state && state.ingredients ? state.ingredients : [];
+  // If keyword is passed, set keyword to the word, else set to empty string
+  const keyword = state && state.keyword ? state.keyword : "";
+
+  // Function to calculate limit based on window size
+  const limit = limitScreenSize(window.innerWidth);
+
+  // Load recipes based on ing/keyword,limits, and page
   useEffect(() => {
     setResultsLoaded(false);
-    const { state } = location;
-    // If ingredients are passed, set selectedIngredients to ingredients, else set as empty array
-    const selectedIngredients =
-      state && state.ingredients ? state.ingredients : [];
-    // If keyword is passed, set keyword to the word, else set to empty string
-    const keyword = state && state.keyword ? state.keyword : "";
-
-    // Function to get recipes and passing in selected ingredients or keyword
-    console.log("running now");
-    getRecipes(selectedIngredients, keyword);
+    getRecipes(selectedIngredients, keyword, limit, localPage);
   }, []);
 
+  const loadMoreRecipes = async () => {
+    //  Set time out to make loader
+    setTimeout(() => {
+      getRecipes(selectedIngredients, keyword, limit, localPage + 1);
+    }, 700);
+    setLocalPage((prev) => prev + 1);
+  };
+
   return (
-    <ResultsLayout
-      recipes={recipeSearchResults}
-      title="Recipe Results"
-      page="searchResults"
-    />
+    <InfiniteScroll
+      dataLength={recipeSearchResults.length}
+      next={loadMoreRecipes}
+      hasMore={hasMore}
+      loader={<SmallLoader />}
+      endMessage={
+        <p style={{ textAlign: "center" }}>
+          <b>No More Recipes</b>
+        </p>
+      }
+    >
+      <ResultsLayout
+        recipes={recipeSearchResults}
+        title="Recipe Results"
+        page="searchResults"
+      />
+    </InfiniteScroll>
   );
 };
 
