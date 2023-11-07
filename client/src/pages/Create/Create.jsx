@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "../../utils/axiosConfig";
 import { FormRow, Loading } from "../../components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -49,18 +50,8 @@ const Create = () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/upload`,
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to upload image");
-      }
-      const data = await response.json();
+      const response = await axios.post(`/api/v1/recipes/upload`, formData);
+      const data = response.data;
       if (data.secure_url) {
         setRecipeInfo((prevInfo) => ({
           ...prevInfo,
@@ -98,40 +89,22 @@ const Create = () => {
       instructions: formattedInstructions,
     };
     let url;
-    let method;
+    let axiosMethod = isEditing ? axios.put : axios.post;
     if (isEditing) {
-      url = `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/${
-        currentRecipeInfo.id
-      }`;
-      method = "PUT";
+      url = `/api/v1/recipes/${currentRecipeInfo.id}`;
     } else {
-      url = `${import.meta.env.VITE_BASE_URL}/api/v1/recipes`;
-      method = "POST";
+      url = `/api/v1/recipes`;
     }
     try {
-      let response = await fetch(url, {
-        method,
-        headers: {
-          "Content-type": "application/JSON",
-        },
-        credentials: "include",
-        body: JSON.stringify(updatedRecipeInfo),
-      });
+      let response = await axiosMethod(url, updatedRecipeInfo);
 
-      if (response.ok) {
-        let { msg } = await response.json();
-        toast.success(isEditing ? "Updating Recipe..." : "Creating Recipe...");
-        setTimeout(() => {
-          navigate("/my-recipes");
-        }, 3000);
-      } else {
-        let { msg } = await response.json();
-        if (msg) {
-          toast.error(msg);
-        }
-      }
+      toast.success(isEditing ? "Updating Recipe..." : "Creating Recipe...");
+      setTimeout(() => {
+        navigate("/my-recipes");
+      }, 3000);
     } catch (error) {
       console.error(error);
+      toast.error("An error occurred");
     }
   };
 

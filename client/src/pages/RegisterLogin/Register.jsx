@@ -4,6 +4,7 @@ import { FormRow } from "../../components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppContext } from "../../context/appContext";
+import axios from "../../utils/axiosConfig";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -26,34 +27,28 @@ const Register = () => {
   const registerUser = async (e) => {
     e.preventDefault();
     try {
-      let response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/auth/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/JSON",
-          },
-          credentials: "include",
-          body: JSON.stringify(registrationInfo),
-        }
+      let response = await axios.post(
+        `/api/v1/auth/register`,
+        registrationInfo
       );
 
       // If success, register user and navigate user to dashboard
-      if (response.ok) {
-        let { msg } = await response.json();
-        getCurrentUser();
-        toast.success(msg);
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
-      } else {
-        let { msg } = await response.json();
-        if (msg) {
-          toast.error(msg);
-        }
-      }
+      const { data } = response;
+      if (data && data.msg) getCurrentUser();
+      toast.success(msg);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch (error) {
-      console.error(error);
+      const {
+        data: { msg },
+      } = error.response;
+      if (msg) {
+        toast.error(msg);
+      } else {
+        toast.error("An unexpected error occurred.");
+        console.error("Registration error:", error.message);
+      }
     }
   };
 

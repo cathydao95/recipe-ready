@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { FaRegClock, FaBookmark, FaCheck } from "react-icons/fa";
 import { useAppContext } from "../../context/appContext";
 import LoginModal from "../../components/LoginModal/LoginModal";
+import axios from "../../utils/axiosConfig";
 
 const Recipe = () => {
   const { isLoading, usersBookmarked, handleBookmarkClick, setShowLogin } =
@@ -25,41 +26,36 @@ const Recipe = () => {
   // Function to get recipe information using id
   const getRecipe = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/${id}`,
-        {
-          credentials: "include",
-        }
-      );
+      const response = await axios.get(`/api/v1/recipes/${id}`);
       if (response.status === 404) {
         setRecipeNotFound(true);
       }
 
-      if (response.ok) {
+      if (response.status === 200) {
         const {
           data: { recipe },
-        } = await response.json();
+        } = response.data;
 
         setRecipeInfo(recipe[0]);
       }
     } catch (error) {
       console.error(error);
+      setRecipeNotFound(true);
     }
   };
 
   // Function to retrieve recipe's nutritional information
   const getRecipeNutrition = async (recipeId) => {
-    let url = `${import.meta.env.VITE_BASE_URL}/api/v1/recipes/${id}/nutrition`;
+    let url = `/api/v1/recipes/${id}/nutrition`;
 
     try {
-      const response = await fetch(url, {
-        credentials: "include",
-      });
+      const response = await axios.get(url);
+      console.log(response);
 
-      if (response.ok) {
+      if (response.data) {
         const {
           data: { recipeNutrition },
-        } = await response.json();
+        } = response.data;
         setRecipeNutrition(recipeNutrition);
         setShowNutrition(true);
       }
@@ -178,28 +174,28 @@ const Recipe = () => {
                     <tr>
                       <td>Calories</td>
                       <td>
-                        {recipeNutrition.calories.value}{" "}
-                        {recipeNutrition.calories.unit}
+                        {recipeNutrition.calories?.value}{" "}
+                        {recipeNutrition.calories?.unit}
                       </td>
                     </tr>
                     <tr>
                       <td>Carbs</td>
                       <td>
-                        {recipeNutrition.carbs.value}{" "}
-                        {recipeNutrition.carbs.unit}
+                        {recipeNutrition.carbs?.value}{" "}
+                        {recipeNutrition.carbs?.unit}
                       </td>
                     </tr>
                     <tr>
                       <td>Protein</td>
                       <td>
-                        {recipeNutrition.protein.value}{" "}
-                        {recipeNutrition.protein.unit}
+                        {recipeNutrition.protein?.value}{" "}
+                        {recipeNutrition.protein?.unit}
                       </td>
                     </tr>
                     <tr>
                       <td>Fat</td>
                       <td>
-                        {recipeNutrition.fat.value} {recipeNutrition.fat.unit}
+                        {recipeNutrition.fat?.value} {recipeNutrition.fat?.unit}
                       </td>
                     </tr>
                   </tbody>
