@@ -5,8 +5,9 @@ import { DashboardContext } from "../../pages/Layouts/DashboardLayout";
 import { AppContext } from "../../context/appContext";
 import Sidebar from "./Sidebar";
 
-describe("Sidebar Component Integration Test", () => {
-  // // Create toggleSidebar and logOutUser mock functions
+// Integration test to check if sidebar is toggling
+describe("Sidebar Component", () => {
+  // Create toggleSidebar and logOutUser mock functions
   let toggleSidebar;
   let logOutUser;
 

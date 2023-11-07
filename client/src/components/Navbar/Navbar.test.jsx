@@ -17,6 +17,7 @@ vi.mock("../../context/appContext", () => ({
   }),
 }));
 
+// Unit test becasue it is checking that elements in the navbar are present
 describe("Navbar Unit Test", () => {
   it("renders the navbar component", () => {
     render(

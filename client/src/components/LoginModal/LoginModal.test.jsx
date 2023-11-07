@@ -4,22 +4,23 @@ import { BrowserRouter } from "react-router-dom";
 import { AppContext } from "../../context/appContext";
 import LoginModal from "./LoginModal";
 
-describe("LoginModal Integration Test", () => {
+// Integration test becasue it checks the interaction between the LoginModal in the Router when button is clicked
+describe("LoginModal", () => {
   it("displays the modal when showLogin is true", () => {
-    const mockContextValue = {
+    const mockContext = {
       showLogin: true,
       setShowLogin: vi.fn(),
     };
 
     render(
       <BrowserRouter>
-        <AppContext.Provider value={mockContextValue}>
+        <AppContext.Provider value={mockContext}>
           <LoginModal />
         </AppContext.Provider>
       </BrowserRouter>
     );
 
-    //  Check for modal's title
+    // Check for the title of the modal
     expect(screen.getByText(/Want to save this recipe?/i)).toBeInTheDocument();
   });
 
