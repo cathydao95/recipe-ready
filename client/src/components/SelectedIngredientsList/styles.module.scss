@@ -1,0 +1,15 @@
+.selectedContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.selectedIng {
+  text-transform: capitalize;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  padding-left: 2rem;
+  font-size: 1.15rem;
+  align-items: center;
+}
