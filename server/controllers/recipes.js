@@ -123,7 +123,6 @@ export const editRecipe = async (req, res) => {
   const { id } = req.params;
   const { title, ingredients, instructions, prep_time, image_url } = req.body;
 
-  console.log(req.body);
   const ingredientsString = prepareIngredients(ingredients);
 
   const { rows: updatedRecipe } = await db.query(
@@ -140,7 +139,6 @@ export const editRecipe = async (req, res) => {
 // DELETE A RECIPE
 export const deleteRecipe = async (req, res) => {
   const { id } = req.params;
-  console.log(req);
 
   await db.query("DELETE FROM recipes WHERE id = $1", [id]);
 
@@ -237,7 +235,6 @@ export const getRecipeNutrition = async (req, res) => {
       `https://api.spoonacular.com/recipes/guessNutrition?apiKey=${apiKey}&title=${title}`
     );
 
-    console.log(response);
     const recipeNutrition = response.data;
     res.status(StatusCodes.OK).json({
       status: "success",
@@ -285,7 +282,6 @@ export const uploadRecipeImage = async (req, res) => {
   try {
     // Wait for the uploadToCloudinary function to resolve
     const result = await uploadToCloudinary(req.file.buffer);
-    console.log(result);
     res.status(StatusCodes.OK).json({ secure_url: result.secure_url });
   } catch (error) {
     console.error(error);

@@ -16,7 +16,6 @@ export const getIngredients = async (req, res) => {
     );
 
     const ingredientsList = ingredients.map((ing) => ing.name);
-    console.log(ingredientsList);
 
     const response = {
       status: "success",

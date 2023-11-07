@@ -26,7 +26,6 @@ const UserSettings = () => {
     e.preventDefault();
     try {
       let response = await axios.put(`/api/v1/users/current`, updatedUserInfo);
-      console.log(response);
       const {
         data: { msg },
       } = response.data;

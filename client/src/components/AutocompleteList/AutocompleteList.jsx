@@ -11,7 +11,6 @@ const AutocompleteList = ({
   const autocompleteList =
     suggestedList && suggestedList.length
       ? suggestedList.map((suggestedIng, index) => {
-          console.log(selectedIngredients === index);
           return (
             <div
               key={index}
@@ -32,7 +31,6 @@ const AutocompleteList = ({
         })
       : null;
 
-  console.log(autocompleteList);
   return (
     <div className={styles.container}>
       <div className={suggestedList.length && styles.automatedListContainer}>

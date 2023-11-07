@@ -50,7 +50,6 @@ const Recipe = () => {
 
     try {
       const response = await axios.get(url);
-      console.log(response);
 
       if (response.data) {
         const {
