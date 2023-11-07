@@ -51,16 +51,18 @@ const SearchByName = () => {
     <div className="wrapper">
       <div className={styles.searchContainer}>
         <form className={styles.searchForm} onSubmit={handleSubmit}>
-          <div className={styles.searchIcon}>
-            <FaSearch />
+          <div className={styles.searchInputContainer}>
+            <div className={styles.searchIcon}>
+              <FaSearch />
+            </div>
+            <input
+              name="search"
+              className={styles.searchInput}
+              placeholder="Search Recipes"
+              onChange={(e) => setKeyword(e.target.value)}
+              autoComplete="off"
+            ></input>
           </div>
-          <input
-            name="search"
-            className={styles.searchInput}
-            placeholder="Search Recipes"
-            onChange={(e) => setKeyword(e.target.value)}
-            autoComplete="off"
-          ></input>
         </form>
       </div>
       <p className={styles.text}>
