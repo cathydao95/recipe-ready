@@ -1,0 +1,16 @@
+.container {
+  text-align: left;
+  background-color: var(--clr-primary-9);
+}
+
+.automatedListContainer {
+  padding: 1rem 0;
+}
+.suggestedIng {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.suggestedIng:hover {
+  background-color: var(--clr-primary-red);
+}
