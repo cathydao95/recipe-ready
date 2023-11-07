@@ -1,19 +1,30 @@
-import { useState, useEffect } from "react";
 import styles from "./styles.module.scss";
+import clsx from "clsx";
 const AutocompleteList = ({
   suggestedList,
-  setSelectedIngredients,
   selectedIngredients,
   handleAdd,
+  selectedAutocomplete,
+  handleKeyDown,
 }) => {
+  // Generate the list of autocomplete ingredients as divs
   const autocompleteList =
     suggestedList && suggestedList.length
       ? suggestedList.map((suggestedIng, index) => {
+          console.log(selectedIngredients === index);
           return (
             <div
               key={index}
-              className={styles.suggestedIng}
+              className={clsx(
+                styles.suggestedIng,
+                // If current selectedAutocomplete is equal to the current index, add active clas
+                selectedAutocomplete === index && styles.active
+              )}
+              // On click add the autocomplete ing
               onClick={() => handleAdd(suggestedIng)}
+              // Handle key press to navigate and select autocomplete ing
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              tabIndex={0}
             >
               {suggestedIng}
             </div>
