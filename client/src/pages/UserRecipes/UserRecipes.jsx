@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Loading, ResultsLayout } from "../../components";
+import { ResultsLayout } from "../../components";
 import { useAppContext } from "../../context/appContext";
 
 const UserRecipes = () => {
