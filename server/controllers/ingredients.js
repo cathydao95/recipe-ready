@@ -6,7 +6,7 @@ import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
 // GET INGREDIENTS BASED ON USER'S INPUT
 export const getIngredients = async (req, res) => {
   try {
-    const { input, limit = 10 } = req.query;
+    const { input, limit = 5 } = req.query;
 
     // QUERY RECIPES TO FIND TOTAL RECIPES
     const { rows: ingredients } = await db.query(
