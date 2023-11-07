@@ -1,7 +1,5 @@
 import styles from "./styles.module.scss";
-import { FaRegClock, FaRegBookmark } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import clsx from "clsx";
 
 const RecipeArticle = ({ recipe }) => {
   const { id, title, image_url } = recipe;

@@ -1,6 +1,6 @@
 import { FaAlignLeft } from "react-icons/fa";
 import styles from "./styles.module.scss";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDashboardContext } from "../../pages/Layouts/DashboardLayout";
 import { useAppContext } from "../../context/appContext";
 

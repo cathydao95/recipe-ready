@@ -1,3 +1,6 @@
+.wrapper {
+  min-height: 300px;
+}
 .selectedContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

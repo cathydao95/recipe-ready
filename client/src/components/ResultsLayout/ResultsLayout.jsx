@@ -1,7 +1,6 @@
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import RecipeCard from "../RecipeCard/RecipeCard";
-import Loading from "../Loading/Loading";
 import EmptyPageContent from "../EmptyPageContent/EmptyPageContent";
 import { useAppContext } from "../../context/appContext";
 

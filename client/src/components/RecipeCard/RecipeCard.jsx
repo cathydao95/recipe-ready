@@ -1,13 +1,12 @@
 import styles from "./styles.module.scss";
 import { useState, useEffect } from "react";
-import { FaRegClock, FaRegBookmark, FaBookmark } from "react-icons/fa";
+import { FaRegClock, FaBookmark } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { useAppContext } from "../../context/appContext";
 import Modal from "react-bootstrap/Modal";
 import LoginModal from "../LoginModal/LoginModal";
-import { pageContent } from "../../utils/pageContent";
 
 const RecipeCard = ({ recipe, page }) => {
   // Destructure properties from recipe prop
@@ -88,6 +87,7 @@ const RecipeCard = ({ recipe, page }) => {
           </div>
         </div>
       </Link>
+
       <LoginModal />
 
       <Modal
