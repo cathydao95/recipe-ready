@@ -1,6 +1,9 @@
 .container {
   text-align: left;
   background-color: var(--clr-primary-9);
+  position: absolute;
+  width: 100%;
+  z-index: 1;
 }
 
 .automatedListContainer {
