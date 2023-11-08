@@ -21,7 +21,7 @@
   width: 200px;
   padding: 0.25rem;
   margin: 1rem 0;
-  background-color: var(--clr-primary-red);
+  background-color: var(--clr-primary-main);
   color: var(--clr-primary-10);
   border: none;
 }
@@ -108,7 +108,7 @@
 }
 
 .nutritionTable th {
-  background-color: var(--clr-primary-red);
+  background-color: var(--clr-primary-main);
 }
 
 @media (min-width: 481px) {

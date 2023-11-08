@@ -13,20 +13,20 @@ const SelectedIngredientsList = ({
     setSelectedIngredients(updatedIngredients);
   };
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.selectedContainer}>
-        {selectedIngredients.map((ing) => (
-          <div
-            key={ing}
-            className={styles.selectedIng}
-            onClick={() => handleIngredientClick(ing)}
-          >
-            <FaRegCheckSquare className={styles.icon} />
-            {ing}
-          </div>
-        ))}
-      </div>
+    // <div className={styles.wrapper}>
+    <div className={styles.selectedContainer}>
+      {selectedIngredients.map((ing) => (
+        <div
+          key={ing}
+          className={styles.selectedIng}
+          onClick={() => handleIngredientClick(ing)}
+        >
+          <FaRegCheckSquare className={styles.icon} />
+          {ing}
+        </div>
+      ))}
     </div>
+    // </div>
   );
 };
 

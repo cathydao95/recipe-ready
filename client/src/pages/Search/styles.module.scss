@@ -57,6 +57,16 @@
   font-size: 1.15rem;
   padding: 0 10px;
 }
+
+.wrapperSuggested {
+  min-height: 300px;
+  background-image: url("../../assets/ingredients.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  margin-bottom: 1.5rem;
+}
+
 @media (min-width: 481px) {
   .recipesContainer {
     display: grid;
@@ -77,6 +87,10 @@
   .recipesContainer {
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
+  }
+  .wrapperSuggested {
+    min-height: 400px;
+    margin-bottom: 2rem;
   }
 }
 @media (min-width: 1201px) {

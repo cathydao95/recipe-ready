@@ -54,12 +54,12 @@
 }
 
 .icon:hover {
-  color: var(--clr-primary-red);
+  color: var(--clr-primary-main);
 }
 
 // MODAL
 .modalHeader {
-  background-color: var(--clr-primary-red);
+  background-color: var(--clr-primary-main);
   text-align: center;
 }
 
@@ -76,7 +76,7 @@
   width: 200px;
   padding: 0.5rem;
   margin: 1rem 0;
-  background-color: var(--clr-primary-red);
+  background-color: var(--clr-primary-main);
   color: var(--clr-primary-10);
   border: none;
 }
