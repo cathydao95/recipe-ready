@@ -12,6 +12,7 @@ import cloudinary from "cloudinary";
 import recipeRouter from "./routers/recipes.js";
 import authRouter from "./routers/auth.js";
 import usersRouter from "./routers/users.js";
+import ingredientsRouter from "./routers/ingredients.js";
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 
 // Constants
@@ -48,6 +49,7 @@ app.use(express.json());
 app.use("/api/v1/recipes", recipeRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/ingredients", ingredientsRouter);
 
 // Not found middleware (404 - triggered when request is made to a nonexistant route)
 // app.use("*", (req, res) => {

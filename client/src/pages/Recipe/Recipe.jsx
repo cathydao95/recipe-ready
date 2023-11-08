@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { EmptyPageContent, Loading } from "../../components";
+import { EmptyPageContent, Loading, SmallLoader } from "../../components";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
@@ -48,25 +48,26 @@ const Recipe = () => {
   const getRecipeNutrition = async (recipeId) => {
     let url = `/api/v1/recipes/${id}/nutrition`;
 
-    try {
-      const response = await axios.get(url);
-      console.log(response);
+    // TEMP COMMENT OUT TO SAVE TOKENS
+    // try {
+    //   const response = await axios.get(url);
 
-      if (response.data) {
-        const {
-          data: { recipeNutrition },
-        } = response.data;
-        setRecipeNutrition(recipeNutrition);
-        setShowNutrition(true);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    //   if (response.data) {
+    //     const {
+    //       data: { recipeNutrition },
+    //     } = response.data;
+    //     setRecipeNutrition(recipeNutrition);
+    //     setShowNutrition(true);
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   // Run get recipe function when page renders
   useEffect(() => {
     getRecipe();
+    getRecipeNutrition(id);
     setShowLogin(false);
   }, []);
 
@@ -153,15 +154,8 @@ const Recipe = () => {
                 </ol>
               </div>
             </div>
-            <div className={styles.nutrBtnContainer}>
-              <button
-                className="btn"
-                onClick={() => getRecipeNutrition(recipeInfo.id)}
-              >
-                See Nutrition Info
-              </button>
-            </div>
-            {showNutrition && (
+            <h4>Estimated Nutrition Information</h4>
+            {showNutrition ? (
               <div className={styles.nutritionContainer}>
                 <table className={styles.nutritionTable}>
                   <thead>
@@ -201,6 +195,8 @@ const Recipe = () => {
                   </tbody>
                 </table>
               </div>
+            ) : (
+              <SmallLoader />
             )}
           </div>
         </div>

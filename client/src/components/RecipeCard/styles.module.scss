@@ -30,7 +30,7 @@
 .recipeTitle {
   color: var(--clr-primary-1);
   font-weight: 400;
-  flex-basis: 60%;
+  flex-basis: 90%;
 }
 
 .prepTime {
@@ -51,15 +51,16 @@
   border: none;
   font-size: 1.5rem;
   color: var(--clr-primary-1);
+  flex-basis: 10%;
 }
 
 .icon:hover {
-  color: var(--clr-primary-red);
+  color: var(--clr-primary-main);
 }
 
 // MODAL
 .modalHeader {
-  background-color: var(--clr-primary-red);
+  background-color: var(--clr-primary-main);
   text-align: center;
 }
 
@@ -76,7 +77,7 @@
   width: 200px;
   padding: 0.5rem;
   margin: 1rem 0;
-  background-color: var(--clr-primary-red);
+  background-color: var(--clr-primary-main);
   color: var(--clr-primary-10);
   border: none;
 }
@@ -84,14 +85,4 @@
 .actionBtn:hover {
   background-color: var(--clr-dark-red);
   color: var(--clr-primary-10);
-}
-
-@media (min-width: 481px) {
-}
-
-@media (min-width: 769px) {
-}
-@media (min-width: 1025px) {
-}
-@media (min-width: 1201px) {
 }

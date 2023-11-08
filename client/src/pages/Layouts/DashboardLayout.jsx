@@ -27,6 +27,7 @@ const DashboardLayout = () => {
           <Sidebar />
           <div>
             <Navbar />
+
             <div>
               <Outlet />
             </div>

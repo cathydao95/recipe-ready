@@ -35,11 +35,11 @@
 .homeBtn {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--clr-primary-red);
+  color: var(--clr-primary-main);
 }
 
 .homeBtn:hover {
-  color: var(--clr-primary-gold);
+  color: var(--clr-primary-secondary);
 }
 
 @media (min-width: 481px) {

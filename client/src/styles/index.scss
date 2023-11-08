@@ -24,11 +24,11 @@ Variables
   --clr-primary-9: #f5f5f4;
   --clr-primary-10: #ffffff;
 
-  --clr-primary-red: #de7777;
+  --clr-primary-main: #de7777;
 
   --clr-dark-red: #b64040;
 
-  --clr-primary-gold: #ffbd5a;
+  --clr-primary-secondary: #ffbd5a;
 }
 
 // font-family: 'Inter', sans-serif;
@@ -55,17 +55,17 @@ h2,
 h3,
 h4,
 h5 {
-  color: var(--clr-primary-red);
   text-transform: capitalize;
   line-height: 1.25;
   margin: 0.75rem 0;
-  font-weight: 700;
 }
 h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
+  color: var(--clr-primary-main);
+  font-weight: 700;
 }
 h2 {
-  font-size: 2.25rem;
+  font-size: 1.75rem;
 }
 h3 {
   font-size: 1.25rem;
@@ -167,12 +167,16 @@ button {
 }
 
 .formLink:hover {
-  color: var(--clr-primary-gold);
+  color: var(--clr-primary-secondary);
 }
-
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .formBtn,
 .btn {
-  background-color: var(--clr-primary-gold);
+  background-color: var(--clr-primary-secondary);
   padding: 1rem;
   border: none;
   margin: 1.5rem 0 1rem;
@@ -181,7 +185,7 @@ button {
 
 .formBtn:hover,
 .btn:hover {
-  background-color: var(--clr-primary-red);
+  background-color: var(--clr-primary-main);
 }
 
 .formAlert {
@@ -202,7 +206,7 @@ button {
 }
 
 .bookmarkedIcon {
-  color: var(--clr-primary-red);
+  color: var(--clr-primary-main);
 }
 
 .notBookmarkedIcon {
@@ -211,10 +215,10 @@ button {
 
 @media (min-width: 481px) {
   h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
   h2 {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
   }
 
   .wrapper {

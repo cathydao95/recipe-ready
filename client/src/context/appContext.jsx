@@ -10,10 +10,11 @@ const AppProvider = ({ children }) => {
   const [usersRecipes, setUsersRecipes] = useState([]);
   const [usersBookmarked, setUsersBookmarked] = useState([]);
   const [recipeSearchResults, setRecipeSearchResults] = useState([]);
-  const [resultsLoaded, setResultsLoaded] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [resultsLoaded, setResultsLoaded] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
   const getCurrentUser = async () => {
     try {
@@ -52,28 +53,52 @@ const AppProvider = ({ children }) => {
   };
 
   // Function to get recipes based on keyword or provided ingredients
-  const getRecipes = async (ingredients, keyword) => {
+  const getRecipes = async (
+    ingredients = [],
+    keyword = "",
+    limit,
+    pageNumber
+  ) => {
     try {
-      let queryParam = "";
+      let queryParam = `?limit=${limit}&page=${pageNumber}`;
 
       if (ingredients && ingredients.length > 0) {
-        queryParam += `?ingredients=${ingredients.join(",")}`;
+        queryParam += `&ingredients=${ingredients.join(",")}`;
       }
 
       if (keyword && keyword !== "") {
-        queryParam += `?keyword=${keyword}`;
+        queryParam += `&keyword=${keyword}`;
       }
 
       const response = await axios.get(`/api/v1/recipes${queryParam}`);
 
       const {
         data: { recipes },
+        hasMore: updatedHasMore,
       } = response.data;
-      setRecipeSearchResults(recipes);
+
+      // If page number greater than 1, append new recipe results
+      if (pageNumber === 1) {
+        setRecipeSearchResults(recipes);
+      } else {
+        setRecipeSearchResults((prevRecipes) => [...prevRecipes, ...recipes]);
+      }
+      // updated hasmore to the newest has more
+      if (updatedHasMore) {
+        setHasMore(updatedHasMore);
+      } else {
+        setHasMore(false);
+      }
       setResultsLoaded(true);
     } catch (error) {
       console.error(error.response);
     }
+  };
+
+  // Reset search defaults
+  const resetSearch = () => {
+    setRecipeSearchResults([]);
+    setHasMore(true);
   };
 
   // Function to fetch a user's personal/created recipes
@@ -138,6 +163,9 @@ const AppProvider = ({ children }) => {
       setUsersRecipes((prevRecipes) =>
         prevRecipes.filter((recipe) => recipe.id !== id)
       );
+      setUsersBookmarked((prevBookmarks) =>
+        prevBookmarks.filter((bookmark) => bookmark.id !== id)
+      );
 
       let { msg } = response.data;
       toast.success("Recipe Deleted!");
@@ -147,11 +175,6 @@ const AppProvider = ({ children }) => {
       return { success: false, message: "An error occurred" };
     }
   };
-
-  // console.log("testing if loading", isLoading);
-  // console.log("testing if results loaded", resultsLoaded);
-  // console.log("testing for current user", currentUser);
-  // console.log("recipe results", recipeSearchResults);
 
   return (
     <AppContext.Provider
@@ -178,6 +201,8 @@ const AppProvider = ({ children }) => {
         resultsLoaded,
         setResultsLoaded,
         getPersonalRecipes,
+        hasMore,
+        resetSearch,
       }}
     >
       {children}

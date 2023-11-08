@@ -2,14 +2,16 @@ import db from "../db/db-connection.js";
 import "dotenv/config";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
-import fs from "fs/promises";
 import cloudinary from "cloudinary";
 import streamifier from "streamifier";
+import axios from "axios";
 import { prepareIngredients } from "../utils/recipeUtils.js";
 
 // GET RECIPES BASED ON INGREDIENTS OR KEYWORD
 export const getRecipes = async (req, res) => {
-  const { ingredients, keyword } = req.query;
+  const { ingredients, keyword, limit = 12, page = 1 } = req.query;
+
+  const offset = (page - 1) * limit;
 
   let queryText = "SELECT * FROM recipes";
   let queryParams = [];
@@ -26,12 +28,31 @@ export const getRecipes = async (req, res) => {
     queryParams = [`%${keyword}%`];
   }
 
-  const { rows: recipes } = await db.query(queryText, queryParams);
+  // QUERY RECIPES TO FIND TOTAL RECIPES
+  const { rows: count } = await db.query(queryText, queryParams);
+  const totalRecipes = count.length;
+
+  // SET LIMIT AND OFFSET BASED ON QUERY PARAMS
+  if (queryParams.length === 0) {
+    queryText += " LIMIT $1 OFFSET $2";
+  } else {
+    queryText += " LIMIT $2 OFFSET $3";
+  }
+
+  queryParams.push(limit, offset);
+
+  // QUERY RECIPES BASED ON LIMITS
+  const { rows: recipes, rowCount } = await db.query(queryText, queryParams);
+
+  // CHECK IF MORE RECIPES THAT HAVE NO BEEN LOADED BY CHECKING IF TOTALRECIPES > OFFSET + LENGTH OF CURRENT SEARCH
+  const hasMore = totalRecipes > offset + recipes.length;
 
   const response = {
     status: "success",
     results: recipes.length,
     data: { recipes },
+    page,
+    hasMore,
   };
 
   res.status(StatusCodes.OK).json(response);
@@ -102,7 +123,6 @@ export const editRecipe = async (req, res) => {
   const { id } = req.params;
   const { title, ingredients, instructions, prep_time, image_url } = req.body;
 
-  console.log(req.body);
   const ingredientsString = prepareIngredients(ingredients);
 
   const { rows: updatedRecipe } = await db.query(
@@ -119,7 +139,6 @@ export const editRecipe = async (req, res) => {
 // DELETE A RECIPE
 export const deleteRecipe = async (req, res) => {
   const { id } = req.params;
-  console.log(req);
 
   await db.query("DELETE FROM recipes WHERE id = $1", [id]);
 
@@ -144,6 +163,7 @@ export const getUsersBookmarked = async (req, res) => {
   });
 };
 // BOOKMARK RECIPE
+// CHECKS IF RECIPE ALREADY EXISTS IN BOOKMARKED TABLE. IF DOES, REMOVE, ELSE ADD
 export const bookmarkRecipe = async (req, res) => {
   const { id } = req.params;
   const { userId } = req.user;
@@ -211,26 +231,25 @@ export const getRecipeNutrition = async (req, res) => {
     let title = recipe[0].title.replace(/ /g, "+");
     let apiKey = process.env.SPOONACULAR_API_KEY;
 
-    const response = await fetch(
+    const response = await axios.get(
       `https://api.spoonacular.com/recipes/guessNutrition?apiKey=${apiKey}&title=${title}`
     );
 
-    if (!response.ok) {
-      return res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ error: "Failed to fetch nutrition data" });
-    }
-
-    const recipeNutrition = await response.json();
+    const recipeNutrition = response.data;
     res.status(StatusCodes.OK).json({
       status: "success",
       data: { recipeNutrition },
     });
   } catch (error) {
     console.error(error);
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Internal server error" });
+    if (error.response) {
+      const { status, data } = error.response;
+      res.status(status).json({ error: data });
+    } else {
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: "Recipe not found" });
+    }
   }
 };
 
@@ -263,7 +282,6 @@ export const uploadRecipeImage = async (req, res) => {
   try {
     // Wait for the uploadToCloudinary function to resolve
     const result = await uploadToCloudinary(req.file.buffer);
-    console.log(result);
     res.status(StatusCodes.OK).json({ secure_url: result.secure_url });
   } catch (error) {
     console.error(error);
