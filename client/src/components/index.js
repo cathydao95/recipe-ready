@@ -8,3 +8,4 @@ export { default as RecipeCard } from "./RecipeCard/RecipeCard";
 export { default as EmptyPageContent } from "./EmptyPageContent/EmptyPageContent";
 export { default as AutocompleteList } from "./AutocompleteList/AutocompleteList";
 export { default as SelectedIngredientsList } from "./SelectedIngredientsList/SelectedIngredientsList";
+export { default as SmallLoader } from "./SmallLoader/SmallLoader";

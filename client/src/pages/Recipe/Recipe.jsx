@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { EmptyPageContent, Loading } from "../../components";
+import { EmptyPageContent, Loading, SmallLoader } from "../../components";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
@@ -66,6 +66,7 @@ const Recipe = () => {
   // Run get recipe function when page renders
   useEffect(() => {
     getRecipe();
+    getRecipeNutrition(id);
     setShowLogin(false);
   }, []);
 
@@ -152,7 +153,51 @@ const Recipe = () => {
                 </ol>
               </div>
             </div>
-            <div className={styles.nutrBtnContainer}>
+
+            {showNutrition ? (
+              <div className={styles.nutritionContainer}>
+                <table className={styles.nutritionTable}>
+                  <thead>
+                    <tr>
+                      <th>Nutrition</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Calories</td>
+                      <td>
+                        {recipeNutrition.calories?.value}{" "}
+                        {recipeNutrition.calories?.unit}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Carbs</td>
+                      <td>
+                        {recipeNutrition.carbs?.value}{" "}
+                        {recipeNutrition.carbs?.unit}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Protein</td>
+                      <td>
+                        {recipeNutrition.protein?.value}{" "}
+                        {recipeNutrition.protein?.unit}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Fat</td>
+                      <td>
+                        {recipeNutrition.fat?.value} {recipeNutrition.fat?.unit}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <SmallLoader />
+            )}
+            {/* <div className={styles.nutrBtnContainer}>
               <button
                 className="btn"
                 onClick={() => getRecipeNutrition(recipeInfo.id)}
@@ -200,7 +245,7 @@ const Recipe = () => {
                   </tbody>
                 </table>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       )}
