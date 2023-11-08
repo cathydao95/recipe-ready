@@ -48,19 +48,20 @@ const Recipe = () => {
   const getRecipeNutrition = async (recipeId) => {
     let url = `/api/v1/recipes/${id}/nutrition`;
 
-    try {
-      const response = await axios.get(url);
+    // TEMP COMMENT OUT TO SAVE TOKENS
+    // try {
+    //   const response = await axios.get(url);
 
-      if (response.data) {
-        const {
-          data: { recipeNutrition },
-        } = response.data;
-        setRecipeNutrition(recipeNutrition);
-        setShowNutrition(true);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    //   if (response.data) {
+    //     const {
+    //       data: { recipeNutrition },
+    //     } = response.data;
+    //     setRecipeNutrition(recipeNutrition);
+    //     setShowNutrition(true);
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   // Run get recipe function when page renders
@@ -153,7 +154,7 @@ const Recipe = () => {
                 </ol>
               </div>
             </div>
-
+            <h4>Estimated Nutrition Information</h4>
             {showNutrition ? (
               <div className={styles.nutritionContainer}>
                 <table className={styles.nutritionTable}>
@@ -197,55 +198,6 @@ const Recipe = () => {
             ) : (
               <SmallLoader />
             )}
-            {/* <div className={styles.nutrBtnContainer}>
-              <button
-                className="btn"
-                onClick={() => getRecipeNutrition(recipeInfo.id)}
-              >
-                See Nutrition Info
-              </button>
-            </div>
-            {showNutrition && (
-              <div className={styles.nutritionContainer}>
-                <table className={styles.nutritionTable}>
-                  <thead>
-                    <tr>
-                      <th>Nutrition</th>
-                      <th>Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Calories</td>
-                      <td>
-                        {recipeNutrition.calories?.value}{" "}
-                        {recipeNutrition.calories?.unit}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Carbs</td>
-                      <td>
-                        {recipeNutrition.carbs?.value}{" "}
-                        {recipeNutrition.carbs?.unit}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Protein</td>
-                      <td>
-                        {recipeNutrition.protein?.value}{" "}
-                        {recipeNutrition.protein?.unit}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Fat</td>
-                      <td>
-                        {recipeNutrition.fat?.value} {recipeNutrition.fat?.unit}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            )} */}
           </div>
         </div>
       )}

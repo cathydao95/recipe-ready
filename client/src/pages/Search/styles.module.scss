@@ -47,7 +47,7 @@
 .text {
   width: 100%;
   text-align: center;
-  border-bottom: 1px solid var(--clr-primary-7);
+  border-bottom: 1px solid var(--clr-primary-main);
   line-height: 0.1em;
   margin: 3rem 0;
 }
@@ -78,6 +78,10 @@
 @media (min-width: 769px) {
   .searchForm {
     width: 70%;
+  }
+
+  .text span {
+    font-size: 1.25rem;
   }
   .recipesContainer {
     grid-template-columns: repeat(3, 1fr);

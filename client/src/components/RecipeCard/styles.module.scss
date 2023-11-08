@@ -22,11 +22,6 @@
   padding: 0.5rem;
 }
 
-.titleContainer {
-  display: flex;
-  justify-content: space-between;
-}
-
 .recipeTitle {
   color: var(--clr-primary-1);
   font-weight: 400;
@@ -84,14 +79,4 @@
 .actionBtn:hover {
   background-color: var(--clr-dark-red);
   color: var(--clr-primary-10);
-}
-
-@media (min-width: 481px) {
-}
-
-@media (min-width: 769px) {
-}
-@media (min-width: 1025px) {
-}
-@media (min-width: 1201px) {
 }
