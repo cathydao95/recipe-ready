@@ -16,7 +16,7 @@ const ErrorNotFound = () => {
             <p className={styles.text}>
               We cannot find the page you are looking for
             </p>
-            <Link to="/recipes" className={styles.homeBtn}>
+            <Link to="/" className={styles.homeBtn}>
               Back Home
             </Link>
           </div>
