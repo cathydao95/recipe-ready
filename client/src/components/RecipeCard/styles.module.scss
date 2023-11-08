@@ -22,10 +22,15 @@
   padding: 0.5rem;
 }
 
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .recipeTitle {
   color: var(--clr-primary-1);
   font-weight: 400;
-  flex-basis: 60%;
+  flex-basis: 90%;
 }
 
 .prepTime {
@@ -46,6 +51,7 @@
   border: none;
   font-size: 1.5rem;
   color: var(--clr-primary-1);
+  flex-basis: 10%;
 }
 
 .icon:hover {
