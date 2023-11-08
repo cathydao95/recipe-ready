@@ -56,6 +56,40 @@ ALTER SEQUENCE public.bookmarked_id_seq OWNED BY public.bookmarked.id;
 
 
 --
+-- Name: ingredients; Type: TABLE; Schema: public; Owner: tpl1122_1
+--
+
+CREATE TABLE public.ingredients (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.ingredients OWNER TO tpl1122_1;
+
+--
+-- Name: ingredients_id_seq; Type: SEQUENCE; Schema: public; Owner: tpl1122_1
+--
+
+CREATE SEQUENCE public.ingredients_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.ingredients_id_seq OWNER TO tpl1122_1;
+
+--
+-- Name: ingredients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tpl1122_1
+--
+
+ALTER SEQUENCE public.ingredients_id_seq OWNED BY public.ingredients.id;
+
+
+--
 -- Name: recipes; Type: TABLE; Schema: public; Owner: tpl1122_1
 --
 
@@ -140,6 +174,13 @@ ALTER TABLE ONLY public.bookmarked ALTER COLUMN id SET DEFAULT nextval('public.b
 
 
 --
+-- Name: ingredients id; Type: DEFAULT; Schema: public; Owner: tpl1122_1
+--
+
+ALTER TABLE ONLY public.ingredients ALTER COLUMN id SET DEFAULT nextval('public.ingredients_id_seq'::regclass);
+
+
+--
 -- Name: recipes id; Type: DEFAULT; Schema: public; Owner: tpl1122_1
 --
 
@@ -173,6 +214,397 @@ COPY public.bookmarked (id, user_id, recipe_id) FROM stdin;
 40	1	91
 41	1	93
 42	1	96
+58	1	101
+64	1	102
+65	1	103
+66	1	104
+67	1	105
+68	1	106
+69	1	107
+72	1	108
+74	1	110
+77	1	128
+\.
+
+
+--
+-- Data for Name: ingredients; Type: TABLE DATA; Schema: public; Owner: tpl1122_1
+--
+
+COPY public.ingredients (id, name) FROM stdin;
+1	Chicken
+2	Beef
+3	Pork
+4	Salmon
+5	Tuna
+6	Shrimp
+7	Lamb
+8	Turkey
+9	Bacon
+10	Sausage
+11	Ham
+12	Ground beef
+13	Cod
+14	Tofu
+15	Eggs
+16	Quail
+17	Duck
+18	Venison
+19	Rabbit
+20	Pheasant
+21	Elk
+22	Kangaroo
+23	Buffalo
+24	Ostrich
+25	Bison
+26	Goat
+27	Grouse
+28	Partridge
+29	Wild boar
+30	Squab
+31	Guinea fowl
+32	Alligator
+33	Bear
+34	Moose
+35	Octopus
+36	Squid
+37	Anchovy
+38	Crawfish
+39	Clam
+40	Crab
+41	Lobster
+42	Mussels
+43	Scallop
+44	Snail
+45	Geoduck
+46	Sea urchin
+47	Horse
+48	Pangolin
+49	Ground chicken
+50	Ground pork
+51	Ground turkey
+52	Apple
+53	Banana
+54	Orange
+55	Strawberry
+56	Blueberry
+57	Raspberry
+58	Blackberry
+59	Grapes
+60	Watermelon
+61	Pineapple
+62	Mango
+63	Peach
+64	Pear
+65	Cherry
+66	Kiwi
+67	Lemon
+68	Lime
+69	Grapefruit
+70	Cantaloupe
+71	Potato
+72	Carrot
+73	Broccoli
+74	Spinach
+75	Lettuce
+76	Cucumber
+77	Avocado
+78	Mushroom
+79	Bell Pepper
+80	Zucchini
+81	Cabbage
+82	Cauliflower
+83	Asparagus
+84	Eggplant
+85	Kale
+86	Celery
+87	Radish
+88	Corn
+89	Peas
+90	Green Beans
+91	Parsley
+92	Cilantro
+93	Basil
+94	Thyme
+95	Oregano
+96	Rosemary
+97	Sage
+98	Cumin
+99	Coriander
+100	Paprika
+101	Chili Powder
+102	Turmeric
+103	Cayenne Pepper
+104	Mustard Greens
+105	Collard Greens
+106	Swiss Chard
+107	Bok Choy
+108	Arugula
+109	Watercress
+110	Turnip
+111	Rutabaga
+112	Beet
+113	Okra
+114	Brussels Sprouts
+115	Artichoke
+116	Pumpkin
+117	Squash
+118	Sweet Potato
+119	Radicchio
+120	Fennel
+121	Garlic
+122	Ginger
+123	Tomato
+124	Pepper
+125	Onion
+126	Tomatoes
+127	Beans
+128	Artichoke hearts
+129	Water chestnuts
+130	Bamboo shoots
+131	Olives
+132	Pickles
+133	Sauerkraut
+134	Applesauce
+135	Fruit cocktail
+136	Cranberry sauce
+137	Mandarin oranges
+138	Guava
+139	Papaya
+140	Passion fruit
+141	Lychee
+142	Jackfruit
+143	Coconut milk
+144	Condensed milk
+145	Evaporated milk
+146	Cream of mushroom soup
+147	Cream of chicken soup
+148	Cream of celery soup
+149	Cream of tomato soup
+150	Clam chowder
+151	Chicken broth
+152	Beef broth
+153	Vegetable broth
+154	Sardines
+155	Salt
+156	 Black Pepper
+157	Cinnamon
+158	Nutmeg
+159	Chili powder
+160	Cayenne pepper
+161	Garlic powder
+162	Onion powder
+163	Mustard
+164	Ketchup
+165	Mayonnaise
+166	Mustard sauce
+167	Soy sauce
+168	Worcestershire sauce
+169	Hot sauce
+170	Barbecue sauce
+171	Sriracha sauce
+172	Teriyaki sauce
+173	Honey
+174	Vinegar
+175	Olive oil
+176	Coconut oil
+177	Sesame oil
+178	Peanut butter
+179	Jam or jelly
+180	Relish
+181	Hoisin sauce
+182	Fish sauce
+183	Tahini
+184	Salsa
+185	Sour cream
+186	Ranch dressing
+187	Thousand Island dressing
+189	Italian dressing
+190	Flour
+191	Sugar
+192	Brown sugar
+193	Baking powder
+194	Baking soda
+195	Cocoa powder
+196	Chocolate chips
+197	Vanilla extract
+198	Milk
+199	Butter
+200	Yeast
+201	Shortening
+202	Cornstarch
+203	Cream of tartar
+204	Maple syrup
+205	Molasses
+206	Corn syrup
+207	Powdered sugar
+208	Almond extract
+209	Cake flour
+210	Pastry flour
+211	Whole wheat flour
+212	Bread flour
+213	Confectioners sugar
+214	Sweetened condensed milk
+215	Heavy cream
+216	Cream
+217	Yogurt
+218	Cheese
+219	Whipped cream
+220	Half-and-half
+221	Buttermilk
+222	Cottage cheese
+223	Cream cheese
+224	Ricotta cheese
+225	Mozzarella cheese
+226	Cheddar cheese
+227	Parmesan cheese
+228	Feta cheese
+229	Swiss cheese
+230	Gouda cheese
+231	Provolone cheese
+232	American cheese
+233	Milk powder
+234	Goat cheese
+235	Blue cheese
+236	Almond milk
+237	Soy milk
+238	Oat milk
+239	Cashew milk
+240	Rice milk
+241	Hemp milk
+242	Macadamia milk
+243	Hazelnut milk
+244	Flax milk
+245	Pea milk
+246	Sunflower milk
+247	Nutritional yeast
+248	Coconut cream
+249	Coconut yogurt
+250	Cashew cream
+251	Rice
+252	Brown Rice
+253	White Rice
+254	Wheat
+255	Oats
+256	Barley
+257	Rye
+258	Quinoa
+259	Buckwheat
+260	Millet
+261	Sorghum
+262	Amaranth
+263	Farro
+264	Spelt
+265	Teff
+266	Kamut
+267	Wild rice
+268	Couscous
+269	Polenta
+270	Freekeh
+271	Bulgur
+272	Pearl barley
+273	Emmer
+274	Einkorn
+275	Triticale
+276	Teff flour
+277	Masa harina
+278	Graham flour
+279	Semolina
+280	Vegetable Oil
+284	Canola Oil
+285	Peanut Oil
+286	Sunflower Oil
+287	Sesame Oil
+288	Grapeseed Oil
+289	Coconut Oil
+290	Avocado Oil
+291	Corn Oil
+292	Walnut Oil
+293	Flaxseed Oil
+294	Almond Oil
+295	Ranch Dressing
+296	Italian Dressing
+297	Caesar Dressing
+298	Balsamic Vinaigrette
+299	Blue Cheese Dressing
+300	French Dressing
+301	Thousand Island Dressing
+302	Honey Mustard Dressing
+303	Greek Dressing
+304	Raspberry Vinaigrette
+305	Poppy Seed Dressing
+306	Sesame Ginger Dressing
+308	Lemon Tahini Dressing
+311	Asian Sesame Dressing
+312	Red Wine Vinaigrette
+313	White Wine Vinaigrette
+314	Cilantro Lime Dressing
+315	Avocado Dressing
+316	Dijon Mustard Dressing
+317	Garlic Parmesan Dressing
+318	Chipotle Dressing
+319	Creamy Tahini Dressing
+320	Mango Vinaigrette
+321	Almonds
+322	Cashews
+323	Peanuts
+324	Walnuts
+325	Pecans
+326	Hazelnuts
+327	Brazil Nuts
+328	Macadamia Nuts
+329	Pistachios
+330	Sunflower Seeds
+331	Pumpkin Seeds
+332	Chia Seeds
+333	Flaxseeds
+334	Sesame Seeds
+335	Hemp Seeds
+336	Poppy Seeds
+337	Pine Nuts
+338	Chestnuts
+283	Olive Oil
+344	Coconut Cream
+339	Shredded Coconut
+345	Coconut Milk
+348	Soy Nuts
+349	Pine Nut Kernels
+350	Watermelon Seeds
+351	Black Sesame Seeds
+352	White Sesame Seeds
+355	Cacao Nibs
+356	Popcorn Kernels
+357	Chestnut Flour
+358	Ground Flaxseeds
+359	Ground Chia Seeds
+360	Sunflower Seed Butter
+361	Peanut Butter
+362	Almond Butter
+363	Cashew Butter
+364	Hazelnut Butter
+365	Pistachio Butter
+366	Coconut Butter
+367	Sesame Seed Butter
+368	Fish
+369	Tortillas
+370	Rice Flour
+371	Spam
+372	Wood Ear Mushrooms
+373	Fried Shallots
+374	Bean Sprouts
+375	Kimchi
+376	Gochujang
+379	Sriracha
+381	Nori
+382	Seaweed
+383	Kewpie Mayo
+384	Lemongrass
+385	Shrimp Paste
+386	Chili Oil
+387	Vienna Sausages
+380	Beef shank
+378	Oyster sauce
+346	Coconut Water
 \.
 
 
@@ -253,10 +685,24 @@ COPY public.recipes (id, title, ingredients, instructions, prep_time, image_url,
 70	French Onion Soup	{onions,"beef broth",thyme,bread,cheese}	1. Caramelize onions. 2. Add broth and thyme. 3. Top with bread and cheese, then broil.	45	https://images.pexels.com/photos/5038909/pexels-photo-5038909.jpeg?auto=compress&cs=tinysrgb&w=600	\N	t
 71	Mac and Cheese	{pasta,cheese,milk,butter,flour}	1. Make cheese sauce. 2. Combine with cooked pasta and bake.	35	https://images.pexels.com/photos/15483262/pexels-photo-15483262/free-photo-of-photo-of-mac-and-cheese-on-a-plate.jpeg?auto=compress&cs=tinysrgb&w=600	\N	t
 72	Chicken Caesar Wrap	{chicken,lettuce,parmesan,tortilla,"caesar dressing"}	1. Toss chicken with lettuce and dressing. 2. Wrap in tortilla.	15	https://images.pexels.com/photos/9624298/pexels-photo-9624298.jpeg?auto=compress&cs=tinysrgb&w=600	\N	t
-95	asdasd	{asdasd}	1. asdasd	334	https://res.cloudinary.com/dnu4wptmg/image/upload/v1699145936/recipe-image/salmonbowl_fbxjo4.jpg	1	f
-98	asdasd	{asdasd}	1. asdasd	34	https://res.cloudinary.com/dnu4wptmg/image/upload/v1699146171/recipe-image/ramen_bj2o92.jpg	1	f
 82	Ellie's Test Recipe	{asd,asd,asd}	1. asdasd. 2. asudhasd asasdasd . 3. asdasdasd 	45	https://res.cloudinary.com/dnu4wptmg/image/upload/v1699122449/recipe-image/salmonbowl_fdmlcd.jpg	2	f
-100	23	{2}	1. 1. 2. 2	2	https://res.cloudinary.com/dnu4wptmg/image/upload/v1699146273/recipe-image/noresults_caapsd.png	1	f
+111	Seafood Paella	{rice,shrimp,mussels,"chicken broth",saffron}	1. Cook seafood. 2. Add rice and broth. 3. Simmer until done.	55	https://images.pexels.com/photos/16743486/pexels-photo-16743486/free-photo-of-seafood-paella-with-lobster.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1	\N	t
+112	Tom Yum Soup	{shrimp,lemongrass,"lime leaves",chilis,mushrooms}	1. Boil broth with lemongrass. 2. Add shrimp and mushrooms. 3. Season with lime.	30	https://images.pexels.com/photos/10201775/pexels-photo-10201775.jpeg?auto=compress&cs=tinysrgb&w=300	\N	t
+113	Shakshuka	{tomatoes,eggs,onions,"bell peppers",cumin}	1. Sauté veggies. 2. Pour in tomatoes. 3. Crack eggs into sauce and cook.	25	https://images.pexels.com/photos/3648979/pexels-photo-3648979.jpeg?auto=compress&cs=tinysrgb&w=300	\N	t
+114	Falafel Wrap	{chickpeas,garlic,parsley,tahini,flatbread}	1. Make falafel mix and fry. 2. Spread tahini on bread. 3. Add falafels and wrap.	50	https://images.pexels.com/photos/15378370/pexels-photo-15378370/free-photo-of-falafel-salad-on-tortilla.jpeg?auto=compress&cs=tinysrgb&w=300	\N	t
+115	Quinoa Salad	{quinoa,cucumbers,tomatoes,feta,"lemon juice"}	1. Cook quinoa. 2. Chop veggies and mix. 3. Combine with dressing.	20	https://images.pexels.com/photos/16123122/pexels-photo-16123122/free-photo-of-close-up-of-salad.jpeg?auto=compress&cs=tinysrgb&w=300	\N	t
+116	Banh Xeo	{"rice flour","turmeric powder","coconut milk",pork,shrimp,"bean sprouts"}	1. Mix flour, turmeric, and coconut milk for batter. 2. Pour batter into hot skillet. 3. Add pork, shrimp, and bean sprouts. 4. Fold and serve with herbs.	30	https://media.gettyimages.com/id/657980786/photo/xeo-cake-with-vegetables-and-fish-sauce-vietnamese-crepe-vietnamese-crispy-pancake-vietnamese.jpg?s=612x612&w=0&k=20&c=faMSbEfIYYTzqprZp5TUllR3Dd2yZPwmUYsVCX7wNkg=	\N	t
+117	Banh Cuon	{"rice flour",water,"ground pork","wood ear mushrooms","fried shallots"}	1. Steam rice batter to make sheets. 2. Cook pork and mushrooms. 3. Fill sheets with mixture, roll up. 4. Top with shallots and serve.	45	https://media.gettyimages.com/id/1186412198/photo/b%C3%A1nh-cu%E1%BB%91n-or-fresh-spring-rolls.jpg?s=612x612&w=0&k=20&c=vkJZpxCyBbfYqdMUYh91NHs9aqyx9cvFe6ktYTw3wWI=	\N	t
+118	Soondubu Jjigae	{"soft tofu",kimchi,"seafood or pork",gochujang,"sesame oil","green onions"}	1. Sauté kimchi and protein in sesame oil. 2. Add gochujang and water, bring to boil. 3. Add tofu and simmer. 4. Garnish with green onions.	25	https://media.gettyimages.com/id/498160815/photo/sundubu-jjigae.jpg?s=612x612&w=0&k=20&c=4nosqkieYEwHkE3-iPVlNv5GWlMXTQYz0y3hbpqov3w=	\N	t
+120	Loco Moco	{"ground beef",eggs,rice,"beef broth",onions,butter}	1. Form beef into patties and fry. 2. Cook rice. 3. Fry eggs. 4. Make gravy with broth and onions. 5. Assemble and serve.	30	https://media.istockphoto.com/id/1179654431/photo/homemade-hawaiian-loco-moco.jpg?b=1&s=612x612&w=0&k=20&c=QPgYQZQaxIjFowU22pIL_65o9nu5sU6QA7cAfu0xTMs=	\N	t
+121	Bun Bo Hue	{"beef shank",oxtail,lemongrass,"rice noodles","shrimp paste","chili oil"}	1. Simmer beef and oxtail with lemongrass. 2. Cook noodles. 3. Strain broth, add shrimp paste and chili oil. 4. Serve noodles with sliced beef and pour broth over.	120	https://media.gettyimages.com/id/566047011/photo/bun-hue-is-hues-style-vermicelli-soup-at-the-vietnamese-vegetarian-restaurant-bo-de-tinh-tam.jpg?s=612x612&w=0&k=20&c=iy9AzawY8pV5wm42h7xGJERoojZBGaX2VnLsoMvAdRM=	\N	t
+119	Spam Musubi	{Spam,rice,nori,"soy sauce",sugar,"rice vinegar"}	1. Slice and fry Spam. 2. Mix soy sauce and sugar, glaze Spam. 3. Press rice into musubi press. 4. Place Spam on rice, wrap with nori.	20	https://media.gettyimages.com/id/689904266/photo/spam-musubi.jpg?s=612x612&w=0&k=20&c=-AmiY0KHxglNTk3AfY-8eFOPuD2hWh2G1DUfRooZwsE=	\N	t
+122	Basic Omelette	{eggs,milk,salt,pepper,butter,"cheese (optional)","ham (optional)","bell peppers (optional)"}	1. Beat eggs with milk, salt, and pepper. 2. Melt butter in a pan. 3. Cook eggs until set. 4. Add cheese and fillings if desired, fold omelette.	10	https://images.pexels.com/photos/1437268/pexels-photo-1437268.jpeg?auto=compress&cs=tinysrgb&w=300	\N	t
+123	Grilled Cheese Sandwich	{bread,cheese,butter}	1. Butter bread slices. 2. Place cheese between bread. 3. Grill on pan until golden brown on both sides.	10	https://images.pexels.com/photos/14941252/pexels-photo-14941252.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1	\N	t
+124	Tomato Pasta	{pasta,"tomato sauce",salt,"olive oil"}	1. Cook pasta in salted water. 2. Heat tomato sauce. 3. Drain pasta, mix with sauce. 4. Drizzle with olive oil and garnish with basil.	15	https://images.pexels.com/photos/18411462/pexels-photo-18411462/free-photo-of-spaghetti-with-tomato-sauce-sprinkled-with-parmesan-and-topped-with-a-basil-leaves.jpeg?auto=compress&cs=tinysrgb&w=300	\N	t
+125	Garden Salad	{lettuce,cucumber,tomatoes,carrots,"salad dressing"}	1. Chop lettuce, cucumber, tomatoes, and carrots. 2. Toss vegetables in a bowl. 3. Drizzle with salad dressing.	10	https://images.pexels.com/photos/4198015/pexels-photo-4198015.jpeg?auto=compress&cs=tinysrgb&w=300	\N	t
+126	Chicken Fried Rice	{rice,chicken,"soy sauce",peas,carrots,eggs,onion,garlic}	1. Cook rice. 2. Sauté chicken, veggies, and garlic. 3. Add rice, soy sauce, and scrambled eggs.	30	https://images.pexels.com/photos/723198/pexels-photo-723198.jpeg?auto=compress&cs=tinysrgb&w=300	\N	t
+127	Broccoli and Chicken Stir-Fry	{chicken,broccoli,"soy sauce"}	1. Sauté garlic and chicken. 2. Add broccoli and stir-fry. 3. Pour soy sauce and cook until done.	20	https://images.pexels.com/photos/262973/pexels-photo-262973.jpeg?auto=compress&cs=tinysrgb&w=300	\N	t
 \.
 
 
@@ -269,7 +715,7 @@ COPY public.users (id, first_name, last_name, email, hashed_password) FROM stdin
 3	Test	Account	test@gmail.com	$2b$10$Nfne1J9UlFYaVxj8BC/ieuqe2Pai9uFoaV1.GM9O5c2mitU2PiMU6
 4	test	account	testaccount@gmail.com	$2b$10$gbMShC5eDOTlc9.PxpSPm.RfZIgGnyPE/ug3tq5Fc5XS8fK1c/cFu
 5	new	account	newaccount@gmail.com	$2b$10$SQfyXalhF2YzjT9UM5QLju1bL/5DRg.anAlPNsvf4J1B5M8vQ2cIK
-1	cat	Dao	catdao@gmail.com	$2b$10$oA4R8CBBJaOpMMFUN4hrke0RWwzWvo/.Q7uYHtmrzw.ww3rxaI/7a
+1	Cat	Dao	cathydao@gmail.com	$2b$10$oA4R8CBBJaOpMMFUN4hrke0RWwzWvo/.Q7uYHtmrzw.ww3rxaI/7a
 \.
 
 
@@ -277,14 +723,21 @@ COPY public.users (id, first_name, last_name, email, hashed_password) FROM stdin
 -- Name: bookmarked_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tpl1122_1
 --
 
-SELECT pg_catalog.setval('public.bookmarked_id_seq', 57, true);
+SELECT pg_catalog.setval('public.bookmarked_id_seq', 77, true);
+
+
+--
+-- Name: ingredients_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tpl1122_1
+--
+
+SELECT pg_catalog.setval('public.ingredients_id_seq', 387, true);
 
 
 --
 -- Name: recipes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tpl1122_1
 --
 
-SELECT pg_catalog.setval('public.recipes_id_seq', 100, true);
+SELECT pg_catalog.setval('public.recipes_id_seq', 128, true);
 
 
 --
@@ -300,6 +753,22 @@ SELECT pg_catalog.setval('public.users_id_seq', 5, true);
 
 ALTER TABLE ONLY public.bookmarked
     ADD CONSTRAINT bookmarked_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ingredients ingredients_name_key; Type: CONSTRAINT; Schema: public; Owner: tpl1122_1
+--
+
+ALTER TABLE ONLY public.ingredients
+    ADD CONSTRAINT ingredients_name_key UNIQUE (name);
+
+
+--
+-- Name: ingredients ingredients_pkey; Type: CONSTRAINT; Schema: public; Owner: tpl1122_1
+--
+
+ALTER TABLE ONLY public.ingredients
+    ADD CONSTRAINT ingredients_pkey PRIMARY KEY (id);
 
 
 --

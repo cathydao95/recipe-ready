@@ -26,6 +26,13 @@ CREATE TABLE bookmarked (
     user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     recipe_id INT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE);
 
+-- Create ingredients Table
+CREATE TABLE ingredients (
+   id integer NOT NULL,
+   name VARCHAR(255) UNIQUE NOT NULL
+);
+
+
 
 INSERT INTO recipes (id, first_name, last_name, email, hashed_password)
 VALUES ('Cat' 'Dao','catdao@gmail.com','$2b$10$oA4R8CBBJaOpMMFUN4hrke0RWwzWvo/.Q7uYHtmrzw.ww3rxaI/7a');
@@ -49,3 +56,8 @@ VALUES
     ('Lemon Garlic Shrimp', '{"Shrimp","Garlic","Butter","Lemon Juice","Parsley"}', '1. Sauté garlic in butter. 2. Add shrimp. 3. Finish with lemon juice and parsley.', 20, 'https://images.pexels.com/photos/3843224/pexels-photo-3843224.jpeg?auto=compress&cs=tinysrgb&w=400', NULL, TRUE),
     ('Vegan Chili', '{"Beans","Tomatoes","Onion","Bell Peppers","Chili Powder","Cumin"}', '1. Cook vegetables with spices. 2. Add beans and tomatoes. 3. Simmer.', 50, 'https://images.unsplash.com/photo-1638329389022-daef2efb71b3?auto=format&fit=crop&q=60&w=400&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2hpbGl8ZW58MHx8MHx8fDA%3D', NULL, TRUE),
     ('Buttermilk Fried Chicken', '{"Chicken Pieces","Buttermilk","Flour","Paprika","Garlic Powder"}', '1. Marinate chicken in buttermilk. 2. Dredge in seasoned flour. 3. Fry until golden.', 60, 'https://images.pexels.com/photos/1352270/pexels-photo-1352270.jpeg?auto=compress&cs=tinysrgb&w=400', NULL, TRUE);
+
+
+
+    INSERT INTO ingredients (name) VALUES (‘Spam’), ('Rice Flour'), ('Wood Ear Mushrooms'), ('Fried Shallots'), ('Bean Sprouts'), ('Kimchi'), ('Gochujang'),('Fish Sauce'),('Oyster Sauce'), ('Sriracha'), ('Beef Shank'), ('Nori'), ('Seaweed'),('Kewpie Mayo'), ('Lemongrass'), ('Shrimp Paste'), ('Chili Oil'), ('Vienna Sausages');
+

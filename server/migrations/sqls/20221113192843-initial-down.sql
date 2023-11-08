@@ -5,3 +5,5 @@ DROP TABLE users;
 DROP TABLE recipes;
 
 DROP TABLE bookmarked;
+
+DROP TABLE ingredients;
