@@ -14,8 +14,8 @@ const ResultsLayout = ({ recipes, title, page }) => {
           <EmptyPageContent page={page} />
         ) : (
           <div className={styles.recipesContainer}>
-            {recipes.map((recipe, index) => (
-              <RecipeCard key={index} recipe={recipe} page={page} />
+            {recipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} page={page} />
             ))}
           </div>
         )}
