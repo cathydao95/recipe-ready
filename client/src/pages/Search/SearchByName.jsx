@@ -26,13 +26,19 @@ const SearchByName = () => {
 
   // Function that passes keyword to results
   const handleSubmit = (e) => {
+    // if search is empty return
     e.preventDefault();
+    if (keyword.trim() === "") {
+      return;
+    }
     setResultsLoaded(false);
     resetSearch();
     navigate("/results", {
       state: { keyword },
     });
   };
+
+  console.log(keyword);
 
   useEffect(() => {
     getRecipes([], "", limit, localPage);
