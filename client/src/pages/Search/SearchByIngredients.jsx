@@ -119,16 +119,20 @@ const SearchByIngredients = () => {
         </form>
       </div>
       <p className={styles.text}>
-        <span>Ingredients</span>
+        <span>Ingredient List</span>
       </p>
 
-      <SelectedIngredientsList
-        selectedIngredients={selectedIngredients}
-        setSelectedIngredients={setSelectedIngredients}
-      />
-      <button className="formBtn" onClick={searchRecipes}>
-        Search For Recipes
-      </button>
+      <div className={styles.wrapperSuggested}>
+        <SelectedIngredientsList
+          selectedIngredients={selectedIngredients}
+          setSelectedIngredients={setSelectedIngredients}
+        />
+      </div>
+      <div className="btnContainer">
+        <button className="btn" onClick={searchRecipes}>
+          Search For Recipes
+        </button>
+      </div>
     </div>
   );
 };

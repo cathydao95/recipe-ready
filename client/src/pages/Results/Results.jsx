@@ -42,11 +42,6 @@ const Results = () => {
       next={loadMoreRecipes}
       hasMore={hasMore}
       loader={<SmallLoader />}
-      endMessage={
-        <p style={{ textAlign: "center" }}>
-          <b>No More Recipes</b>
-        </p>
-      }
     >
       <ResultsLayout
         recipes={recipeSearchResults}
