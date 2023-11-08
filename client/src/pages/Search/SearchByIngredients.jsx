@@ -91,7 +91,7 @@ const SearchByIngredients = () => {
   return (
     <div className={clsx("wrapper")}>
       <div className={styles.searchContainer}>
-        <h2>What Ingredients Do You Have?</h2>
+        <h1>What Ingredients Do You Have?</h1>
         <form className={styles.searchForm}>
           <div className={styles.searchInputContainer}>
             <div className={styles.searchIcon}>

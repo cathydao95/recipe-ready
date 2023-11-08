@@ -38,8 +38,6 @@ const SearchByName = () => {
     });
   };
 
-  console.log(keyword);
-
   useEffect(() => {
     getRecipes([], "", limit, localPage);
   }, []);
