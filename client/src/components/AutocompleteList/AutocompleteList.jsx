@@ -24,6 +24,7 @@ const AutocompleteList = ({
               // Handle key press to navigate and select autocomplete ing
               onKeyDown={(e) => handleKeyDown(e, index)}
               tabIndex={0}
+              data-testid="autocompleteSuggestion"
             >
               {suggestedIng}
             </div>

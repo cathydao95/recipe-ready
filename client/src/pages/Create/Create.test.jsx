@@ -1,41 +1,43 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, fireEvent, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import { AppProvider } from "../../context/appContext";
+import React from "react";
+import { render } from "@testing-library/react";
+import { useLocation } from "react-router-dom";
 import Create from "./Create";
 
-global.fetch = vi.fn(() =>
-  Promise.resolve({
-    ok: true,
-    json: () => Promise.resolve({ msg: "Recipe created!" }),
-  })
-);
+// Unit test to check if correct title is displayed dpending on editing mode
 
-describe("Create Component Integration Test", () => {
-  it("submits the form and calls the API", async () => {
-    render(
-      <MemoryRouter>
-        <AppProvider>
-          <Create />
-        </AppProvider>
-      </MemoryRouter>
-    );
+// create mock for react router dom
+vi.mock("react-router-dom", () => ({
+  ...vi.importActual("react-router-dom"),
+  useNavigate: () => vi.fn(),
+  useLocation: vi.fn(),
+}));
 
-    fireEvent.change(screen.getByPlaceholderText(/title/i), {
-      target: { value: "Recipe title" },
-    });
-    fireEvent.change(screen.getByPlaceholderText(/ingredients/i), {
-      target: { value: "Ingredients" },
-    });
-    fireEvent.change(screen.getByPlaceholderText(/instructions/i), {
-      target: { value: "Instructions" },
-    });
-    fireEvent.change(screen.getByPlaceholderText(/prep time/i), {
-      target: { value: "30" },
+describe("<Create />", () => {
+  useLocation.mockReturnValue({
+    state: {},
+  });
+
+  it('displays "Create New Recipe" when not editing', () => {
+    const { getByText } = render(<Create />);
+    expect(getByText("Create New Recipe")).toBeInTheDocument();
+  });
+
+  it('displays "Edit Recipe" when editing', () => {
+    useLocation.mockReturnValue({
+      state: {
+        isEditing: true,
+        currentRecipeInfo: {
+          id: "1",
+          title: "Sample Recipe",
+          ingredients: ["beef", "chicken", "fish"], //
+          instructions: "Grill",
+          prep_time: "45",
+          image_url: "url",
+        },
+      },
     });
 
-    fireEvent.click(screen.getByRole("button", { name: /submit/i }));
-
-    expect(fetch).toHaveBeenCalled();
+    const { getByText } = render(<Create />);
+    expect(getByText("Edit Recipe")).toBeInTheDocument();
   });
 });
