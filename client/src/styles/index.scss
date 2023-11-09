@@ -25,6 +25,7 @@ Variables
   --clr-primary-10: #ffffff;
 
   --clr-primary-main: #de7777;
+  --clr-primary-main: #5d7b97;
 
   --clr-dark-red: #b64040;
 
@@ -32,7 +33,7 @@ Variables
 }
 
 // font-family: 'Inter', sans-serif;
-// font-family: 'Poppins', sans-serif;
+// font-family: 'Playfair Display', serif;
 *,
 ::after,
 ::before {
@@ -42,7 +43,7 @@ Variables
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Inter", sans-serif;
   background: var(--clr-primary-10);
   color: var(--clr-primary-1);
   line-height: 1.5;
@@ -61,8 +62,8 @@ h5 {
 }
 h1 {
   font-size: 2rem;
-  color: var(--clr-primary-main);
   font-weight: 700;
+  font-family: "Playfair Display", serif;
 }
 h2 {
   font-size: 1.75rem;
@@ -92,6 +93,7 @@ ul {
 }
 a {
   font-family: "Inter", sans-serif;
+  font-weight: 300;
   text-decoration: none;
   color: var(--clr-primary-1);
 }
@@ -247,7 +249,7 @@ button {
 
 @media (min-width: 769px) {
   h1 {
-    font-size: 3.5rem;
+    font-size: 3rem;
   }
   h2 {
     font-size: 3rem;
