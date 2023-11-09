@@ -4,6 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import { useAppContext } from "../../context/appContext";
+import logo from "../../assets/logo.png";
 
 const Sidebar = () => {
   // Destrcuture functions from context
@@ -19,6 +20,10 @@ const Sidebar = () => {
       <div>
         <div className={styles.headerContent}>
           {/* Close button to hide sidebar */}
+
+          <Link to="/" onClick={toggleSidebar}>
+            <img className={styles.logo} src={logo} alt="Recipe Ready Logo" />
+          </Link>
           <button
             type="button"
             className={styles.closeBtn}
@@ -27,9 +32,6 @@ const Sidebar = () => {
           >
             <FaTimes />
           </button>
-          <Link to="/" onClick={toggleSidebar}>
-            <h1 className={styles.title}>Recipe Ready</h1>
-          </Link>
         </div>
         <div className={styles.container}>
           <div className={styles.link}>
