@@ -1,28 +1,23 @@
 .recipeWrapper {
-  background-color: var(--clr-primary-8);
+  margin: 1rem;
 }
 
 .btnContainer {
-  background-color: var(--clr-primary-10);
   display: flex;
-  justify-content: center;
-  gap: 2rem;
-  padding: 1rem 0;
+  justify-content: space-between;
 }
 
-.bookmarkContainer {
-  font-size: 0.875rem;
+.secondaryBtnContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.25rem;
+  gap: 1rem;
 }
+
 .actionBtn {
-  width: 200px;
   padding: 0.25rem;
   margin: 1rem 0;
-  background-color: var(--clr-primary-main);
-  color: var(--clr-primary-10);
+  background-color: transparent;
+  color: var(--clr-primary-1);
+  font-size: 2rem;
   border: none;
 }
 .imgContainer {
@@ -39,7 +34,7 @@
 .recipeInfoContainer {
   display: flex;
   flex-direction: column;
-  padding: 1rem 2rem;
+  padding: 1rem 0rem;
 }
 
 .recipeHeader {
@@ -52,28 +47,83 @@
   font-size: 1.5rem;
   text-align: left;
 }
-
-.prepTime {
-  font-size: 0.75rem;
+.prepTimeContainer {
   display: flex;
+  flex-direction: column;
+}
+.prepTimeText {
+  color: var(--clr-primary-5);
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+.prepTime {
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
   gap: 0.25rem;
-  justify-content: end;
   flex-basis: 40%;
 }
 
 .ingInstrContainer {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 2rem 0;
+  gap: 0.5rem;
+  padding: 1rem 0;
 }
 .ingContainer {
-  text-align: left;
   padding: 0;
 }
 
+.ingContainer li {
+  position: relative;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+}
+
+.ingContainer li::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--clr-primary-main);
+
+  margin-right: 0.5em;
+}
+
+.ingContainer li.crossed {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
 .instructionsList {
-  padding: 0.25rem;
+  counter-reset: list-counter;
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+
+  li {
+    counter-increment: list-counter;
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 24px;
+
+    &::before {
+      content: counter(list-counter);
+      position: absolute;
+      left: 0;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: var(--clr-primary-main);
+      color: var(--clr-primary-10);
+      text-align: center;
+    }
+  }
 }
 
 .ing {
@@ -82,10 +132,6 @@
 
 .instructionsContainer {
   text-align: left;
-}
-
-.instructionsList {
-  margin: 0 1rem;
 }
 
 .instruction {
@@ -112,6 +158,9 @@
 }
 
 @media (min-width: 481px) {
+  .recipeWrapper {
+    margin: 1.5rem 4rem;
+  }
   .imgContainer {
     height: 350px;
   }
@@ -164,7 +213,16 @@
   }
 }
 
+@media (min-width: 769px) {
+  .recipeWrapper {
+    margin: 1.5rem 6rem;
+  }
+}
+
 @media (min-width: 1025px) {
+  .recipeWrapper {
+    margin: 4rem 8rem;
+  }
   .ingInstrContainer {
     flex-direction: row;
     justify-content: space-evenly;
@@ -172,4 +230,7 @@
   }
 }
 @media (min-width: 1201px) {
+  .recipeWrapper {
+    margin: 4rem 10rem;
+  }
 }

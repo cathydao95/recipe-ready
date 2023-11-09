@@ -3,7 +3,9 @@ import { EmptyPageContent, Loading, SmallLoader } from "../../components";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
-import { FaRegClock, FaBookmark, FaCheck } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa";
+import { BsBackspace, BsBookmarkFill, BsBookmark } from "react-icons/bs";
+import { CiExport } from "react-icons/ci";
 import { useAppContext } from "../../context/appContext";
 import LoginModal from "../../components/LoginModal/LoginModal";
 import axios from "../../utils/axiosConfig";
@@ -44,11 +46,14 @@ const Recipe = () => {
     }
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   // Function to retrieve recipe's nutritional information
   const getRecipeNutrition = async (recipeId) => {
     let url = `/api/v1/recipes/${id}/nutrition`;
 
-    // TEMP COMMENT OUT TO SAVE TOKENS
     // try {
     //   const response = await axios.get(url);
 
@@ -71,6 +76,8 @@ const Recipe = () => {
     setShowLogin(false);
   }, []);
 
+  console.log(recipeNutrition);
+
   return isLoading ? (
     <Loading />
   ) : recipeNotFound ? (
@@ -79,35 +86,32 @@ const Recipe = () => {
       <EmptyPageContent page="noRecipe" />
     </div>
   ) : (
-    <div>
+    <div className={styles.recipeWrapper}>
       {recipeInfo.id && (
-        <div className={clsx(styles.recipeWrapper, "wrapper")}>
+        <div>
           <div className={styles.btnContainer}>
             <button onClick={() => navigate(-1)} className={styles.actionBtn}>
-              Back
+              <BsBackspace />
             </button>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                handleBookmarkClick(id);
-              }}
-              className={styles.actionBtn}
-            >
-              {isBookmarked ? (
-                <>
-                  <span className={styles.bookmarkContainer}>
-                    Bookmarked <FaCheck />
-                  </span>
-                </>
-              ) : (
-                <>
-                  <span className={styles.bookmarkContainer}>
-                    <FaBookmark /> Bookmark
-                  </span>
-                </>
-              )}
-            </button>
+            <div className={styles.secondaryBtnContainer}>
+              <button className={styles.actionBtn} onClick={handlePrint}>
+                <CiExport />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleBookmarkClick(id);
+                }}
+                className={styles.actionBtn}
+              >
+                {isBookmarked ? <BsBookmarkFill /> : <BsBookmark />}
+              </button>
+            </div>
           </div>
+          <div className={styles.recipeHeader}>
+            <h3 className={styles.recipeTitle}>{recipeInfo.title}</h3>
+          </div>
+
           <div className={clsx(styles.imgContainer, "imgContainer")}>
             <img
               className={styles.img}
@@ -116,8 +120,8 @@ const Recipe = () => {
             />
           </div>
           <div className={styles.recipeInfoContainer}>
-            <div className={styles.recipeHeader}>
-              <h3 className={styles.recipeTitle}>{recipeInfo.title}</h3>
+            <div className={styles.prepTimeContainer}>
+              <span className={styles.prepTimeText}>Prep Time</span>
               <span className={styles.prepTime}>
                 <FaRegClock />
                 {recipeInfo.prep_time} min
