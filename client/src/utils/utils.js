@@ -23,3 +23,16 @@ export const limitScreenSize = (screenWidth) => {
     return 4;
   }
 };
+
+//  /Function to determine the  meal time
+export const getMealTime = () => {
+  const hour = new Date().getHours();
+
+  if (hour < 11) {
+    return "Breakfast";
+  } else if (hour < 17) {
+    return "Lunch";
+  } else {
+    return "Dinner";
+  }
+};
