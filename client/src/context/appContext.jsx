@@ -7,9 +7,9 @@ export const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState([]);
-  const [usersRecipes, setUsersRecipes] = useState([]);
-  const [usersBookmarked, setUsersBookmarked] = useState([]);
-  const [recipeSearchResults, setRecipeSearchResults] = useState([]);
+  const [usersRecipes, setUsersRecipes] = useState(null);
+  const [usersBookmarked, setUsersBookmarked] = useState(null);
+  const [recipeSearchResults, setRecipeSearchResults] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);

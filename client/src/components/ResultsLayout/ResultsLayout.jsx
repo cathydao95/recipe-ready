@@ -7,37 +7,41 @@ import { useNavigate } from "react-router-dom";
 import { BsBackspace } from "react-icons/bs";
 
 const ResultsLayout = ({ recipes, title, page }) => {
-  const { resultsLoaded } = useAppContext();
   const navigate = useNavigate();
+
+  // Variable that determimes if back button should be shown
+  const showBackButton = recipes && recipes.length > 0;
+
   return (
-    resultsLoaded && (
-      <div className={clsx("wrapper")}>
-        <div className={styles.headerContainer}>
-          {recipes && recipes.length > 0 && (
-            <button
-              onClick={() => {
-                navigate(-1);
-              }}
-              className={styles.backBtn}
-            >
-              <BsBackspace />
-            </button>
-          )}
-          <h1 className={styles.title}>{title}</h1>
-          {/* Create an invisible spacer element so that title can be centered and back button can be at the start */}
-          <div className={styles.spacer}></div>
-        </div>
-        {!recipes || recipes.length === 0 ? (
-          <EmptyPageContent page={page} />
+    <div className={clsx("wrapper")}>
+      <div className={styles.headerContainer}>
+        {showBackButton ? (
+          <button
+            onClick={() => {
+              navigate(-1);
+            }}
+            className={styles.backBtn}
+          >
+            <BsBackspace />
+          </button>
         ) : (
-          <div className={styles.recipesContainer}>
-            {recipes.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} page={page} />
-            ))}
-          </div>
+          // Invisible spacer when back button is not present
+          <div className={styles.spacer}></div>
         )}
+        <h1 className={styles.title}>{title}</h1>
+
+        <div className={styles.spacer}></div>
       </div>
-    )
+      {recipes?.length === 0 ? (
+        <EmptyPageContent page={page} />
+      ) : (
+        <div className={styles.recipesContainer}>
+          {recipes?.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} page={page} />
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 

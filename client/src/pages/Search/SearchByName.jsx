@@ -34,8 +34,8 @@ const SearchByName = () => {
       toast.error("Please enter a search word");
       return;
     }
-    setResultsLoaded(false);
     resetSearch();
+    setResultsLoaded(false);
     navigate("/results", {
       state: { keyword },
     });
@@ -43,7 +43,6 @@ const SearchByName = () => {
 
   // When page renders, get recipes witth default settings
   useEffect(() => {
-    setResultsLoaded(false);
     getRecipes([], "", limit, localPage);
   }, []);
 
@@ -86,22 +85,24 @@ const SearchByName = () => {
       <p className={styles.text}>
         <span>LATEST RECIPES</span>
       </p>
-      {recipeSearchResults.length < 1 ? (
+      {!recipeSearchResults ? (
         <SmallLoader />
       ) : (
-        <InfiniteScroll
-          dataLength={recipeSearchResults.length}
-          next={loadMoreRecipes}
-          hasMore={hasMore}
-          loader={<SmallLoader />}
-        >
-          <div className={styles.recipesContainer}>
-            {resultsLoaded &&
-              recipeSearchResults.map((recipe, index) => {
-                return <RecipeArticle key={index} recipe={recipe} />;
-              })}
-          </div>
-        </InfiniteScroll>
+        recipeSearchResults && (
+          <InfiniteScroll
+            dataLength={recipeSearchResults.length}
+            next={loadMoreRecipes}
+            hasMore={hasMore}
+            loader={<SmallLoader />}
+          >
+            <div className={styles.recipesContainer}>
+              {resultsLoaded &&
+                recipeSearchResults.map((recipe, index) => {
+                  return <RecipeArticle key={index} recipe={recipe} />;
+                })}
+            </div>
+          </InfiniteScroll>
+        )
       )}
     </div>
   );

@@ -7,12 +7,14 @@ import SmallLoader from "../../components/SmallLoader/SmallLoader";
 import { limitScreenSize } from "../../utils/utils";
 
 const Results = () => {
-  const { getRecipes, hasMore, recipeSearchResults } = useAppContext();
+  const { getRecipes, hasMore, recipeSearchResults, resultsLoaded } =
+    useAppContext();
 
   const [localPage, setLocalPage] = useState(1);
   const location = useLocation();
   const { state } = location;
   // If ingredients are passed, set selectedIngredients to ingredients, else set as empty array
+
   const selectedIngredients =
     state && state.ingredients ? state.ingredients : [];
   // If keyword is passed, set keyword to the word, else set to empty string
@@ -34,21 +36,23 @@ const Results = () => {
     setLocalPage((prev) => prev + 1);
   };
 
-  return recipeSearchResults && recipeSearchResults.length === 0 ? (
+  return !resultsLoaded ? (
     <SmallLoader />
   ) : (
-    <InfiniteScroll
-      dataLength={recipeSearchResults.length}
-      next={loadMoreRecipes}
-      hasMore={hasMore}
-      loader={<SmallLoader />}
-    >
-      <ResultsLayout
-        recipes={recipeSearchResults}
-        title="Recipe Results"
-        page="searchResults"
-      />
-    </InfiniteScroll>
+    recipeSearchResults && (
+      <InfiniteScroll
+        dataLength={recipeSearchResults.length}
+        next={loadMoreRecipes}
+        hasMore={hasMore}
+        loader={<SmallLoader />}
+      >
+        <ResultsLayout
+          recipes={recipeSearchResults}
+          title="Recipe Results"
+          page="searchResults"
+        />
+      </InfiniteScroll>
+    )
   );
 };
 

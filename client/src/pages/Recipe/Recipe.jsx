@@ -5,7 +5,7 @@ import {
   NutritionTable,
   SmallLoader,
 } from "../../components";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import { FaRegClock } from "react-icons/fa";
@@ -27,7 +27,7 @@ const Recipe = () => {
   const [recipeNotFound, setRecipeNotFound] = useState(false);
   const [checkedIngredients, setCheckedIngredients] = useState({});
 
-  const isBookmarked = usersBookmarked.some(
+  const isBookmarked = usersBookmarked?.some(
     (bookmarkedRecipe) => bookmarkedRecipe.id == id
   );
 
@@ -69,19 +69,19 @@ const Recipe = () => {
   const getRecipeNutrition = async (recipeId) => {
     let url = `/api/v1/recipes/${id}/nutrition`;
 
-    try {
-      const response = await axios.get(url);
+    // try {
+    //   const response = await axios.get(url);
 
-      if (response.data) {
-        const {
-          data: { recipeNutrition },
-        } = response.data;
-        setRecipeNutrition(recipeNutrition);
-        setShowNutrition(true);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    //   if (response.data) {
+    //     const {
+    //       data: { recipeNutrition },
+    //     } = response.data;
+    //     setRecipeNutrition(recipeNutrition);
+    //     setShowNutrition(true);
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   // When page renders, fetch recipe data and nutrition info
@@ -118,7 +118,11 @@ const Recipe = () => {
                 }}
                 className={styles.actionBtn}
               >
-                {isBookmarked ? <BsBookmarkFill /> : <BsBookmark />}
+                {isBookmarked ? (
+                  <BsBookmarkFill className="bookmarkFilled" />
+                ) : (
+                  <BsBookmark />
+                )}
               </button>
             </div>
           </div>

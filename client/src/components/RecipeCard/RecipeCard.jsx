@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import { useState, useEffect } from "react";
-import { FaRegClock, FaBookmark } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa";
+import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import clsx from "clsx";
@@ -77,11 +78,11 @@ const RecipeCard = ({ recipe, page }) => {
                   handleBookmarkClick(id);
                 }}
               >
-                <FaBookmark
-                  className={
-                    isBookmarked ? "bookmarkedIcon" : "notBookmarkedIcon"
-                  }
-                />
+                {isBookmarked ? (
+                  <BsBookmarkFill className="bookmarkFilled" />
+                ) : (
+                  <BsBookmark />
+                )}
               </button>
             </div>
           </div>
