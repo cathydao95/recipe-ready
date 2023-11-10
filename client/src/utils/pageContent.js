@@ -1,4 +1,4 @@
-import cooking from "../assets/cooking.svg";
+import cooking from "../assets/cooking.png";
 import bookmarkImg from "../assets/bookmark.png";
 import noResults from "../assets/noresults.png";
 export const pageContent = {
