@@ -121,8 +121,12 @@ const SearchByIngredients = () => {
       <p className={styles.text}>
         <span>Ingredient List</span>
       </p>
-
       <div className={styles.wrapperSuggested}>
+        <div
+          className={clsx(styles.backgroundImage, {
+            [styles.backgroundImageAnimated]: selectedIngredients.length > 0,
+          })}
+        ></div>
         <SelectedIngredientsList
           selectedIngredients={selectedIngredients}
           setSelectedIngredients={setSelectedIngredients}
