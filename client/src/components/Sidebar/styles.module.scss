@@ -28,42 +28,20 @@
 .logo {
   height: 80px;
 }
+
 .closeBtn {
   background: transparent;
   border: none;
   font-size: 2rem;
   color: var(--clr-primary-1);
-}
 
-.closeBtn:hover {
-  color: var(--clr-primary-main);
+  &:hover {
+    color: var(--clr-primary-main);
+  }
 }
 
 .container {
   padding: 1rem;
-}
-.category {
-  color: var(--clr-primary-1);
-  font-size: 1.5rem;
-  font-weight: 800;
-  padding: 1rem;
-}
-
-.linksContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.linksContainer a {
-  font-size: 1.15rem;
-  color: var(--clr-primary-1);
-}
-
-.linksContainer a:hover {
-  font-size: 1.25rem;
-  color: var(--clr-primary-main);
 }
 
 @media (min-width: 489px) {
@@ -71,6 +49,7 @@
     height: 100px;
   }
 }
+
 @media (min-width: 769px) {
   .showSidebar {
     display: none;
