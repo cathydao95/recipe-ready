@@ -7,8 +7,7 @@ import SmallLoader from "../../components/SmallLoader/SmallLoader";
 import { limitScreenSize } from "../../utils/utils";
 
 const Results = () => {
-  const { getRecipes, recipeSearchResults, hasMore, setResultsLoaded } =
-    useAppContext();
+  const { getRecipes, hasMore, recipeSearchResults } = useAppContext();
 
   const [localPage, setLocalPage] = useState(1);
   const location = useLocation();
@@ -24,7 +23,6 @@ const Results = () => {
 
   // Load recipes based on ing/keyword,limits, and page
   useEffect(() => {
-    setResultsLoaded(false);
     getRecipes(selectedIngredients, keyword, limit, localPage);
   }, []);
 
@@ -36,7 +34,9 @@ const Results = () => {
     setLocalPage((prev) => prev + 1);
   };
 
-  return (
+  return recipeSearchResults && recipeSearchResults.length === 0 ? (
+    <SmallLoader />
+  ) : (
     <InfiniteScroll
       dataLength={recipeSearchResults.length}
       next={loadMoreRecipes}

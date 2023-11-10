@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 const SearchByIngredients = () => {
   const navigate = useNavigate();
   // Destructure functions and states from app context
-  const { getRecipes, recipeSearchResults, setIsLoading } = useAppContext();
+  const { setResultsLoaded } = useAppContext();
   // State to manage the list of selected ingredients
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   // State to manage user's input of ingredients
@@ -65,6 +65,7 @@ const SearchByIngredients = () => {
       toast.error("Please enter some ingredients");
       return;
     }
+    setResultsLoaded(false);
     navigate("/results", {
       state: { ingredients: selectedIngredients },
     });
