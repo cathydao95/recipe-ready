@@ -1,5 +1,7 @@
 .recipeWrapper {
   margin: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
 .btnContainer {
@@ -29,6 +31,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 10px;
 }
 
 .recipeInfoContainer {
@@ -170,7 +173,8 @@
 
 @media (min-width: 481px) {
   .recipeWrapper {
-    margin: 1.5rem 4rem;
+    display: flex;
+    justify-content: center;
   }
   .imgContainer {
     height: 350px;
@@ -183,27 +187,33 @@
     justify-content: center;
     gap: 1rem;
   }
-
-  .prepTime {
-    flex-basis: 20%;
-    justify-content: center;
+  .imgContainer {
+    width: 100%;
+    height: 400px;
+    text-align: center;
+    padding: 1rem 0 0;
   }
+  .img {
+    height: 100%;
+    object-fit: cover;
+  }
+
   .ingInstrContainer {
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
   }
 }
 
 @media (min-width: 750px) {
   .imgContainer {
-    width: 100;
+    width: 100%;
     height: 400px;
     text-align: center;
-    padding: 4rem 0 0;
+    padding: 1rem 0 0;
   }
 
   .img {
-    width: 400px;
+    width: 400ox;
     height: 100%;
     object-fit: cover;
   }
@@ -213,24 +223,8 @@
   }
 }
 
-@media (min-width: 769px) {
-  .recipeWrapper {
-    margin: 1.5rem 6rem;
-  }
-}
-
 @media (min-width: 1025px) {
-  .recipeWrapper {
-    margin: 4rem 8rem;
-  }
   .ingInstrContainer {
     flex-direction: row;
-    justify-content: space-evenly;
-    gap: 6rem;
-  }
-}
-@media (min-width: 1201px) {
-  .recipeWrapper {
-    margin: 4rem 10rem;
   }
 }
