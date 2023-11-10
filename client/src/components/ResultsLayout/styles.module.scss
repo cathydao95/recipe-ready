@@ -1,5 +1,25 @@
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0 2rem;
+}
+
+.backBtn {
+  background-color: transparent;
+  color: var(--clr-primary-1);
+  font-size: 2rem;
+  border: none;
+  text-align: left;
+  margin-bottom: 2rem;
+}
 .title {
-  padding: 2rem 0;
+  margin: 0 0 2rem;
+}
+.spacer {
+  width: 2rem;
+  height: 2rem;
+  visibility: hidden;
 }
 
 .recipesContainer {
