@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 1rem 0 2rem;
+  margin: 2rem 0 0;
 }
 
 .backBtn {
@@ -14,7 +14,7 @@
   margin-bottom: 2rem;
 }
 .title {
-  margin: 0 0 2rem;
+  margin-bottom: 2rem;
 }
 .spacer {
   width: 2rem;
@@ -37,6 +37,9 @@
 }
 
 @media (min-width: 850px) {
+  .headerContainer {
+    margin: 0 0 1rem;
+  }
   .recipesContainer {
     grid-template-columns: repeat(3, 1fr);
   }

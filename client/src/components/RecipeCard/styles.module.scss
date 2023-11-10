@@ -12,14 +12,17 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 10px 10px 0 0;
 }
 
 .recipeInfoContainer {
-  border: 2px solid var(--clr-primary-8);
+  border: 2px solid var(--clr-primary-9);
+  background-color: var(--clr-primary-9);
   text-align: left;
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
+  border-radius: 0 0 10px 10px;
 }
 
 .titleContainer {
@@ -31,6 +34,7 @@
   color: var(--clr-primary-1);
   font-weight: 400;
   flex-basis: 90%;
+  font-family: "Inter", sans-serif;
 }
 
 .prepTime {

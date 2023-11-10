@@ -1,11 +1,11 @@
 .navbar {
-  // background-color: var(--clr-primary-main);
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1);
+  background-color: var(--clr-primary-main);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 15vh;
+  height: 12vh;
   padding: 1rem;
 }
 
@@ -37,23 +37,6 @@
 
 .bigNavItems {
   display: none;
-}
-
-.logoutBtn {
-  background-color: transparent;
-  font-size: 0.875rem;
-  border: none;
-  font-weight: 400;
-  color: var(--clr-primary-1);
-}
-
-.loginBtn {
-  color: var(--clr-primary-1);
-}
-
-.loginBtn:hover,
-.logoutBtn:hover {
-  color: var(--clr-primary-1);
 }
 
 @media (min-width: 481px) {
@@ -89,15 +72,18 @@
     background-color: transparent;
     border: none;
     color: var(--clr-primary-1);
-
     padding: 14px 16px;
     margin: 0;
+  }
+
+  .dropBtn:hover {
+    color: var(--clr-primary-10);
   }
 
   .dropdownContent {
     display: none;
     position: absolute;
-    background-color: var(--clr-primary-10);
+    background-color: var(--clr-primary-main);
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
   }
@@ -112,15 +98,24 @@
   }
 
   .dropdownContent a:hover {
-    background-color: var(--clr-primary-main);
+    color: var(--clr-primary-10);
   }
 
   .link:hover .dropdownContent {
     display: block;
   }
 
-  .loginBtn:hover {
+  .logoutBtn {
+    background-color: transparent;
+    font-size: 0.875rem;
+    border: none;
+    font-weight: 400;
     color: var(--clr-primary-1);
+  }
+
+  .loginBtn:hover,
+  .logoutBtn:hover {
+    color: var(--clr-primary-10);
   }
 }
 

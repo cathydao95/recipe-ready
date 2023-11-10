@@ -16,24 +16,22 @@ Variables
   --clr-primary-3: #44403c;
   --clr-primary-4: #57534e;
   /* primary/main color */
-  --clr-primary-5: #78716c;
+  --clr-primary-5: #f1f1f1;
   /* lighter shades of primary color */
   --clr-primary-6: #a8a29e;
   --clr-primary-7: #d6d3d1;
-  --clr-primary-8: #e7e5e4;
+  --clr-primary-8: #e9eae7;
   --clr-primary-9: #f5f5f4;
   --clr-primary-10: #ffffff;
 
-  --clr-primary-main: #de7777;
-  --clr-primary-main: #5d7b97;
-
-  --clr-dark-red: #b64040;
-
-  --clr-primary-secondary: #ffbd5a;
+  // --clr-primary-main: #95b89a;
+  --clr-primary-main: #8fb19d;
+  --clr-primary-secondary: #719c83;
+  --clr-primary-light: #fcf8f8;
+  --clr-primary-blue: #89a0b7;
+  --clr-primary-purple: #b789b7;
 }
 
-// font-family: 'Inter', sans-serif;
-// font-family: 'Playfair Display', serif;
 *,
 ::after,
 ::before {
@@ -44,11 +42,11 @@ Variables
 
 body {
   font-family: "Inter", sans-serif;
-  background: var(--clr-primary-10);
   color: var(--clr-primary-1);
   line-height: 1.5;
   font-size: 0.875rem;
   font-weight: 400;
+  background-color: var(--clr-primary-8);
 }
 
 h1,
@@ -59,11 +57,11 @@ h5 {
   text-transform: capitalize;
   line-height: 1.25;
   margin: 0.75rem 0;
+  font-family: "Playfair Display", serif;
 }
 h1 {
   font-size: 2rem;
   font-weight: 700;
-  font-family: "Playfair Display", serif;
 }
 h2 {
   font-size: 1.75rem;
@@ -104,7 +102,7 @@ button {
 }
 
 .pageWrapper {
-  height: 90vh;
+  height: 88vh;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -139,7 +137,7 @@ button {
   border: none;
   border-bottom: 1px solid var(--clr-primary-1);
   color: var(--clr-primary-1);
-  // text-transform: capitalize;
+  background-color: var(--clr-primary-8);
   padding: 0.5rem;
 }
 .formInput {
@@ -178,9 +176,9 @@ button {
 }
 .formBtn,
 .btn {
-  background-color: var(--clr-primary-secondary);
+  // background-color: var(--clr-primary-secondary);
   padding: 1rem;
-  border: none;
+  border: 1.5px solid var(--clr-primary-1);
   margin: 1.5rem 0 1rem;
   width: 100%;
 }
@@ -188,6 +186,7 @@ button {
 .formBtn:hover,
 .btn:hover {
   background-color: var(--clr-primary-main);
+  border: 1.5px solid var(--clr-primary-1);
 }
 
 .formAlert {
@@ -207,12 +206,8 @@ button {
   position: relative;
 }
 
-.bookmarkedIcon {
-  color: var(--clr-primary-main);
-}
-
-.notBookmarkedIcon {
-  color: var(--clr-primary-8);
+.bookmarkFilled {
+  color: var(--clr-primary-secondary);
 }
 
 @media (min-width: 481px) {
