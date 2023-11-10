@@ -6,12 +6,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
-import uploadImg from "../../assets/upload-img.svg";
+import uploadImg from "../../assets/uploadimg.png";
 import { formatStringInstructions } from "../../utils/utils";
+import { useAppContext } from "../../context/appContext";
 
 const Create = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setResultsLoaded } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
   const { isEditing, currentRecipeInfo } = location.state || {};
 
@@ -99,6 +101,7 @@ const Create = () => {
       let response = await axiosMethod(url, updatedRecipeInfo);
 
       toast.success(isEditing ? "Updating Recipe..." : "Creating Recipe...");
+      setResultsLoaded(false);
       setTimeout(() => {
         navigate("/my-recipes");
       }, 3000);
@@ -111,7 +114,7 @@ const Create = () => {
   return isLoading ? (
     <Loading />
   ) : (
-    <div className="wrapper">
+    <div className={styles.wrapper}>
       <h1 className="title">
         {isEditing && currentRecipeInfo ? "Edit Recipe" : "Create New Recipe"}
       </h1>

@@ -16,6 +16,7 @@ const AppProvider = ({ children }) => {
   const [resultsLoaded, setResultsLoaded] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
+  // Function to get current user and authenticate and get user's recipes and bookmarks
   const getCurrentUser = async () => {
     try {
       let response = await axios.get(`/api/v1/users/current`);
