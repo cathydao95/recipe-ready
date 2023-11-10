@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { EmptyPageContent, Loading, SmallLoader } from "../../components";
+import {
+  EmptyPageContent,
+  Loading,
+  NutritionTable,
+  SmallLoader,
+} from "../../components";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
@@ -20,6 +25,7 @@ const Recipe = () => {
   const [recipeInfo, setRecipeInfo] = useState([]);
   const [showNutrition, setShowNutrition] = useState(false);
   const [recipeNotFound, setRecipeNotFound] = useState(false);
+  const [checkedIngredients, setCheckedIngredients] = useState({});
 
   const isBookmarked = usersBookmarked.some(
     (bookmarkedRecipe) => bookmarkedRecipe.id == id
@@ -46,6 +52,15 @@ const Recipe = () => {
     }
   };
 
+  // Function to cross off ingredients from list
+  const toggleIngredient = (ingredient) => {
+    setCheckedIngredients((prevSelected) => ({
+      ...prevSelected,
+      [ingredient]: !prevSelected[ingredient],
+    }));
+  };
+
+  // Function to open the print window
   const handlePrint = () => {
     window.print();
   };
@@ -54,30 +69,29 @@ const Recipe = () => {
   const getRecipeNutrition = async (recipeId) => {
     let url = `/api/v1/recipes/${id}/nutrition`;
 
-    // try {
-    //   const response = await axios.get(url);
+    try {
+      const response = await axios.get(url);
 
-    //   if (response.data) {
-    //     const {
-    //       data: { recipeNutrition },
-    //     } = response.data;
-    //     setRecipeNutrition(recipeNutrition);
-    //     setShowNutrition(true);
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
+      if (response.data) {
+        const {
+          data: { recipeNutrition },
+        } = response.data;
+        setRecipeNutrition(recipeNutrition);
+        setShowNutrition(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  // Run get recipe function when page renders
+  // When page renders, fetch recipe data and nutrition info
   useEffect(() => {
     getRecipe();
     getRecipeNutrition(id);
     setShowLogin(false);
   }, []);
 
-  console.log(recipeNutrition);
-
+  // If loading display loading, else check if recipe is found and display not found page or recipe info
   return isLoading ? (
     <Loading />
   ) : recipeNotFound ? (
@@ -133,8 +147,26 @@ const Recipe = () => {
                 <ul className={styles.ingContainer}>
                   {recipeInfo?.ingredients?.map((ing) => {
                     return (
-                      <li key={ing} className={styles.ing}>
-                        {ing[0].toUpperCase() + ing.slice(1)}
+                      <li
+                        key={ing}
+                        className={`${styles.ing} ${
+                          checkedIngredients[ing] ? styles.crossed : ""
+                        }`}
+                      >
+                        <label className={styles.checkboxContainer}>
+                          <input
+                            type="checkbox"
+                            checked={checkedIngredients[ing] || false}
+                            onChange={() => toggleIngredient(ing)}
+                            className={styles.checkbox}
+                          />
+                          <span
+                            className={`${styles.customCheckbox} ${
+                              checkedIngredients[ing] ? styles.checked : ""
+                            }`}
+                          ></span>
+                          {ing[0].toUpperCase() + ing.slice(1)}
+                        </label>
                       </li>
                     );
                   })}
@@ -158,47 +190,11 @@ const Recipe = () => {
                 </ol>
               </div>
             </div>
-            <h4>Estimated Nutrition Information</h4>
+            <h4 className={styles.nutritionText}>
+              Estimated Nutrition Information
+            </h4>
             {showNutrition ? (
-              <div className={styles.nutritionContainer}>
-                <table className={styles.nutritionTable}>
-                  <thead>
-                    <tr>
-                      <th>Nutrition</th>
-                      <th>Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Calories</td>
-                      <td>
-                        {recipeNutrition.calories?.value}{" "}
-                        {recipeNutrition.calories?.unit}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Carbs</td>
-                      <td>
-                        {recipeNutrition.carbs?.value}{" "}
-                        {recipeNutrition.carbs?.unit}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Protein</td>
-                      <td>
-                        {recipeNutrition.protein?.value}{" "}
-                        {recipeNutrition.protein?.unit}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Fat</td>
-                      <td>
-                        {recipeNutrition.fat?.value} {recipeNutrition.fat?.unit}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <NutritionTable recipeNutrition={recipeNutrition} />
             ) : (
               <SmallLoader />
             )}
