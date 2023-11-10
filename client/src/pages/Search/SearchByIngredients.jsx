@@ -6,6 +6,8 @@ import clsx from "clsx";
 import { useAppContext } from "../../context/appContext";
 import { FaSearch } from "react-icons/fa";
 import axios from "../../utils/axiosConfig";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SearchByIngredients = () => {
   const navigate = useNavigate();
@@ -59,6 +61,10 @@ const SearchByIngredients = () => {
   // Function to handle button click and search recipes
   const searchRecipes = (e) => {
     e.preventDefault();
+    if (selectedIngredients.length < 1) {
+      toast.error("Please enter some ingredients");
+      return;
+    }
     navigate("/results", {
       state: { ingredients: selectedIngredients },
     });

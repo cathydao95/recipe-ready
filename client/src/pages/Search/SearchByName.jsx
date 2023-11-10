@@ -6,6 +6,8 @@ import { FaSearch } from "react-icons/fa";
 import { RecipeArticle, SmallLoader } from "../../components";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { limitScreenSize, getMealTime } from "../../utils/utils";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SearchByName = () => {
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ const SearchByName = () => {
     // if search is empty return
     e.preventDefault();
     if (keyword.trim() === "") {
+      toast.error("Please enter a search word");
       return;
     }
     setResultsLoaded(false);
@@ -87,11 +90,6 @@ const SearchByName = () => {
         next={loadMoreRecipes}
         hasMore={hasMore}
         loader={<SmallLoader />}
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>No More Recipes</b>
-          </p>
-        }
       >
         <div className={styles.recipesContainer}>
           {resultsLoaded &&
