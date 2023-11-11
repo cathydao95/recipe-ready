@@ -96,6 +96,19 @@ a {
   color: var(--clr-primary-1);
 }
 
+.custom-toast-container {
+  width: 300px; /* Adjust the width to your desired value */
+}
+
+.Toastify__toast--success {
+  color: var(--clr-primary-main);
+}
+
+/* Custom styles for error toast */
+.Toastify__toast--error {
+  color: rgb(188, 71, 71);
+}
+
 button {
   font-family: "Inter", sans-serif;
   font-size: 0.875rem;

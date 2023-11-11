@@ -26,7 +26,7 @@ export const register = async (req, res) => {
   setTokenCookie(res, token);
 
   res.status(StatusCodes.CREATED).json({
-    msg: "User registered...logging in",
+    msg: "User registered! Logging in...",
   });
 };
 
@@ -56,7 +56,7 @@ export const login = async (req, res) => {
   setTokenCookie(res, token);
 
   res.status(StatusCodes.OK).json({
-    msg: "Logging in...",
+    msg: "Logging In...",
   });
 };
 
@@ -68,5 +68,5 @@ export const logout = (req, res) => {
     expires: new Date(Date.now()),
   });
 
-  res.status(StatusCodes.OK).json({ msg: "User logged out" });
+  res.status(StatusCodes.OK).json({ msg: "Successfully Logged Out!" });
 };

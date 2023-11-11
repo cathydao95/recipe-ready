@@ -100,7 +100,11 @@ const Create = () => {
     try {
       let response = await axiosMethod(url, updatedRecipeInfo);
 
-      toast.success(isEditing ? "Updating Recipe..." : "Creating Recipe...");
+      toast.success(
+        isEditing
+          ? "Recipe Successfully Updated"
+          : "Recipe Successfully Created"
+      );
       setResultsLoaded(false);
       setTimeout(() => {
         navigate("/my-recipes");
