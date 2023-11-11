@@ -7,6 +7,6 @@ test("renders SmallLoader component", () => {
   render(<SmallLoader />);
 
   // Ensure that the loading text is present
-  const loadingText = screen.getByText("Loading...");
+  const loadingText = screen.getByText("...");
   expect(loadingText).toBeInTheDocument();
 });
