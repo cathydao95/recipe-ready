@@ -91,6 +91,7 @@ const Create = () => {
       instructions: formattedInstructions,
     };
     let url;
+    // Check if editing or creating to determine if post or put request
     let axiosMethod = isEditing ? axios.put : axios.post;
     if (isEditing) {
       url = `/api/v1/recipes/${currentRecipeInfo.id}`;

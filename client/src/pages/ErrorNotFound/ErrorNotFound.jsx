@@ -3,6 +3,7 @@ import img from "../../assets/not-found.svg";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 
+// Page to display if user enters a route that does not exist
 const ErrorNotFound = () => {
   const error = useRouteError();
 

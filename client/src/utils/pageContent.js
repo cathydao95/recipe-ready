@@ -1,6 +1,8 @@
 import cooking from "../assets/cooking.png";
 import bookmarkImg from "../assets/bookmark.png";
 import noResults from "../assets/noresults.png";
+
+// Define the text, button text, links, and images for different pages
 export const pageContent = {
   personal: {
     text: "You Have Not Created Any Recipes",
