@@ -17,8 +17,13 @@ const RecipeCard = ({ recipe, page }) => {
   const navigate = useNavigate();
 
   // Extract functions and state from App Context
-  const { deleteRecipe, usersBookmarked, handleBookmarkClick, setShowLogin } =
-    useAppContext();
+  const {
+    deleteRecipe,
+    usersBookmarked,
+    handleBookmarkClick,
+    setShowLogin,
+    isAuthenticated,
+  } = useAppContext();
 
   // State to control whether to show modal
   const [show, setShow] = useState(false);
@@ -89,7 +94,7 @@ const RecipeCard = ({ recipe, page }) => {
         </div>
       </Link>
 
-      <LoginModal />
+      {!isAuthenticated && <LoginModal />}
 
       <Modal
         show={show}

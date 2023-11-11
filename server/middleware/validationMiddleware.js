@@ -6,6 +6,7 @@ import {
 } from "../errors/customErrors.js";
 import db from "../db/db-connection.js";
 
+// Create a middleware to handle form validation errors
 const withValidationErrors = (validateValues) => {
   return [
     validateValues,
@@ -27,6 +28,8 @@ const withValidationErrors = (validateValues) => {
     },
   ];
 };
+
+// Validation middleware to validate recipe input
 export const validateRecipeInput = withValidationErrors([
   body("title").notEmpty().withMessage("Title is required"),
   body("ingredients").notEmpty().withMessage("Ingredients is required"),
@@ -35,6 +38,7 @@ export const validateRecipeInput = withValidationErrors([
   body("image_url").notEmpty().withMessage("Image Url is required"),
 ]);
 
+// Validation middleware to validate registration input
 export const validateRegisterInput = withValidationErrors([
   body("firstName").notEmpty().withMessage("First name is required"),
   body("lastName").notEmpty().withMessage("Last name is required"),
@@ -59,6 +63,7 @@ export const validateRegisterInput = withValidationErrors([
     .withMessage("Password must be at least 6 characters long"),
 ]);
 
+// Validation middleware to validate login input
 export const validateLoginInput = withValidationErrors([
   body("email")
     .notEmpty()
@@ -68,6 +73,7 @@ export const validateLoginInput = withValidationErrors([
   body("password").notEmpty().withMessage("Password is required"),
 ]);
 
+// Validation middleware to validate user update input
 export const validateUpdateUserInput = withValidationErrors([
   body("firstName").notEmpty().withMessage("First name is required"),
   body("lastName").notEmpty().withMessage("Last name is required"),
@@ -88,6 +94,7 @@ export const validateUpdateUserInput = withValidationErrors([
     }),
 ]);
 
+// Validation middleware to check recipe owner
 export const validateOwner = withValidationErrors([
   // req provides info about current user and param('id'), provides access to the param in the route that we will be using
   param("id").custom(async (id, { req }) => {

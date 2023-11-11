@@ -19,6 +19,7 @@ const EmptyPageContent = ({ page }) => {
             alt={content.altText}
           />
         </div>
+        {/* If page is noRecipe, add a navigate(-1) on button so that user can click to previous page */}
         {page === "noRecipe" ? (
           <button onClick={() => navigate(-1)} className={styles.btn}>
             Back to Search

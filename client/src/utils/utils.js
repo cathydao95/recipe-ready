@@ -12,6 +12,11 @@ export const formatStringInstructions = (str) => {
   return formattedString;
 };
 
+// Function to remove number from instructions that are being edited
+export const removeNumberingFromInstructions = (str) => {
+  return str.replace(/\d+\.\s+/g, "");
+};
+
 // Function that informs how many recipes to load at a time depending on screen size
 export const limitScreenSize = (screenWidth) => {
   // Base on current media query breakpoints

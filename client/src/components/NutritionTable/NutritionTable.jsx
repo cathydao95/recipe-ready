@@ -1,5 +1,6 @@
 import styles from "./styles.module.scss";
 
+// Display the nutrition information for recipes in a table format
 const NutritionTable = ({ recipeNutrition }) => {
   return (
     <div className={styles.nutritionContainer}>

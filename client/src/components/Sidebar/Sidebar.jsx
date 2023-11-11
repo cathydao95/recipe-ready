@@ -7,6 +7,7 @@ import { useAppContext } from "../../context/appContext";
 import logo from "../../assets/logo.png";
 import { SidebarLinks } from "../../components/index";
 
+// Sidebar to display on small screen sizes
 const Sidebar = () => {
   // Destrcuture functions from context
   const { showSidebar, toggleSidebar } = useDashboardContext();
@@ -46,7 +47,7 @@ const Sidebar = () => {
               { to: "/", text: "Search By Recipe", onClick: toggleSidebar },
             ]}
           />
-
+          {/* Check if user is authenticated to determine what links to display */}
           {isAuthenticated ? (
             // AUTHENTICATED USER
             <>

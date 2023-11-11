@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import { LinkItem } from "../index";
 
+// Page links to display on sidebar
 const SidebarLinks = ({ category, links }) => {
   return (
     <div className={styles.link}>
