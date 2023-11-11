@@ -16,6 +16,7 @@ export const getRecipes = async (req, res) => {
   let queryText = "SELECT * FROM recipes";
   let queryParams = [];
 
+  // ADD FILTERS BASED ON INGREDIENTS OR KEYWORDS
   if (ingredients) {
     const ingredientsArray = ingredients.split(",");
     // @> compares the arrays and ensures that all ingredients in the DB are contained in the ingredientsArray
@@ -61,13 +62,16 @@ export const getRecipes = async (req, res) => {
 // GET SINGLE RECIPE
 export const getRecipe = async (req, res) => {
   const { id } = req.params;
+  // Validate the ID parameter
   if (!id || isNaN(id))
     throw new BadRequestError('Invalid or missing "id" parameter');
 
+  // Query DB to get recipe with ID
   const { rows: recipe } = await db.query("SELECT * FROM recipes WHERE id=$1", [
     id,
   ]);
 
+  // If recipe doesn't exist throw an error
   if (recipe.length === 0) throw new NotFoundError(`no recipe with id ${id}`);
 
   res.status(StatusCodes.OK).json({
@@ -79,6 +83,7 @@ export const getRecipe = async (req, res) => {
 // GET ALL OF THE LOGGED IN USER'S RECIPES
 export const getUsersRecipes = async (req, res) => {
   const { userId } = req.user;
+  // Query DB and get current user's recipes
   const { rows: recipes } = await db.query(
     "SELECT * FROM recipes WHERE user_id = $1",
     [userId]
@@ -95,9 +100,11 @@ export const createRecipe = async (req, res) => {
   const { userId } = req.user;
   const { title, ingredients, instructions, prep_time, image_url } = req.body;
 
+  // check if recipe is public or a user's
   const user_id = userId ? userId : null;
   const public_recipe = user_id !== null && false;
 
+  // convert ingredients to string using utils function
   const ingredientsString = prepareIngredients(ingredients);
 
   const { rows: newRecipe } = await db.query(
@@ -150,6 +157,7 @@ export const deleteRecipe = async (req, res) => {
 // GET USERS BOOKMARKS
 export const getUsersBookmarked = async (req, res) => {
   const { userId } = req.user;
+  //Query DB to get user's bookmarked recipes
   const { rows: bookmarks } = await db.query(
     `SELECT recipes.* FROM bookmarked
        JOIN recipes ON bookmarked.recipe_id = recipes.id
@@ -162,12 +170,14 @@ export const getUsersBookmarked = async (req, res) => {
     data: { bookmarks },
   });
 };
+
 // BOOKMARK RECIPE
 // CHECKS IF RECIPE ALREADY EXISTS IN BOOKMARKED TABLE. IF DOES, REMOVE, ELSE ADD
 export const bookmarkRecipe = async (req, res) => {
   const { id } = req.params;
   const { userId } = req.user;
 
+  // Check if recipe has already been bookmarked by user
   try {
     const { rows: existingBookmark } = await db.query(
       "SELECT * FROM bookmarked WHERE user_id = $1 AND recipe_id = $2",
@@ -228,6 +238,7 @@ export const getRecipeNutrition = async (req, res) => {
 
     if (recipe.length === 0) throw new NotFoundError(`no recipe with id ${id}`);
 
+    // Prepare the title for spoonacular api request
     let title = recipe[0].title.replace(/ /g, "+");
     let apiKey = process.env.SPOONACULAR_API_KEY;
 

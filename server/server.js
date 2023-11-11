@@ -15,21 +15,24 @@ import usersRouter from "./routers/users.js";
 import ingredientsRouter from "./routers/ingredients.js";
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 
-// Constants
+// CONSTANTS
 const PORT = process.env.PORT || 8080;
 const ORIGIN = process.env.ORIGIN;
 
 const app = express();
 
+// Set up cloudinary configuration for image upload
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
+// Get the curret directory
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "dist");
 
+// Serve static files
 app.use(express.static(REACT_BUILD_DIR));
 
 // Middleware
@@ -51,17 +54,11 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/ingredients", ingredientsRouter);
 
-// Not found middleware (404 - triggered when request is made to a nonexistant route)
-// app.use("*", (req, res) => {
-//   res.status(404).json({ msg: "not found" });
-// });
-
 // Error handling middleware
 app.use(errorHandlerMiddleware);
 
 // creates an endpoint for the route /api
 app.get("*", (req, res) => {
-  // res.json({ message: "Hola, from My template ExpressJS with React-Vite" });
   res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
 });
 

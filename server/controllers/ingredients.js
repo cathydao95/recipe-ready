@@ -1,7 +1,6 @@
 import db from "../db/db-connection.js";
 import "dotenv/config";
 import { StatusCodes } from "http-status-codes";
-import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
 
 // GET INGREDIENTS BASED ON USER'S INPUT
 export const getIngredients = async (req, res) => {
@@ -15,6 +14,7 @@ export const getIngredients = async (req, res) => {
       [`${input}%`, limit]
     );
 
+    // Only return ingredients in an array
     const ingredientsList = ingredients.map((ing) => ing.name);
 
     const response = {

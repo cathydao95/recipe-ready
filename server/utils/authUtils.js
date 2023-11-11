@@ -4,7 +4,9 @@ import jwt from "jsonwebtoken";
 export const setTokenCookie = (res, token) => {
   const oneDay = 1000 * 60 * 60 * 24;
   res.cookie("token", token, {
+    // Setting httpOnly to true makes cookie accessible via HTTP
     httpOnly: true,
+    // Cookie expires one day from now
     expires: new Date(Date.now() + oneDay),
     secure: process.env.NODE_ENV === "production",
   });
