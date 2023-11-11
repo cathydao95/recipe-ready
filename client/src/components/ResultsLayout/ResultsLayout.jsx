@@ -5,6 +5,7 @@ import EmptyPageContent from "../EmptyPageContent/EmptyPageContent";
 import { useNavigate } from "react-router-dom";
 import { BsBackspace } from "react-icons/bs";
 
+// Create layout for bookmarked, results, and personal page
 const ResultsLayout = ({ recipes, title, page }) => {
   const navigate = useNavigate();
 
@@ -14,6 +15,7 @@ const ResultsLayout = ({ recipes, title, page }) => {
   return (
     <div className={clsx("wrapper")}>
       <div className={styles.headerContainer}>
+        {/* Check if backButton should be displayed */}
         {showBackButton ? (
           <div
             onClick={() => {

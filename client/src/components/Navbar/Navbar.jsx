@@ -38,8 +38,10 @@ const Navbar = () => {
               <Link to="/">Search By Recipe</Link>
             </div>
           </div>
+          {/* Check if user is authenticated  */}
           {isAuthenticated ? (
             <>
+              {/* Display full routes when user is authenticated */}
               <div className={styles.link}>
                 <button className={styles.dropBtn}>Collection</button>
                 <div className={styles.dropdownContent}>
@@ -68,6 +70,7 @@ const Navbar = () => {
               </div>
             </>
           ) : (
+            // Only display login if user is not authenticated
             <div className={styles.link}>
               <Link to="/login" className={styles.loginBtn}>
                 Login
