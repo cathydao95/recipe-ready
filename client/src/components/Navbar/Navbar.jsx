@@ -15,7 +15,6 @@ const Navbar = () => {
       {/* Navbar for small screens */}
       <div className={styles.smallNavItems}>
         <Link to="/">
-          {/* <h4 className={styles.logo}>Recipe Ready</h4> */}
           <img className={styles.logo} src={logo} alt="Recipe Ready Logo" />
         </Link>
         <button
@@ -30,7 +29,6 @@ const Navbar = () => {
       <div className={styles.bigNavItems}>
         <Link to="/">
           <img className={styles.logo} src={logo} alt="Recipe Ready Logo" />
-          {/* <h4 className={styles.logo}>Recipe Ready</h4> */}
         </Link>
         <div className={styles.linksContainer}>
           <div className={styles.link}>

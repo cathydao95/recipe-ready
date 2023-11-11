@@ -2,7 +2,6 @@ import styles from "./styles.module.scss";
 import clsx from "clsx";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import EmptyPageContent from "../EmptyPageContent/EmptyPageContent";
-import { useAppContext } from "../../context/appContext";
 import { useNavigate } from "react-router-dom";
 import { BsBackspace } from "react-icons/bs";
 

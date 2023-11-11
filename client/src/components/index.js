@@ -10,3 +10,5 @@ export { default as AutocompleteList } from "./AutocompleteList/AutocompleteList
 export { default as SelectedIngredientsList } from "./SelectedIngredientsList/SelectedIngredientsList";
 export { default as SmallLoader } from "./SmallLoader/SmallLoader";
 export { default as NutritionTable } from "./NutritionTable/NutritionTable";
+export { default as SidebarLinks } from "./SidebarLinks/SidebarLinks";
+export { default as LinkItem } from "./LinkItem/LinkItem";

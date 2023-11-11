@@ -5,8 +5,9 @@ import { useNavigate, Link } from "react-router-dom";
 // EmptyPageContent renders when there are no recipes to show
 const EmptyPageContent = ({ page }) => {
   const navigate = useNavigate();
+  // use pageContent utils function and display info depending on the page passed
   const content = pageContent[page];
-  // Content to display depending on the page passed
+
   return (
     <div className={styles.container}>
       <div className={styles.noRecipesContainer}>

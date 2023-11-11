@@ -1,12 +1,14 @@
-import { ResultsLayout } from "../../components";
+import { ResultsLayout, SmallLoader } from "../../components";
 import { useAppContext } from "../../context/appContext";
 
 const Bookmarked = () => {
   // Destructuring from App context
-  const { usersBookmarked } = useAppContext();
+  const { usersBookmarked, resultsLoaded } = useAppContext();
 
   // Pass props to Results Layout
-  return (
+  return !resultsLoaded ? (
+    <SmallLoader />
+  ) : (
     <ResultsLayout
       recipes={usersBookmarked}
       title="Bookmarked Recipes"

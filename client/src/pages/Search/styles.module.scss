@@ -7,11 +7,12 @@
 
 .linkText {
   color: #855d75;
+
+  &:hover {
+    color: #213f1d;
+  }
 }
 
-.linkText:hover {
-  color: #213f1d;
-}
 .searchForm {
   width: 100%;
   position: relative;

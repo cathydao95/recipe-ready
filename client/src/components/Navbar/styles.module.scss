@@ -25,10 +25,10 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-}
 
-.toggleBtn:hover {
-  color: var(--clr-primary-9);
+  :hover {
+    color: var(--clr-primary-9);
+  }
 }
 
 .logo {
@@ -44,11 +44,13 @@
     padding: 1rem 4rem;
   }
 }
+
 @media (min-width: 769px) {
   .navbar {
     overflow: hidden;
     padding: 3rem 6rem;
   }
+
   .smallNavItems {
     display: none;
   }
@@ -76,29 +78,25 @@
     margin: 0;
   }
 
-  .dropBtn:hover {
-    color: var(--clr-primary-10);
-  }
-
   .dropdownContent {
     display: none;
     position: absolute;
     background-color: var(--clr-primary-main);
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-  }
 
-  .dropdownContent a {
-    float: none;
-    color: var(--clr-primary-1);
-    padding: 12px 16px;
-    display: block;
-    text-align: left;
-    width: 175px;
-  }
+    a {
+      float: none;
+      color: var(--clr-primary-1);
+      padding: 12px 16px;
+      display: block;
+      text-align: left;
+      width: 175px;
 
-  .dropdownContent a:hover {
-    color: var(--clr-primary-10);
+      &:hover {
+        color: var(--clr-primary-10);
+      }
+    }
   }
 
   .link:hover .dropdownContent {
@@ -113,6 +111,7 @@
     color: var(--clr-primary-1);
   }
 
+  .dropBtn:hover,
   .loginBtn:hover,
   .logoutBtn:hover {
     color: var(--clr-primary-10);

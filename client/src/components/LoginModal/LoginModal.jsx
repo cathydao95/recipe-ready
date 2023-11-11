@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import styles from "./styles.module.scss";
 
+// Login Modal to display when user tries to bookmark a recipe when not logged in
 const LoginModal = () => {
   // Extract functions and state from App Context
   const { showLogin, setShowLogin } = useAppContext();

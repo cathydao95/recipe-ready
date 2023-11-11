@@ -2,7 +2,6 @@ import styles from "./styles.module.scss";
 import clsx from "clsx";
 const AutocompleteList = ({
   suggestedList,
-  selectedIngredients,
   handleAdd,
   selectedAutocomplete,
   handleKeyDown,

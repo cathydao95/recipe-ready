@@ -1,5 +1,12 @@
+.wrapper {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1rem;
+}
 .imgInputContainer {
-  height: 350px;
+  height: 250px;
   width: 100%;
   margin: 2rem 0;
   background-color: var(--clr-primary-8);
