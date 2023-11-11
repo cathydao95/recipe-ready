@@ -4,6 +4,8 @@ import { FaTimes } from "react-icons/fa";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import { useAppContext } from "../../context/appContext";
+import logo from "../../assets/logo.png";
+import { SidebarLinks } from "../../components/index";
 
 const Sidebar = () => {
   // Destrcuture functions from context
@@ -19,6 +21,9 @@ const Sidebar = () => {
       <div>
         <div className={styles.headerContent}>
           {/* Close button to hide sidebar */}
+          <Link to="/" onClick={toggleSidebar}>
+            <img className={styles.logo} src={logo} alt="Recipe Ready Logo" />
+          </Link>
           <button
             type="button"
             className={styles.closeBtn}
@@ -27,70 +32,69 @@ const Sidebar = () => {
           >
             <FaTimes />
           </button>
-          <Link to="/" onClick={toggleSidebar}>
-            <h1 className={styles.title}>Recipe Ready</h1>
-          </Link>
         </div>
         <div className={styles.container}>
-          <div className={styles.link}>
-            <div className={styles.category}>Explore</div>
-            <ul className={styles.linksContainer}>
-              <Link to="search-ingredients" onClick={toggleSidebar}>
-                Search By Ingredients
-              </Link>
-              <Link to="/" onClick={toggleSidebar}>
-                Search By Recipe
-              </Link>
-            </ul>
-          </div>
-          {isAuthenticated ? (
-            <>
-              <div className={styles.link}>
-                <div className={styles.category}>Collection</div>
-                <ul className={styles.linksContainer}>
-                  <Link to="create" onClick={toggleSidebar}>
-                    Create New Recipe
-                  </Link>
-                  <Link to="my-recipes" onClick={toggleSidebar}>
-                    Personal Recipes
-                  </Link>
-                  <Link to="bookmarked" onClick={toggleSidebar}>
-                    Bookmarked Recipes
-                  </Link>
-                </ul>
-              </div>
+          {/* DEFAULT LINKS */}
+          <SidebarLinks
+            category="Explore"
+            links={[
+              {
+                to: "search-ingredients",
+                text: "Search By Ingredients",
+                onClick: toggleSidebar,
+              },
+              { to: "/", text: "Search By Recipe", onClick: toggleSidebar },
+            ]}
+          />
 
-              <div className={styles.link}>
-                <div className={styles.category}>Account</div>
-                <ul className={styles.linksContainer}>
-                  <Link to="profile" onClick={toggleSidebar}>
-                    Settings
-                  </Link>
-                  <Link to="login">
-                    <div
-                      onClick={() => {
-                        logOutUser();
-                        toggleSidebar();
-                      }}
-                    >
-                      Logout
-                    </div>
-                  </Link>
-                </ul>
-              </div>
+          {isAuthenticated ? (
+            // AUTHENTICATED USER
+            <>
+              <SidebarLinks
+                category="Collection"
+                links={[
+                  {
+                    to: "create",
+                    text: "Create New Recipe",
+                    onClick: toggleSidebar,
+                  },
+                  {
+                    to: "my-recipes",
+                    text: "Personal Recipes",
+                    onClick: toggleSidebar,
+                  },
+                  {
+                    to: "bookmarked",
+                    text: "Bookmarked Recipes",
+                    onClick: toggleSidebar,
+                  },
+                ]}
+              />
+              <SidebarLinks
+                category="Account"
+                links={[
+                  { to: "profile", text: "Settings", onClick: toggleSidebar },
+                  {
+                    to: "login",
+                    text: "Logout",
+                    onClick: () => {
+                      logOutUser();
+                      toggleSidebar();
+                    },
+                  },
+                ]}
+              />
             </>
           ) : (
-            <div className={styles.link}>
-              <div className={styles.category}>Account</div>
-              <ul className={styles.linksContainer}>
-                <Link to="register" onClick={toggleSidebar}>
-                  Register
-                </Link>
-                <Link to="login">
-                  <div onClick={toggleSidebar}> Login</div>
-                </Link>
-              </ul>
-            </div>
+            <>
+              <SidebarLinks
+                category="Account"
+                links={[
+                  { to: "register", text: "Register", onClick: toggleSidebar },
+                  { to: "login", text: "Login", onClick: toggleSidebar },
+                ]}
+              />
+            </>
           )}
         </div>
       </div>

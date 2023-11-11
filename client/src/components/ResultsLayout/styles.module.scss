@@ -1,5 +1,28 @@
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2rem 0 0;
+}
+
+.backBtn {
+  background-color: transparent;
+  color: var(--clr-primary-1);
+  font-size: 2rem;
+  border: none;
+  text-align: left;
+  margin-bottom: 2rem;
+  &:hover {
+    color: var(--clr-primary-secondary);
+  }
+}
 .title {
-  padding: 2rem 0;
+  margin-bottom: 2rem;
+}
+.spacer {
+  width: 2rem;
+  height: 2rem;
+  visibility: hidden;
 }
 
 .recipesContainer {
@@ -17,6 +40,9 @@
 }
 
 @media (min-width: 850px) {
+  .headerContainer {
+    margin: 0 0 1rem;
+  }
   .recipesContainer {
     grid-template-columns: repeat(3, 1fr);
   }

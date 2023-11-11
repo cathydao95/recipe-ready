@@ -6,11 +6,13 @@ import clsx from "clsx";
 import { useAppContext } from "../../context/appContext";
 import { FaSearch } from "react-icons/fa";
 import axios from "../../utils/axiosConfig";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SearchByIngredients = () => {
   const navigate = useNavigate();
   // Destructure functions and states from app context
-  const { getRecipes, recipeSearchResults, setIsLoading } = useAppContext();
+  const { setResultsLoaded } = useAppContext();
   // State to manage the list of selected ingredients
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   // State to manage user's input of ingredients
@@ -59,6 +61,11 @@ const SearchByIngredients = () => {
   // Function to handle button click and search recipes
   const searchRecipes = (e) => {
     e.preventDefault();
+    if (selectedIngredients.length < 1) {
+      toast.error("Please enter some ingredients");
+      return;
+    }
+    setResultsLoaded(false);
     navigate("/results", {
       state: { ingredients: selectedIngredients },
     });
@@ -121,8 +128,12 @@ const SearchByIngredients = () => {
       <p className={styles.text}>
         <span>Ingredient List</span>
       </p>
-
       <div className={styles.wrapperSuggested}>
+        <div
+          className={clsx(styles.backgroundImage, {
+            [styles.backgroundImageAnimated]: selectedIngredients.length > 0,
+          })}
+        ></div>
         <SelectedIngredientsList
           selectedIngredients={selectedIngredients}
           setSelectedIngredients={setSelectedIngredients}

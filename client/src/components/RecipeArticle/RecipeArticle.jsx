@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import { Link } from "react-router-dom";
 
+// Create recipe articles for each recipe in dashboard
 const RecipeArticle = ({ recipe }) => {
   const { id, title, image_url } = recipe;
   return (

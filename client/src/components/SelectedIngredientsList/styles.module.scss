@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
+  width: 100%;
 }
 
 .selectedIng {
@@ -12,9 +13,10 @@
   padding-left: 1rem;
   font-size: 1rem;
   align-items: center;
-  background-color: var(--clr-primary-9);
   height: 50px;
+  text-align: center;
 }
+
 .icon {
   font-size: 1rem;
 }
@@ -34,8 +36,6 @@
 
 @media (min-width: 1025px) {
   .selectedContainer {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
-}
-@media (min-width: 1201px) {
 }

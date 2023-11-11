@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import { useAppContext } from "../../context/appContext";
 import { FaSearch } from "react-icons/fa";
-import { RecipeArticle } from "../../components";
+import { RecipeArticle, SmallLoader } from "../../components";
 import InfiniteScroll from "react-infinite-scroll-component";
-import SmallLoader from "../../components/SmallLoader/SmallLoader";
-import { limitScreenSize } from "../../utils/utils";
+import { limitScreenSize, getMealTime } from "../../utils/utils";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SearchByName = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const SearchByName = () => {
   } = useAppContext();
   const [keyword, setKeyword] = useState("");
   const [localPage, setLocalPage] = useState(1);
+  const [mealTime, setMealTime] = useState(getMealTime());
 
   // Pass in limitScreenSize utils function and pass in window.innerWidth to find out size of screen
   const limit = limitScreenSize(window.innerWidth);
@@ -29,15 +31,17 @@ const SearchByName = () => {
     // if search is empty return
     e.preventDefault();
     if (keyword.trim() === "") {
+      toast.error("Please enter a search word");
       return;
     }
-    setResultsLoaded(false);
     resetSearch();
+    setResultsLoaded(false);
     navigate("/results", {
       state: { keyword },
     });
   };
 
+  // When page renders, get recipes witth default settings
   useEffect(() => {
     getRecipes([], "", limit, localPage);
   }, []);
@@ -54,6 +58,14 @@ const SearchByName = () => {
   return (
     <div className="wrapper">
       <div className={styles.searchContainer}>
+        <h1>Let's get Recipe Ready! </h1>
+        <p>
+          Kickstart your {mealTime}: Discover Delicious Ideas, Find Favorites,
+          or {""}
+          <Link to="search-ingredients" className={styles.linkText}>
+            Explore Recipes by Ingredients!
+          </Link>
+        </p>
         <form className={styles.searchForm} onSubmit={handleSubmit}>
           <div className={styles.searchInputContainer}>
             <div className={styles.searchIcon}>
@@ -61,6 +73,7 @@ const SearchByName = () => {
             </div>
             <input
               name="search"
+              id="search"
               className={styles.searchInput}
               placeholder="Search Recipes"
               onChange={(e) => setKeyword(e.target.value)}
@@ -72,24 +85,25 @@ const SearchByName = () => {
       <p className={styles.text}>
         <span>LATEST RECIPES</span>
       </p>
-      <InfiniteScroll
-        dataLength={recipeSearchResults.length}
-        next={loadMoreRecipes}
-        hasMore={hasMore}
-        loader={<SmallLoader />}
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>No More Recipes</b>
-          </p>
-        }
-      >
-        <div className={styles.recipesContainer}>
-          {resultsLoaded &&
-            recipeSearchResults.map((recipe, index) => {
-              return <RecipeArticle key={index} recipe={recipe} />;
-            })}
-        </div>
-      </InfiniteScroll>
+      {!recipeSearchResults ? (
+        <SmallLoader />
+      ) : (
+        recipeSearchResults && (
+          <InfiniteScroll
+            dataLength={recipeSearchResults.length}
+            next={loadMoreRecipes}
+            hasMore={hasMore}
+            loader={<SmallLoader />}
+          >
+            <div className={styles.recipesContainer}>
+              {resultsLoaded &&
+                recipeSearchResults.map((recipe, index) => {
+                  return <RecipeArticle key={index} recipe={recipe} />;
+                })}
+            </div>
+          </InfiniteScroll>
+        )
+      )}
     </div>
   );
 };

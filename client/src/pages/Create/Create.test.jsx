@@ -12,24 +12,29 @@ vi.mock("react-router-dom", () => ({
   useLocation: vi.fn(),
 }));
 
-describe("<Create />", () => {
-  useLocation.mockReturnValue({
-    state: {},
-  });
+// Mmck useAppContext
+vi.mock("../../context/appContext", () => ({
+  useAppContext: vi.fn(() => ({ setResultsLoaded: vi.fn() })),
+}));
 
-  it('displays "Create New Recipe" when not editing', () => {
+describe("<Create />", () => {
+  it('displays "Create New Recipe" when not in editing mode', () => {
+    vi.mocked(useLocation).mockReturnValue({
+      state: {},
+    });
+
     const { getByText } = render(<Create />);
     expect(getByText("Create New Recipe")).toBeInTheDocument();
   });
 
-  it('displays "Edit Recipe" when editing', () => {
-    useLocation.mockReturnValue({
+  it('displays "Edit Recipe" when in editing mode', () => {
+    vi.mocked(useLocation).mockReturnValue({
       state: {
         isEditing: true,
         currentRecipeInfo: {
           id: "1",
-          title: "Sample Recipe",
-          ingredients: ["beef", "chicken", "fish"], //
+          title: "Chicken",
+          ingredients: ["beef", "chicken", "fish"],
           instructions: "Grill",
           prep_time: "45",
           image_url: "url",

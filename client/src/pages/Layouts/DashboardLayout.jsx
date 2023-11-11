@@ -5,6 +5,7 @@ import { useAppContext } from "../../context/appContext";
 
 export const DashboardContext = createContext();
 
+// Layout for the application
 const DashboardLayout = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const { getCurrentUser, isLoading } = useAppContext();

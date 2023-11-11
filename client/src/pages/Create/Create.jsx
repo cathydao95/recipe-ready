@@ -6,12 +6,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
-import uploadImg from "../../assets/upload-img.svg";
+import uploadImg from "../../assets/uploadimg.png";
 import { formatStringInstructions } from "../../utils/utils";
+import { useAppContext } from "../../context/appContext";
 
 const Create = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setResultsLoaded } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
   const { isEditing, currentRecipeInfo } = location.state || {};
 
@@ -98,7 +100,12 @@ const Create = () => {
     try {
       let response = await axiosMethod(url, updatedRecipeInfo);
 
-      toast.success(isEditing ? "Updating Recipe..." : "Creating Recipe...");
+      toast.success(
+        isEditing
+          ? "Recipe Successfully Updated"
+          : "Recipe Successfully Created"
+      );
+      setResultsLoaded(false);
       setTimeout(() => {
         navigate("/my-recipes");
       }, 3000);
@@ -111,7 +118,7 @@ const Create = () => {
   return isLoading ? (
     <Loading />
   ) : (
-    <div className="wrapper">
+    <div className={styles.wrapper}>
       <h1 className="title">
         {isEditing && currentRecipeInfo ? "Edit Recipe" : "Create New Recipe"}
       </h1>
@@ -131,13 +138,17 @@ const Create = () => {
               src={
                 recipeInfo.image_url !== "" ? recipeInfo.image_url : uploadImg
               }
+              alt="individual taking picture of food with phone"
             />
           </div>
 
           <div className={clsx("formRow", styles.imgFormRow)}>
+            <label htmlFor="imageUpload" className={styles.imgLabel}>
+              Upload Image
+            </label>
             <input
               className={styles.imgInput}
-              // className="formInput"
+              id="imageUpload"
               type="file"
               name="image_url"
               accept="image/*"

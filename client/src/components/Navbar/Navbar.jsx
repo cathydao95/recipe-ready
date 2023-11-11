@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import { Link } from "react-router-dom";
 import { useDashboardContext } from "../../pages/Layouts/DashboardLayout";
 import { useAppContext } from "../../context/appContext";
+import logo from "../../assets/logo.png";
 
 const Navbar = () => {
   // Use context to toggle sidebar
@@ -13,6 +14,9 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       {/* Navbar for small screens */}
       <div className={styles.smallNavItems}>
+        <Link to="/">
+          <img className={styles.logo} src={logo} alt="Recipe Ready Logo" />
+        </Link>
         <button
           type="button"
           className={styles.toggleBtn}
@@ -20,25 +24,11 @@ const Navbar = () => {
         >
           <FaAlignLeft />
         </button>
-        <Link to="/">
-          <h4 className={styles.logo}>Recipe Ready</h4>
-        </Link>
-        {isAuthenticated ? (
-          <Link to="/">
-            <button className={styles.logoutBtn} onClick={logOutUser}>
-              Logout
-            </button>
-          </Link>
-        ) : (
-          <Link to="/login" className={styles.loginBtn}>
-            Login
-          </Link>
-        )}
       </div>
       {/* Navbar for large screens */}
       <div className={styles.bigNavItems}>
         <Link to="/">
-          <h4 className={styles.logo}>Recipe Ready</h4>
+          <img className={styles.logo} src={logo} alt="Recipe Ready Logo" />
         </Link>
         <div className={styles.linksContainer}>
           <div className={styles.link}>

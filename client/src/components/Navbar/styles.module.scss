@@ -1,11 +1,11 @@
 .navbar {
   background-color: var(--clr-primary-main);
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 10vh;
+  height: 12vh;
   padding: 1rem;
 }
 
@@ -21,39 +21,22 @@
   background: transparent;
   border-color: transparent;
   font-size: 1.75rem;
-  color: var(--clr-primary-10);
+  color: var(--clr-primary-1);
   cursor: pointer;
   display: flex;
   align-items: center;
-}
 
-.toggleBtn:hover {
-  color: var(--clr-dark-red);
+  :hover {
+    color: var(--clr-primary-9);
+  }
 }
 
 .logo {
-  color: var(--clr-primary-10);
+  width: 200px;
 }
 
 .bigNavItems {
   display: none;
-}
-
-.logoutBtn {
-  background-color: transparent;
-  font-size: 0.875rem;
-  border: none;
-  font-weight: 400;
-  color: var(--clr-primary-10);
-}
-
-.loginBtn {
-  color: var(--clr-primary-10);
-}
-
-.loginBtn:hover,
-.logoutBtn:hover {
-  color: var(--clr-primary-1);
 }
 
 @media (min-width: 481px) {
@@ -61,11 +44,13 @@
     padding: 1rem 4rem;
   }
 }
+
 @media (min-width: 769px) {
   .navbar {
     overflow: hidden;
     padding: 3rem 6rem;
   }
+
   .smallNavItems {
     display: none;
   }
@@ -88,8 +73,7 @@
   .loginBtn {
     background-color: transparent;
     border: none;
-    color: var(--clr-primary-10);
-    font-weight: 700;
+    color: var(--clr-primary-1);
     padding: 14px 16px;
     margin: 0;
   }
@@ -100,33 +84,37 @@
     background-color: var(--clr-primary-main);
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-  }
 
-  .dropdownContent a {
-    float: none;
-    color: var(--clr-primary-10);
-    padding: 12px 16px;
-    display: block;
-    text-align: left;
-    width: 175px;
-  }
+    a {
+      float: none;
+      color: var(--clr-primary-1);
+      padding: 12px 16px;
+      display: block;
+      text-align: left;
+      width: 175px;
 
-  .dropdownContent a:hover {
-    color: var(--clr-primary-1);
+      &:hover {
+        color: var(--clr-primary-10);
+      }
+    }
   }
 
   .link:hover .dropdownContent {
     display: block;
   }
 
-  .loginBtn:hover {
+  .logoutBtn {
+    background-color: transparent;
+    font-size: 0.875rem;
+    border: none;
+    font-weight: 400;
     color: var(--clr-primary-1);
   }
-}
 
-@media (min-width: 769px) {
-  .navbar {
-    padding: 1rem 6rem;
+  .dropBtn:hover,
+  .loginBtn:hover,
+  .logoutBtn:hover {
+    color: var(--clr-primary-10);
   }
 }
 

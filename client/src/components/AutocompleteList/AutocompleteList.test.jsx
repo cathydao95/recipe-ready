@@ -31,14 +31,14 @@ describe("AutocompleteList", () => {
 
     // Simulate clicks
     userEvent.click(suggestedIngredients[0]);
-    console.log("Clicked on the first suggestion");
+    console.log("Clicked on chicken");
 
     userEvent.click(suggestedIngredients[1]);
 
-    console.log("Clicked on the second suggestion");
+    console.log("Clicked on beef");
 
     userEvent.click(suggestedIngredients[2]);
 
-    console.log("Clicked on the third suggestion");
+    console.log("Clicked on fish");
   });
 });

@@ -48,6 +48,7 @@ const Login = () => {
       }
     }
   };
+
   return (
     <div className="pageWrapper">
       <h1 className="title">Recipe Ready</h1>

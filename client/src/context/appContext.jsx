@@ -7,15 +7,16 @@ export const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState([]);
-  const [usersRecipes, setUsersRecipes] = useState([]);
-  const [usersBookmarked, setUsersBookmarked] = useState([]);
-  const [recipeSearchResults, setRecipeSearchResults] = useState([]);
+  const [usersRecipes, setUsersRecipes] = useState(null);
+  const [usersBookmarked, setUsersBookmarked] = useState(null);
+  const [recipeSearchResults, setRecipeSearchResults] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [resultsLoaded, setResultsLoaded] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
+  // Function to get current user and authenticate and get user's recipes and bookmarks
   const getCurrentUser = async () => {
     try {
       let response = await axios.get(`/api/v1/users/current`);

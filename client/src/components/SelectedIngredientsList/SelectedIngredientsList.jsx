@@ -13,7 +13,6 @@ const SelectedIngredientsList = ({
     setSelectedIngredients(updatedIngredients);
   };
   return (
-    // <div className={styles.wrapper}>
     <div className={styles.selectedContainer}>
       {selectedIngredients.map((ing) => (
         <div
@@ -26,7 +25,6 @@ const SelectedIngredientsList = ({
         </div>
       ))}
     </div>
-    // </div>
   );
 };
 

@@ -43,7 +43,7 @@ export const editUser = async (req, res) => {
 
   res.status(StatusCodes.OK).json({
     status: "success",
-    data: { msg: "user updated" },
+    data: { msg: "Successfully Updated User" },
   });
 };
 

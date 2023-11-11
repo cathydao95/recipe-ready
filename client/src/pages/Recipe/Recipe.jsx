@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
-import { EmptyPageContent, Loading, SmallLoader } from "../../components";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import {
+  EmptyPageContent,
+  Loading,
+  NutritionTable,
+  SmallLoader,
+} from "../../components";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
-import { FaRegClock, FaBookmark, FaCheck } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa";
+import { BsBackspace, BsBookmarkFill, BsBookmark } from "react-icons/bs";
+import { CiExport } from "react-icons/ci";
 import { useAppContext } from "../../context/appContext";
 import LoginModal from "../../components/LoginModal/LoginModal";
 import axios from "../../utils/axiosConfig";
@@ -18,8 +25,9 @@ const Recipe = () => {
   const [recipeInfo, setRecipeInfo] = useState([]);
   const [showNutrition, setShowNutrition] = useState(false);
   const [recipeNotFound, setRecipeNotFound] = useState(false);
+  const [checkedIngredients, setCheckedIngredients] = useState({});
 
-  const isBookmarked = usersBookmarked.some(
+  const isBookmarked = usersBookmarked?.some(
     (bookmarkedRecipe) => bookmarkedRecipe.id == id
   );
 
@@ -44,33 +52,46 @@ const Recipe = () => {
     }
   };
 
+  // Function to cross off ingredients from list
+  const toggleIngredient = (ingredient) => {
+    setCheckedIngredients((prevSelected) => ({
+      ...prevSelected,
+      [ingredient]: !prevSelected[ingredient],
+    }));
+  };
+
+  // Function to open the print window
+  const handlePrint = () => {
+    window.print();
+  };
+
   // Function to retrieve recipe's nutritional information
   const getRecipeNutrition = async (recipeId) => {
     let url = `/api/v1/recipes/${id}/nutrition`;
 
-    // TEMP COMMENT OUT TO SAVE TOKENS
-    // try {
-    //   const response = await axios.get(url);
+    try {
+      const response = await axios.get(url);
 
-    //   if (response.data) {
-    //     const {
-    //       data: { recipeNutrition },
-    //     } = response.data;
-    //     setRecipeNutrition(recipeNutrition);
-    //     setShowNutrition(true);
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
+      if (response.data) {
+        const {
+          data: { recipeNutrition },
+        } = response.data;
+        setRecipeNutrition(recipeNutrition);
+        setShowNutrition(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  // Run get recipe function when page renders
+  // When page renders, fetch recipe data and nutrition info
   useEffect(() => {
     getRecipe();
     getRecipeNutrition(id);
     setShowLogin(false);
   }, []);
 
+  // If loading display loading, else check if recipe is found and display not found page or recipe info
   return isLoading ? (
     <Loading />
   ) : recipeNotFound ? (
@@ -79,35 +100,36 @@ const Recipe = () => {
       <EmptyPageContent page="noRecipe" />
     </div>
   ) : (
-    <div>
+    <div className={styles.recipeWrapper}>
       {recipeInfo.id && (
-        <div className={clsx(styles.recipeWrapper, "wrapper")}>
+        <div>
           <div className={styles.btnContainer}>
             <button onClick={() => navigate(-1)} className={styles.actionBtn}>
-              Back
+              <BsBackspace />
             </button>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                handleBookmarkClick(id);
-              }}
-              className={styles.actionBtn}
-            >
-              {isBookmarked ? (
-                <>
-                  <span className={styles.bookmarkContainer}>
-                    Bookmarked <FaCheck />
-                  </span>
-                </>
-              ) : (
-                <>
-                  <span className={styles.bookmarkContainer}>
-                    <FaBookmark /> Bookmark
-                  </span>
-                </>
-              )}
-            </button>
+            <div className={styles.secondaryBtnContainer}>
+              <button className={styles.actionBtn} onClick={handlePrint}>
+                <CiExport />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleBookmarkClick(id);
+                }}
+                className={styles.actionBtn}
+              >
+                {isBookmarked ? (
+                  <BsBookmarkFill className="bookmarkFilled" />
+                ) : (
+                  <BsBookmark />
+                )}
+              </button>
+            </div>
           </div>
+          <div className={styles.recipeHeader}>
+            <h3 className={styles.recipeTitle}>{recipeInfo.title}</h3>
+          </div>
+
           <div className={clsx(styles.imgContainer, "imgContainer")}>
             <img
               className={styles.img}
@@ -116,8 +138,8 @@ const Recipe = () => {
             />
           </div>
           <div className={styles.recipeInfoContainer}>
-            <div className={styles.recipeHeader}>
-              <h3 className={styles.recipeTitle}>{recipeInfo.title}</h3>
+            <div className={styles.prepTimeContainer}>
+              <span className={styles.prepTimeText}>Prep Time</span>
               <span className={styles.prepTime}>
                 <FaRegClock />
                 {recipeInfo.prep_time} min
@@ -129,8 +151,26 @@ const Recipe = () => {
                 <ul className={styles.ingContainer}>
                   {recipeInfo?.ingredients?.map((ing) => {
                     return (
-                      <li key={ing} className={styles.ing}>
-                        {ing[0].toUpperCase() + ing.slice(1)}
+                      <li
+                        key={ing}
+                        className={`${styles.ing} ${
+                          checkedIngredients[ing] ? styles.crossed : ""
+                        }`}
+                      >
+                        <label className={styles.checkboxContainer}>
+                          <input
+                            type="checkbox"
+                            checked={checkedIngredients[ing] || false}
+                            onChange={() => toggleIngredient(ing)}
+                            className={styles.checkbox}
+                          />
+                          <span
+                            className={`${styles.customCheckbox} ${
+                              checkedIngredients[ing] ? styles.checked : ""
+                            }`}
+                          ></span>
+                          {ing[0].toUpperCase() + ing.slice(1)}
+                        </label>
                       </li>
                     );
                   })}
@@ -154,47 +194,11 @@ const Recipe = () => {
                 </ol>
               </div>
             </div>
-            <h4>Estimated Nutrition Information</h4>
+            <h4 className={styles.nutritionText}>
+              Estimated Nutrition Information
+            </h4>
             {showNutrition ? (
-              <div className={styles.nutritionContainer}>
-                <table className={styles.nutritionTable}>
-                  <thead>
-                    <tr>
-                      <th>Nutrition</th>
-                      <th>Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Calories</td>
-                      <td>
-                        {recipeNutrition.calories?.value}{" "}
-                        {recipeNutrition.calories?.unit}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Carbs</td>
-                      <td>
-                        {recipeNutrition.carbs?.value}{" "}
-                        {recipeNutrition.carbs?.unit}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Protein</td>
-                      <td>
-                        {recipeNutrition.protein?.value}{" "}
-                        {recipeNutrition.protein?.unit}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Fat</td>
-                      <td>
-                        {recipeNutrition.fat?.value} {recipeNutrition.fat?.unit}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <NutritionTable recipeNutrition={recipeNutrition} />
             ) : (
               <SmallLoader />
             )}

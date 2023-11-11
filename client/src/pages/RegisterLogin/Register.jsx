@@ -33,8 +33,10 @@ const Register = () => {
       );
 
       // If success, register user and navigate user to dashboard
-      const { data } = response;
-      if (data && data.msg) getCurrentUser();
+      const {
+        data: { msg },
+      } = response;
+      if (msg) getCurrentUser();
       toast.success(msg);
       setTimeout(() => {
         navigate("/");

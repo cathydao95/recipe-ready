@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAppContext } from "../../context/appContext";
 import axios from "../../utils/axiosConfig";
 
+// page to update user's login information
 const UserSettings = () => {
   const { getCurrentUser, currentUser } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);

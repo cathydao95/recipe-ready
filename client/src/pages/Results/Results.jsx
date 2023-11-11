@@ -7,13 +7,14 @@ import SmallLoader from "../../components/SmallLoader/SmallLoader";
 import { limitScreenSize } from "../../utils/utils";
 
 const Results = () => {
-  const { getRecipes, recipeSearchResults, hasMore, setResultsLoaded } =
+  const { getRecipes, hasMore, recipeSearchResults, resultsLoaded } =
     useAppContext();
 
   const [localPage, setLocalPage] = useState(1);
   const location = useLocation();
   const { state } = location;
   // If ingredients are passed, set selectedIngredients to ingredients, else set as empty array
+
   const selectedIngredients =
     state && state.ingredients ? state.ingredients : [];
   // If keyword is passed, set keyword to the word, else set to empty string
@@ -24,7 +25,6 @@ const Results = () => {
 
   // Load recipes based on ing/keyword,limits, and page
   useEffect(() => {
-    setResultsLoaded(false);
     getRecipes(selectedIngredients, keyword, limit, localPage);
   }, []);
 
@@ -36,19 +36,23 @@ const Results = () => {
     setLocalPage((prev) => prev + 1);
   };
 
-  return (
-    <InfiniteScroll
-      dataLength={recipeSearchResults.length}
-      next={loadMoreRecipes}
-      hasMore={hasMore}
-      loader={<SmallLoader />}
-    >
-      <ResultsLayout
-        recipes={recipeSearchResults}
-        title="Recipe Results"
-        page="searchResults"
-      />
-    </InfiniteScroll>
+  return !resultsLoaded ? (
+    <SmallLoader />
+  ) : (
+    recipeSearchResults && (
+      <InfiniteScroll
+        dataLength={recipeSearchResults.length}
+        next={loadMoreRecipes}
+        hasMore={hasMore}
+        loader={<SmallLoader />}
+      >
+        <ResultsLayout
+          recipes={recipeSearchResults}
+          title="Recipe Results"
+          page="searchResults"
+        />
+      </InfiniteScroll>
+    )
   );
 };
 

@@ -1,4 +1,3 @@
-// MODAL
 .modalHeader {
   background-color: var(--clr-primary-main);
   text-align: center;
@@ -23,15 +22,14 @@
 }
 
 .actionBtn:hover {
-  background-color: var(--clr-dark-red);
-  color: var(--clr-primary-10);
+  background-color: var(--clr-primary-secondary);
+  color: var(--clr-primary-1);
 }
 
 .loginText {
-  font-weight: 700;
   border-bottom: 1px solid var(--clr-primary-1);
 }
 
 .loginText:hover {
-  color: var(--clr-primary-4);
+  color: var(--clr-primary-secondary);
 }

@@ -1,4 +1,4 @@
-import cooking from "../assets/cooking.svg";
+import cooking from "../assets/cooking.png";
 import bookmarkImg from "../assets/bookmark.png";
 import noResults from "../assets/noresults.png";
 export const pageContent = {
@@ -24,7 +24,6 @@ export const pageContent = {
     altText: "Bookmark",
   },
   noRecipe: {
-    text: "Recipe Not Found",
     buttonText: "Back to Search",
     imageSrc: noResults,
     altText: "No Results",
