@@ -7,7 +7,10 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import uploadImg from "../../assets/uploadimg.png";
-import { formatStringInstructions } from "../../utils/utils";
+import {
+  formatStringInstructions,
+  removeNumberingFromInstructions,
+} from "../../utils/utils";
 import { useAppContext } from "../../context/appContext";
 
 const Create = () => {
@@ -31,13 +34,16 @@ const Create = () => {
   //When isEditing and currentRecipeInfo exists, set recipeInfo with info from  current recipe.
   useEffect(() => {
     if (isEditing && currentRecipeInfo) {
+      const instructionsWithoutNumbering = removeNumberingFromInstructions(
+        currentRecipeInfo.instructions
+      );
       setRecipeInfo({
         title: currentRecipeInfo.title,
         // takes the ingredients array and joins each element by a comma and removes and trailing punctuation and white space
         ingredients: currentRecipeInfo.ingredients
           .join(", ")
           .replace(/[.,;!?]+\s*$/, ""),
-        instructions: currentRecipeInfo.instructions,
+        instructions: instructionsWithoutNumbering,
         prep_time: currentRecipeInfo.prep_time,
         image_url: currentRecipeInfo.image_url,
       });
@@ -144,6 +150,7 @@ const Create = () => {
           </div>
 
           <div className={clsx("formRow", styles.imgFormRow)}>
+            {/* Added a label that will be hidden with CSS to make it available to screen readers to enhance accessibility */}
             <label htmlFor="imageUpload" className={styles.imgLabel}>
               Upload Image
             </label>
