@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import FormRow from "./FormRow";
 
-// Integration test for Form Row because it is testing how the input value and validating prop, in addition to checking if the input has the correct attributes and text.
+// Integration test for Form Row because it is testing the input value and validating prop, in addition to checking if the input has the correct attributes and text.
 describe("FormRow", () => {
   // create mock function for handling input
   const mockHandleInput = vi.fn();

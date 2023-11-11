@@ -69,19 +69,19 @@ const Recipe = () => {
   const getRecipeNutrition = async (recipeId) => {
     let url = `/api/v1/recipes/${id}/nutrition`;
 
-    // try {
-    //   const response = await axios.get(url);
+    try {
+      const response = await axios.get(url);
 
-    //   if (response.data) {
-    //     const {
-    //       data: { recipeNutrition },
-    //     } = response.data;
-    //     setRecipeNutrition(recipeNutrition);
-    //     setShowNutrition(true);
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
+      if (response.data) {
+        const {
+          data: { recipeNutrition },
+        } = response.data;
+        setRecipeNutrition(recipeNutrition);
+        setShowNutrition(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // When page renders, fetch recipe data and nutrition info
