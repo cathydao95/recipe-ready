@@ -15,14 +15,14 @@ const ResultsLayout = ({ recipes, title, page }) => {
     <div className={clsx("wrapper")}>
       <div className={styles.headerContainer}>
         {showBackButton ? (
-          <button
+          <div
             onClick={() => {
               navigate(-1);
             }}
             className={styles.backBtn}
           >
             <BsBackspace />
-          </button>
+          </div>
         ) : (
           // Invisible spacer when back button is not present
           <div className={styles.spacer}></div>

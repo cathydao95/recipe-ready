@@ -134,13 +134,17 @@ const Create = () => {
               src={
                 recipeInfo.image_url !== "" ? recipeInfo.image_url : uploadImg
               }
+              alt="individual taking picture of food with phone"
             />
           </div>
 
           <div className={clsx("formRow", styles.imgFormRow)}>
+            <label htmlFor="imageUpload" className={styles.imgLabel}>
+              Upload Image
+            </label>
             <input
               className={styles.imgInput}
-              // className="formInput"
+              id="imageUpload"
               type="file"
               name="image_url"
               accept="image/*"

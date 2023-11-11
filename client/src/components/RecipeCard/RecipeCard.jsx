@@ -51,7 +51,7 @@ const RecipeCard = ({ recipe, page }) => {
               <h5 className={styles.recipeTitle}>{title}</h5>
 
               {user_id && user_id !== null && (
-                <button
+                <div
                   variant="primary"
                   className={styles.icon}
                   onClick={(e) => {
@@ -61,7 +61,7 @@ const RecipeCard = ({ recipe, page }) => {
                   }}
                 >
                   <FiMoreHorizontal />
-                </button>
+                </div>
               )}
             </div>
 
@@ -70,7 +70,7 @@ const RecipeCard = ({ recipe, page }) => {
                 <FaRegClock />
                 {prep_time} minutes
               </span>
-              <button
+              <div
                 className={styles.icon}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -83,7 +83,7 @@ const RecipeCard = ({ recipe, page }) => {
                 ) : (
                   <BsBookmark />
                 )}
-              </button>
+              </div>
             </div>
           </div>
         </div>

@@ -176,11 +176,12 @@ button {
 }
 .formBtn,
 .btn {
-  // background-color: var(--clr-primary-secondary);
+  color: var(--clr-primary-2);
   padding: 1rem;
   border: 1.5px solid var(--clr-primary-1);
   margin: 1.5rem 0 1rem;
   width: 100%;
+  border-radius: 10px;
 }
 
 .formBtn:hover,

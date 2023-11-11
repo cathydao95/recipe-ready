@@ -12,6 +12,9 @@
   border: none;
   text-align: left;
   margin-bottom: 2rem;
+  &:hover {
+    color: var(--clr-primary-secondary);
+  }
 }
 .title {
   margin-bottom: 2rem;

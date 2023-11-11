@@ -24,7 +24,6 @@ export const pageContent = {
     altText: "Bookmark",
   },
   noRecipe: {
-    text: "Recipe Not Found",
     buttonText: "Back to Search",
     imageSrc: noResults,
     altText: "No Results",
