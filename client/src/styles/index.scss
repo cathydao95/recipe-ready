@@ -147,7 +147,7 @@ button {
   width: 100%;
   padding: 0.375rem 0.75rem;
   border: none;
-  border-bottom: 1px solid var(--clr-primary-1);
+  border-bottom: 1.5px solid var(--clr-primary-1);
   color: var(--clr-primary-1);
   background-color: var(--clr-primary-8);
   padding: 0.5rem;
@@ -158,6 +158,15 @@ button {
 .formInput:focus {
   outline: none;
 }
+
+.formTextArea {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  background-color: var(--clr-primary-8);
+  border: 1.5px solid var(--clr-primary-1);
+}
+
 .formRow {
   margin-bottom: 1rem;
 }
@@ -268,6 +277,11 @@ button {
   }
   .formRow {
     margin-bottom: 2rem;
+  }
+
+  .formTextArea {
+    font-size: 1.15rem;
+    margin: 1rem 0;
   }
 
   .formInput {
