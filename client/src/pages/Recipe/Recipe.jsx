@@ -76,7 +76,6 @@ const Recipe = () => {
         const {
           data: { recipeNutrition },
         } = response.data;
-        console.log(recipeNutrition);
         setRecipeNutrition(recipeNutrition);
         setShowNutrition(true);
       }
@@ -85,7 +84,6 @@ const Recipe = () => {
     }
   };
 
-  console.log(recipeNutrition);
   // When page renders, fetch recipe data and nutrition info
   useEffect(() => {
     getRecipe();

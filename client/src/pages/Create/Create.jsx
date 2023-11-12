@@ -132,8 +132,6 @@ const Create = () => {
     try {
       let response = await axiosMethod(url, updatedRecipeInfo);
 
-      console.log(response);
-
       toast.success(
         isEditing
           ? "Recipe Successfully Updated"
