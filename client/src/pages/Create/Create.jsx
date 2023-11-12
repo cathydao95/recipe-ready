@@ -10,6 +10,8 @@ import uploadImg from "../../assets/uploadimg.png";
 import {
   formatStringInstructions,
   removeNumberingFromInstructions,
+  validateIngredients,
+  validateInstructions,
 } from "../../utils/utils";
 import { useAppContext } from "../../context/appContext";
 
@@ -39,7 +41,7 @@ const Create = () => {
       );
       setRecipeInfo({
         title: currentRecipeInfo.title,
-        // takes the ingredients array and joins each element by a comma and removes and trailing punctuation and white space
+        // takes the ingredients array and joins each element by a comma and removes trailing punctuation and white space
         ingredients: currentRecipeInfo.ingredients
           .join(", ")
           .replace(/[.,;!?]+\s*$/, ""),
@@ -87,6 +89,16 @@ const Create = () => {
   const createRecipe = async (e) => {
     e.preventDefault();
 
+    if (!validateIngredients(recipeInfo.ingredients)) {
+      toast.error("Please enter ingredients in the correct format.");
+      return;
+    }
+
+    if (!validateInstructions(recipeInfo.instructions)) {
+      toast.error("Please format the instructions correctly.");
+      return;
+    }
+
     // Use utils function to format recipe instructions into an ordered list.
     const formattedInstructions = formatStringInstructions(
       recipeInfo.instructions
@@ -107,6 +119,8 @@ const Create = () => {
     try {
       let response = await axiosMethod(url, updatedRecipeInfo);
 
+      console.log(response);
+
       toast.success(
         isEditing
           ? "Recipe Successfully Updated"
@@ -117,8 +131,14 @@ const Create = () => {
         navigate("/my-recipes");
       }, 3000);
     } catch (error) {
-      console.error(error);
-      toast.error("An error occurred");
+      const {
+        data: { msg },
+      } = error.response;
+      if (msg) {
+        toast.error(msg);
+      } else {
+        toast.error("An error occurred");
+      }
     }
   };
 
@@ -169,14 +189,14 @@ const Create = () => {
             name="ingredients"
             value={recipeInfo.ingredients}
             handleInput={handleInput}
-            labelText="Ingredients"
+            labelText="Ingredients (i.e. chicken, salt, pepper, olive oil)"
           />
           <FormRow
-            type="text"
+            type="textarea"
             name="instructions"
             value={recipeInfo.instructions}
             handleInput={handleInput}
-            labelText="Instructions"
+            labelText="Instructions (i.e Season chicken with salt and pepper. Add olive oil to pain. Grill chicken on medium for 20 minutes.)"
           />
           <FormRow
             type="number"
@@ -186,12 +206,7 @@ const Create = () => {
             handleInput={handleInput}
           />
 
-          <button
-            className="formBtn"
-            type="submit"
-            onClick={createRecipe}
-            disabled={recipeInfo.image_url === ""}
-          >
+          <button className="formBtn" type="submit" onClick={createRecipe}>
             Submit
           </button>
         </form>
