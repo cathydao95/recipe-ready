@@ -47,11 +47,13 @@ export const getMealTime = () => {
 // Function to validate that ingredients are being typed in the correct format
 export const validateIngredients = (ingredients) => {
   // \s* matches white spaces before and after 0 or more times
-  // \w+ matches one or more words
-  // -\w+ matches hypens followed by words
-  // (\s*\w+(-\w+)*\s*,\s*)* first capturing group matches ingrediens followed by commas
-  // \s*\w+(-\w+)*\s*) second capturig groupw, matches without comma at the end
-  const regex = /^(\s*\w+(-\w+)*\s*,\s*)*(\s*\w+(-\w+)*\s*)$/;
+  // [a-zA-Z]+ matches one or more alphabetic characters
+  // (-[a-zA-Z]+)* matches hyphens followed by alphabetic characters, 0 or more times
+  // (\s[a-zA-Z]+)* matches spaces followed by alphabetic characters, 0 or more times
+  // (\s*[a-zA-Z]+(-[a-zA-Z]+)*(\s[a-zA-Z]+)*\s*,\s*)* matches ingredients followed by commas
+  // \s*[a-zA-Z]+(-[a-zA-Z]+)*(\s[a-zA-Z]+)*\s* matches an ingredient without a comma at the end
+  const regex =
+    /^(\s*[a-zA-Z]+(-[a-zA-Z]+)*(\s[a-zA-Z]+)*\s*,\s*)*(\s*[a-zA-Z]+(-[a-zA-Z]+)*(\s[a-zA-Z]+)*\s*)$/;
   return regex.test(ingredients);
 };
 
