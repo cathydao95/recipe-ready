@@ -102,11 +102,13 @@ a {
 
 .Toastify__toast--success {
   color: var(--clr-primary-main);
+  font-size: 1rem;
 }
 
 /* Custom styles for error toast */
 .Toastify__toast--error {
   color: rgb(188, 71, 71);
+  font-size: 1rem;
 }
 button {
   font-family: "Inter", sans-serif;
