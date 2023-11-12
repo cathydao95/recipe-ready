@@ -22,7 +22,7 @@ const SearchByIngredients = () => {
   // State for tracking the selected autocomplete item
   const [selectedAutocomplete, setSelectedAutocomplete] = useState(-1);
 
-  // Function to handle user key press
+  // Function to handle user key press to provide additional accessibility and allow keyboard navigation
   const handleKeyDown = (e) => {
     if (e.key === "ArrowUp" && selectedAutocomplete > 0) {
       // Move key press up

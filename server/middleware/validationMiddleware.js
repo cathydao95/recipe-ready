@@ -6,6 +6,15 @@ import {
 } from "../errors/customErrors.js";
 import db from "../db/db-connection.js";
 
+// Format error messages:
+const formatErrorMessages = (errorMessages) => {
+  if (errorMessages.length === 1) {
+    return errorMessages[0];
+  }
+  const formattedMessages = errorMessages.join(", ");
+  return `${formattedMessages}.`;
+};
+
 // Create a middleware to handle form validation errors
 const withValidationErrors = (validateValues) => {
   return [
@@ -16,13 +25,16 @@ const withValidationErrors = (validateValues) => {
       // .array() is a method that returns a list of all errors
       if (!errors.isEmpty()) {
         const errorMessages = errors.array().map((error) => error.msg);
-        if (errorMessages[0].startsWith("no recipe")) {
-          throw new NotFoundError(errorMessages);
+        if (errorMessages[0].startsWith("No recipe")) {
+          throw new NotFoundError(errorMessages.join(", "));
         }
-        if (errorMessages[0].startsWith("not authorized")) {
-          throw new UnauthorizedError(errorMessages);
+        if (errorMessages[0].startsWith("Not authorized")) {
+          throw new UnauthorizedError(errorMessages.join(", "));
         }
-        throw new BadRequestError(errorMessages);
+
+        // For general validation errors, format the messages
+        const formattedErrors = formatErrorMessages(errorMessages);
+        throw new BadRequestError(formattedErrors);
       }
       next();
     },

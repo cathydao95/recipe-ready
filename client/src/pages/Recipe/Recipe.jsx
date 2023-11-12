@@ -147,7 +147,7 @@ const Recipe = () => {
             </div>
             <div className={styles.ingInstrContainer}>
               <div className={styles.ingContainer}>
-                <h4>Ingredients</h4>
+                <h4 className={styles.subHeader}>Ingredients</h4>
                 <ul className={styles.ingContainer}>
                   {recipeInfo?.ingredients?.map((ing) => {
                     return (
@@ -177,7 +177,7 @@ const Recipe = () => {
                 </ul>
               </div>
               <div className={styles.instructionsContainer}>
-                <h4>Instructions</h4>
+                <h4 className={styles.subHeader}>Instructions</h4>
                 <ol className={styles.instructionsList}>
                   {recipeInfo.instructions
                     // split by 1. , 2.,
@@ -194,7 +194,7 @@ const Recipe = () => {
                 </ol>
               </div>
             </div>
-            <h4 className={styles.nutritionText}>
+            <h4 className={clsx(styles.nutritionText, styles.subHeader)}>
               Estimated Nutrition Information
             </h4>
             {showNutrition ? (

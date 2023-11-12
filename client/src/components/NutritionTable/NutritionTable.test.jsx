@@ -15,10 +15,11 @@ const MockRecipeComponent = () => {
   return <NutritionTable recipeNutrition={mockNutrition} />;
 };
 
+// expect nutrtion table to render nutrition data from tecipe component
 describe("NutritionTable Component", () => {
   it("renders nutrition data passed from recipe component", () => {
     render(<MockRecipeComponent />);
-
+    // check that correct information is displayed
     expect(screen.getByText("Calories").closest("td")).toBeInTheDocument();
     expect(screen.getByText("100 calories").closest("td")).toBeInTheDocument();
     expect(screen.getByText("Carbs").closest("td")).toBeInTheDocument();

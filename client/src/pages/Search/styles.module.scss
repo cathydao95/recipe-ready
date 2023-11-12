@@ -119,6 +119,9 @@
   .searchForm {
     width: 75%;
   }
+  .searchInput {
+    font-size: 1.15rem;
+  }
 
   .text span {
     font-size: 1.25rem;
@@ -131,12 +134,28 @@
   }
 }
 @media (min-width: 1025px) {
+  .searchInput {
+    font-size: 1.25rem;
+  }
+
   .recipesContainer {
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
   }
   .backgroundImage {
     background-size: 60%;
+  }
+
+  .wrapperSuggested {
+    margin: 2rem 0;
+  }
+
+  .text span {
+    font-size: 1.75rem;
+  }
+
+  .searchInputContainer {
+    margin: 1rem 0;
   }
 }
 @media (min-width: 1201px) {

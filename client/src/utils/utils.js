@@ -1,12 +1,14 @@
 // Function to format instructions
 export const formatStringInstructions = (str) => {
-  // Split a string into an array where there is a period followed by a space.
-  const strParts = str.split(". ");
+  // Split string into an array where there is a period followed by a space and filter out strings that are not empty space
+  const strParts = str.split(". ").filter((part) => part.trim() !== "");
 
-  // Map through each element in array and return "index + 1. element"
-  const formattedParts = strParts.map((part, index) => `${index + 1}. ${part}`);
+  // map through elements and return "index + 1. element"
+  const formattedParts = strParts.map(
+    (part, index) => `${index + 1}. ${part.trim()}`
+  );
 
-  // Join array elements together by a period and space
+  // join array elements together by a period and space
   const formattedString = formattedParts.join(". ");
 
   return formattedString;
@@ -40,4 +42,28 @@ export const getMealTime = () => {
   } else {
     return "Dinner";
   }
+};
+
+// Function to validate that ingredients are being typed in the correct format
+export const validateIngredients = (ingredients) => {
+  // \s* matches white spaces before and after 0 or more times
+  // [a-zA-Z]+ matches one or more alphabetic characters
+  // (-[a-zA-Z]+)* matches hyphens followed by alphabetic characters, 0 or more times
+  // (\s[a-zA-Z]+)* matches spaces followed by alphabetic characters, 0 or more times
+  // (\s*[a-zA-Z]+(-[a-zA-Z]+)*(\s[a-zA-Z]+)*\s*,\s*)* matches ingredients followed by commas
+  // \s*[a-zA-Z]+(-[a-zA-Z]+)*(\s[a-zA-Z]+)*\s* matches an ingredient without a comma at the end
+  const regex =
+    /^(\s*[a-zA-Z]+(-[a-zA-Z]+)*(\s[a-zA-Z]+)*\s*,\s*)*(\s*[a-zA-Z]+(-[a-zA-Z]+)*(\s[a-zA-Z]+)*\s*)$/;
+  return regex.test(ingredients);
+};
+
+// Function to validate that the instruction are being typed in the correct format
+export const validateInstructions = (instructions) => {
+  // \s* matches white spaces before anfter 0 or more times
+  // \w+ matches one or more words
+  // .* matches any characters 0 or more times
+  // [.] matches a single period
+  // * matches the (\s*\w+.*[.]\s*) group one or more times
+  const regex = /^(\s*\w+.*[.]\s*)+$/;
+  return regex.test(instructions);
 };

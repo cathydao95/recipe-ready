@@ -29,7 +29,7 @@ describe("AutocompleteList", () => {
     );
     expect(suggestedIngredients).toHaveLength(suggestedList.length);
 
-    // Simulate clicks
+    // Simulate clicks and ensure expected output from clicks
     userEvent.click(suggestedIngredients[0]);
     console.log("Clicked on chicken");
 

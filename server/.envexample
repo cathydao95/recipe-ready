@@ -1,9 +1,35 @@
-<!-- If you have a postgres db with an user and password -
-Replace everything between the <> with your variables and remove the <>
-DB_URL="postgresql://<user>:<password>@localhost/<database>"
+<!-- API key for external service -->
 
+API_KEY=
 
+<!-- Database connection URL -->
 
-If you don't have postgres db with an user and password -
-Replace everything between the <> with your variables and remove the <>
-DB_URL="postgresql://localhost/<database>" -->
+DATABASE_URL=
+
+<!-- API key for Spoonacular service -->
+
+SPOONACULAR_API_KEY=
+
+<!-- Secret key for JWT authentication -->
+
+JWT_SECRET=
+
+<!-- JWT token expiration duration -->
+
+JWT_EXPIRATION=
+
+<!-- Cloud service name -->
+
+CLOUD_NAME=
+
+<!-- API key for cloud service -->
+
+CLOUD_API_KEY=
+
+<!-- API secret for cloud service -->
+
+CLOUD_API_SECRET=
+
+<!-- Origin URL for CORS policy -->
+
+ORIGIN=

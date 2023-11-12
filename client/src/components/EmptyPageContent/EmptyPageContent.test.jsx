@@ -22,7 +22,8 @@ const mockPageContent = {
   },
 };
 
-// EmptyPageContent Integration test because using component within a memory router and need to verify its behavior
+// EmptyPageContent Unit test
+// expect corect page information to be rendered depending on page passed
 describe("EmptyPageContent", () => {
   it("should render EmptyPageContent with the correct text for noRecipe page", () => {
     render(
