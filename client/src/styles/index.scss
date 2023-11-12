@@ -1,6 +1,6 @@
 // BOOTSTRAP
 .modal-backdrop.show {
-  background-color: transparent; // Or another color as needed
+  background-color: transparent;
 }
 
 /*
@@ -15,17 +15,17 @@ Variables
   --clr-primary-2: #292524;
   --clr-primary-3: #44403c;
   --clr-primary-4: #57534e;
-  /* primary/main color */
-  --clr-primary-5: #f1f1f1;
-  /* lighter shades of primary color */
+  --clr-primary-5: #8b8986;
   --clr-primary-6: #a8a29e;
   --clr-primary-7: #d6d3d1;
   --clr-primary-8: #e9eae7;
   --clr-primary-9: #f5f5f4;
   --clr-primary-10: #ffffff;
 
-  // --clr-primary-main: #95b89a;
+  // Green color on navbar for better contrast
   --clr-primary-main: #8fb19d;
+
+  //Green complimentary colors
   --clr-primary-secondary: #719c83;
   --clr-primary-light: #fcf8f8;
   --clr-primary-blue: #89a0b7;
@@ -97,7 +97,7 @@ a {
 }
 
 .custom-toast-container {
-  width: 300px; /* Adjust the width to your desired value */
+  width: 300px;
 }
 
 .Toastify__toast--success {
@@ -234,6 +234,8 @@ button {
 .bookmarkFilled {
   color: var(--clr-primary-secondary);
 }
+
+// Add media queries for accessibility on all screen sizes
 
 @media (min-width: 481px) {
   h1 {

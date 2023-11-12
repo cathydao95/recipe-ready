@@ -43,7 +43,7 @@ describe("FormRow", () => {
     const inputElement = screen.getByPlaceholderText(/first name/i);
     // simulate a change to a new value
     fireEvent.change(inputElement, { target: { value: "new_value" } });
-    // assert that mock function was called
+    // expect mock functinon was called
     expect(mockHandleInput).toHaveBeenCalled();
   });
 });
