@@ -89,13 +89,26 @@ const Create = () => {
   const createRecipe = async (e) => {
     e.preventDefault();
 
+    // validate ingredients and instructions to make sure in correct format
     if (!validateIngredients(recipeInfo.ingredients)) {
-      toast.error("Please enter ingredients in the correct format.");
+      toast.error(
+        "Please format the ingredients correctly. List each ingredient, separated by commas. e.g. 'milk, eggs, chicken'. No comma is needed after the last ingredient.",
+        {
+          autoClose: 10000,
+          style: { width: "auto", minWidth: "600px", fontSize: "1rem" },
+        }
+      );
       return;
     }
 
     if (!validateInstructions(recipeInfo.instructions)) {
-      toast.error("Please format the instructions correctly.");
+      toast.error(
+        "Please format the instructions correctly. Each step should be a complete sentence ending with a period. e.g. 'Season chicken with salt and pepper. Mix and add eggs to the chicken.'",
+        {
+          autoClose: 10000,
+          style: { width: "auto", minWidth: "600px", fontSize: "1rem" },
+        }
+      );
       return;
     }
 
