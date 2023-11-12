@@ -26,6 +26,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-size: 1rem;
 }
 
 .imgLabel {
@@ -36,4 +37,10 @@
   padding: 0;
   overflow: hidden;
   border: 0;
+}
+
+@media (min-width: 481px) {
+  .imgInput {
+    font-size: 1.15rem;
+  }
 }

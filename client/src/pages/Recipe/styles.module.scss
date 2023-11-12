@@ -52,7 +52,7 @@
 }
 
 .recipeTitle {
-  font-size: 1.5rem;
+  font-size: 2rem;
   text-align: left;
 }
 
@@ -78,8 +78,7 @@
 .ingInstrContainer {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem 0;
+  justify-content: space-between;
 }
 
 .ingContainer {
@@ -175,6 +174,14 @@
   padding: 0 0.5rem 0.5rem;
 }
 
+.ing,
+.instruction {
+  font-size: 1rem;
+}
+
+.subHeader {
+  margin-bottom: 1.5rem;
+}
 .nutritionText {
   text-align: center;
 }
@@ -214,6 +221,10 @@
     flex-direction: row;
     justify-content: space-between;
   }
+
+  .subHeader {
+    font-size: 1.5rem;
+  }
 }
 
 @media (min-width: 750px) {
@@ -225,5 +236,9 @@
 @media (min-width: 1025px) {
   .ingInstrContainer {
     flex-direction: row;
+  }
+  .ing,
+  .instruction {
+    font-size: 1.15rem;
   }
 }

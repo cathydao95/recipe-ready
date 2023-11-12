@@ -21,8 +21,9 @@
 .btn {
   padding: 0.5rem;
   border: 1.5px solid var(--clr-primary-3);
-  border-radius: 5px;
+  border-radius: 10px;
   width: 300px;
+  background-color: var(--clr-primary-7);
 }
 
 .btn:hover {
@@ -45,6 +46,10 @@
   .text {
     font-size: 1.25rem;
   }
+
+  .btn {
+    font-size: 1rem;
+  }
 }
 
 @media (min-width: 600px) {
@@ -57,11 +62,8 @@
   }
 
   .btn {
-    padding: 0.875rem;
-    border: 1.5px solid var(--clr-primary-3);
-    border-radius: 5px;
     width: 450px;
-    font-size: 1rem;
+    font-size: 1.15rem;
   }
 }
 
@@ -80,5 +82,6 @@
 
   .btn {
     width: 500px;
+    font-size: 1.15rem;
   }
 }

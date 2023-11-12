@@ -32,10 +32,16 @@
   .selectedContainer {
     grid-template-columns: repeat(4, 1fr);
   }
+  .selectedIng {
+    font-size: 1.15rem;
+  }
 }
 
 @media (min-width: 1025px) {
   .selectedContainer {
     grid-template-columns: repeat(5, 1fr);
+  }
+  .selectedIng {
+    font-size: 1.35rem;
   }
 }
