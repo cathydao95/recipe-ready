@@ -129,13 +129,14 @@ const Recipe = () => {
           <div className={styles.recipeHeader}>
             <h3 className={styles.recipeTitle}>{recipeInfo.title}</h3>
           </div>
-
-          <div className={clsx(styles.imgContainer, "imgContainer")}>
-            <img
-              className={styles.img}
-              src={recipeInfo.image_url}
-              alt={recipeInfo.title}
-            />
+          <div className={styles.imgWrapper}>
+            <div className={clsx(styles.imgContainer, "imgContainer")}>
+              <img
+                className={styles.img}
+                src={recipeInfo.image_url}
+                alt={recipeInfo.title}
+              />
+            </div>
           </div>
           <div className={styles.recipeInfoContainer}>
             <div className={styles.prepTimeContainer}>
