@@ -32,9 +32,6 @@ It’s sustainable, makes meal planning easier, and also adds flavor and variety
 
 ## Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-
 * [![Node.js][Node.js-badge]][Node-url]
 * [![Express][Express-badge]][Express-url]
 * [![PostgreSQL][PostgreSQL-badge]][PostgreSQL-url]
@@ -87,8 +84,13 @@ This project uses Spoonacular API. Get your API Key at https://spoonacular.com/f
 
 
 ### Screenshots
-![2](https://github.com/cathydao95/recipe-ready/assets/79618165/767acd48-658e-4c1b-89d4-0c99df0dd2d8)
-![1](https://github.com/cathydao95/recipe-ready/assets/79618165/7f7829c9-b952-40ab-9b55-c3252c48e7db)
+![ezgif com-optimize](https://github.com/cathydao95/recipe-ready/assets/79618165/7a8ac155-317d-4ec2-80f0-ab1770534216)
+
+![ezgif com-optimize2](https://github.com/cathydao95/recipe-ready/assets/79618165/b5042f1f-7a55-44de-95d9-20070cd50a4d)
+
+![ezgif com-optimize3](https://github.com/cathydao95/recipe-ready/assets/79618165/9c1bcb56-f113-4202-992b-946535a71d35)
+
+
 
 
 
